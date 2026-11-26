@@ -197,6 +197,53 @@
     .tok-str { color: var(--c-green-2); }
     .tok-key { color: var(--c-indigo-1); }
 
+    .code-wrap {
+      margin: 20px 0;
+      border: 1px solid var(--c-divider);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--code-block-bg);
+    }
+
+    .code-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--c-divider);
+      background: var(--c-bg);
+      font-family: var(--font-family-mono), monospace;
+      font-size: 12.5px;
+      color: var(--c-text-2);
+    }
+
+    .copy-btn {
+      font-family: var(--font-family-mono), monospace;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 11px;
+      border-radius: var(--radius);
+      border: 1px solid var(--c-border);
+      background: var(--c-bg-alt);
+      color: var(--c-text-1);
+      cursor: pointer;
+      transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .copy-btn:hover {
+      border-color: var(--c-brand-1);
+      color: var(--c-brand-1);
+      background: var(--c-brand-soft);
+    }
+
+    .code-wrap pre {
+      margin: 0;
+      border: none;
+      border-radius: 0;
+      max-height: 540px;
+      overflow: auto;
+    }
+
     @media (max-width: 700px) {
       .spec-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -400,54 +447,779 @@
     <figcaption>Editing <code>diagram.json</code> directly in Wokwi to audit button definitions, 1 kΩ resistors, inverter IDs, and netlist wiring during debugging.</figcaption>
   </figure>
 
-<pre><code>{
-  <span class="tok-key">"version"</span>: <span class="tok-nu">1</span>,
-  <span class="tok-key">"author"</span>: <span class="tok-str">"Uri Shaked"</span>,
-  <span class="tok-key">"editor"</span>: <span class="tok-str">"wokwi"</span>,
-  <span class="tok-key">"parts"</span>: [
-    { <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-vcc"</span>, <span class="tok-key">"id"</span>: <span class="tok-str">"kp_vcc"</span> },
-    { <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-gnd"</span>, <span class="tok-key">"id"</span>: <span class="tok-str">"kp_gnd"</span> },
+  <div class="code-wrap">
+    <div class="code-bar">
+      <span>diagram.json · full Wokwi netlist</span>
+      <button type="button" class="copy-btn" id="copy-diagram-btn">Copy code</button>
+    </div>
+<pre><code id="diagram-json">{
+  "version": 15,
+  "author": "Michael Vert",
+  "editor": "kashak213",
+  "parts": [
+    { "type": "wokwi-vcc", "id": "kp_vcc", "top": -540, "left": -760, "attrs": {} },
+    { "type": "wokwi-gnd", "id": "kp_gnd", "top": 20, "left": -760, "attrs": {} },
     {
-      <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-resistor"</span>,
-      <span class="tok-key">"id"</span>: <span class="tok-str">"r_2"</span>,
-      <span class="tok-key">"top"</span>: <span class="tok-nu">-415</span>,
-      <span class="tok-key">"left"</span>: <span class="tok-nu">-675</span>,
-      <span class="tok-key">"attrs"</span>: { <span class="tok-key">"value"</span>: <span class="tok-str">"1000"</span> }
-    },
-    { <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-gate-not"</span>, <span class="tok-key">"id"</span>: <span class="tok-str">"inv_2"</span>, <span class="tok-key">"top"</span>: <span class="tok-nu">-408</span>, <span class="tok-key">"left"</span>: <span class="tok-nu">-400</span>, <span class="tok-key">"attrs"</span>: {} },
-    {
-      <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-pushbutton"</span>,
-      <span class="tok-key">"id"</span>: <span class="tok-str">"btn_3"</span>,
-      <span class="tok-key">"top"</span>: <span class="tok-nu">-460</span>,
-      <span class="tok-key">"left"</span>: <span class="tok-nu">-540</span>,
-      <span class="tok-key">"attrs"</span>: { <span class="tok-key">"color"</span>: <span class="tok-str">"blue"</span>, <span class="tok-key">"label"</span>: <span class="tok-str">"3"</span>, <span class="tok-key">"bounce"</span>: <span class="tok-str">"0"</span>, <span class="tok-key">"key"</span>: <span class="tok-str">"3"</span> }
+      "type": "wokwi-pushbutton",
+      "id": "btn_1",
+      "top": -460,
+      "left": -760,
+      "attrs": { "color": "blue", "label": "1", "bounce": "0", "key": "1" }
     },
     {
-      <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-resistor"</span>,
-      <span class="tok-key">"id"</span>: <span class="tok-str">"r_3"</span>,
-      <span class="tok-key">"top"</span>: <span class="tok-nu">-415</span>,
-      <span class="tok-key">"left"</span>: <span class="tok-nu">-565</span>,
-      <span class="tok-key">"attrs"</span>: { <span class="tok-key">"value"</span>: <span class="tok-str">"1000"</span> }
+      "type": "wokwi-resistor",
+      "id": "r_1",
+      "top": -415,
+      "left": -785,
+      "attrs": { "value": "1000" }
     },
-    { <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-gate-not"</span>, <span class="tok-key">"id"</span>: <span class="tok-str">"inv_3"</span>, <span class="tok-key">"top"</span>: <span class="tok-nu">-356</span>, <span class="tok-key">"left"</span>: <span class="tok-nu">-400</span>, <span class="tok-key">"attrs"</span>: {} },
+    { "type": "wokwi-gate-not", "id": "inv_1", "top": -460, "left": -400, "attrs": {} },
     {
-      <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-pushbutton"</span>,
-      <span class="tok-key">"id"</span>: <span class="tok-str">"btn_4"</span>,
-      <span class="tok-key">"top"</span>: <span class="tok-nu">-339.4</span>,
-      <span class="tok-key">"left"</span>: <span class="tok-nu">-758.4</span>,
-      <span class="tok-key">"attrs"</span>: { <span class="tok-key">"color"</span>: <span class="tok-str">"blue"</span>, <span class="tok-key">"label"</span>: <span class="tok-str">"4"</span>, <span class="tok-key">"bounce"</span>: <span class="tok-str">"0"</span>, <span class="tok-key">"key"</span>: <span class="tok-str">"4"</span> }
+      "type": "wokwi-pushbutton",
+      "id": "btn_2",
+      "top": -460,
+      "left": -650,
+      "attrs": { "color": "blue", "label": "2", "bounce": "0", "key": "2" }
     },
     {
-      <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-resistor"</span>,
-      <span class="tok-key">"id"</span>: <span class="tok-str">"r_4"</span>,
-      <span class="tok-key">"top"</span>: <span class="tok-nu">-295</span>,
-      <span class="tok-key">"left"</span>: <span class="tok-nu">-785</span>,
-      <span class="tok-key">"attrs"</span>: { <span class="tok-key">"value"</span>: <span class="tok-str">"1000"</span> }
+      "type": "wokwi-resistor",
+      "id": "r_2",
+      "top": -415,
+      "left": -675,
+      "attrs": { "value": "1000" }
     },
-    { <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-gate-not"</span>, <span class="tok-key">"id"</span>: <span class="tok-str">"inv_4"</span>, <span class="tok-key">"top"</span>: <span class="tok-nu">-304</span>, <span class="tok-key">"left"</span>: <span class="tok-nu">-400</span>, <span class="tok-key">"attrs"</span>: {} }
-    <span class="tok-cm">// ... remaining keypad, core logic stages, and 7-segment decoder parts &amp; connections</span>
-  ]
+    { "type": "wokwi-gate-not", "id": "inv_2", "top": -408, "left": -400, "attrs": {} },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_3",
+      "top": -460,
+      "left": -540,
+      "attrs": { "color": "blue", "label": "3", "bounce": "0", "key": "3" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_3",
+      "top": -415,
+      "left": -565,
+      "attrs": { "value": "1000" }
+    },
+    { "type": "wokwi-gate-not", "id": "inv_3", "top": -356, "left": -400, "attrs": {} },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_4",
+      "top": -339.4,
+      "left": -758.4,
+      "attrs": { "color": "blue", "label": "4", "bounce": "0", "key": "4" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_4",
+      "top": -295,
+      "left": -785,
+      "attrs": { "value": "1000" }
+    },
+    { "type": "wokwi-gate-not", "id": "inv_4", "top": -304, "left": -400, "attrs": {} },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_5",
+      "top": -340,
+      "left": -650,
+      "attrs": { "color": "blue", "label": "5", "bounce": "0", "key": "5" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_5",
+      "top": -295,
+      "left": -675,
+      "attrs": { "value": "1000" }
+    },
+    { "type": "wokwi-gate-not", "id": "inv_5", "top": -252, "left": -400, "attrs": {} },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_6",
+      "top": -340,
+      "left": -540,
+      "attrs": { "color": "blue", "label": "6", "bounce": "0", "key": "6" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_6",
+      "top": -295,
+      "left": -565,
+      "attrs": { "value": "1000" }
+    },
+    { "type": "wokwi-gate-not", "id": "inv_6", "top": -200, "left": -400, "attrs": {} },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_7",
+      "top": -220,
+      "left": -760,
+      "attrs": { "color": "blue", "label": "7", "bounce": "0", "key": "7" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_7",
+      "top": -175,
+      "left": -785,
+      "attrs": { "value": "1000" }
+    },
+    { "type": "wokwi-gate-not", "id": "inv_7", "top": -148, "left": -400, "attrs": {} },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_8",
+      "top": -220,
+      "left": -650,
+      "attrs": { "color": "blue", "label": "8", "bounce": "0", "key": "8" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_8",
+      "top": -175,
+      "left": -675,
+      "attrs": { "value": "1000" }
+    },
+    { "type": "wokwi-gate-not", "id": "inv_8", "top": -96, "left": -400, "attrs": {} },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_9",
+      "top": -220,
+      "left": -540,
+      "attrs": { "color": "blue", "label": "9", "bounce": "0", "key": "9" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_9",
+      "top": -175,
+      "left": -565,
+      "attrs": { "value": "1000" }
+    },
+    { "type": "wokwi-gate-not", "id": "inv_9", "top": -44, "left": -400, "attrs": {} },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_0",
+      "top": -100,
+      "left": -650,
+      "attrs": { "color": "blue", "label": "0", "bounce": "0", "key": "0" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_0",
+      "top": -55,
+      "left": -675,
+      "attrs": { "value": "1000" }
+    },
+    { "type": "wokwi-gate-not", "id": "inv_0", "top": 8, "left": -400, "attrs": {} },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_clr",
+      "top": -99.4,
+      "left": -758.4,
+      "attrs": { "color": "red", "label": "CLR", "bounce": "0", "key": "c" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_clr",
+      "top": -55,
+      "left": -785,
+      "attrs": { "value": "1000" }
+    },
+    {
+      "type": "wokwi-clock-generator",
+      "id": "clock1",
+      "top": -520,
+      "left": -280,
+      "attrs": { "frequency": "100" }
+    },
+    { "type": "wokwi-gate-or-2", "id": "enc0_a", "top": -460, "left": -280, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "enc0_b", "top": -405, "left": -280, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "enc0_c", "top": -432, "left": -170, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "enc0_d", "top": -432, "left": -70, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "enc1_a", "top": -335, "left": -280, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "enc1_b", "top": -280, "left": -280, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "enc1_c", "top": -308, "left": -170, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "enc2_a", "top": -210, "left": -280, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "enc2_b", "top": -155, "left": -280, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "enc2_c", "top": -182, "left": -170, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "enc3_a", "top": -90, "left": -170, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "any_01", "top": -20, "left": -280, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "any_23", "top": 35, "left": -280, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "any_03", "top": 8, "left": -170, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "any_all", "top": 8, "left": -70, "attrs": {} },
+    {
+      "type": "board-tt-block-input",
+      "id": "ttin",
+      "top": -220,
+      "left": 40,
+      "attrs": { "verilogRole": "input" }
+    },
+    {
+      "type": "board-tt-block-output",
+      "id": "ttout",
+      "top": -180,
+      "left": 1660,
+      "attrs": { "verilogRole": "output" }
+    },
+    { "type": "wokwi-flip-flop-d", "id": "dff_k1", "top": -520, "left": 210, "attrs": {} },
+    { "type": "wokwi-flip-flop-d", "id": "dff_k2", "top": -520, "left": 380, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "key_fire", "top": -510, "left": 550, "attrs": {} },
+    { "type": "wokwi-gate-xor-2", "id": "ha0_s", "top": -380, "left": 210, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "ha0_c", "top": -325, "left": 210, "attrs": {} },
+    { "type": "wokwi-gate-xor-2", "id": "fa1_p", "top": -250, "left": 210, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "fa1_g", "top": -195, "left": 210, "attrs": {} },
+    { "type": "wokwi-gate-xor-2", "id": "fa1_s", "top": -250, "left": 360, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "fa1_cp", "top": -195, "left": 360, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "fa1_c", "top": -140, "left": 360, "attrs": {} },
+    { "type": "wokwi-gate-xor-2", "id": "fa2_p", "top": -60, "left": 210, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "fa2_g", "top": -5, "left": 210, "attrs": {} },
+    { "type": "wokwi-gate-xor-2", "id": "fa2_s", "top": -60, "left": 360, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "fa2_cp", "top": -5, "left": 360, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "fa2_c", "top": 50, "left": 360, "attrs": {} },
+    { "type": "wokwi-gate-xor-2", "id": "fa3_p", "top": 130, "left": 210, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "fa3_g", "top": 185, "left": 210, "attrs": {} },
+    { "type": "wokwi-gate-xor-2", "id": "fa3_s", "top": 130, "left": 360, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "fa3_cp", "top": 185, "left": 360, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "fa3_c", "top": 240, "left": 360, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "bcd_s21", "top": -380, "left": 530, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "bcd_s3_21", "top": -325, "left": 530, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "bcd_gt9", "top": -270, "left": 530, "attrs": {} },
+    { "type": "wokwi-gate-xor-2", "id": "bcd_r1", "top": -190, "left": 530, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "bcd_k1", "top": -135, "left": 530, "attrs": {} },
+    { "type": "wokwi-gate-xor-2", "id": "bcd_p2", "top": -55, "left": 530, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "bcd_g2", "top": 0, "left": 530, "attrs": {} },
+    { "type": "wokwi-gate-xor-2", "id": "bcd_r2", "top": -55, "left": 680, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "bcd_cp2", "top": 0, "left": 680, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "bcd_k2", "top": 55, "left": 680, "attrs": {} },
+    { "type": "wokwi-gate-xor-2", "id": "bcd_r3", "top": 135, "left": 680, "attrs": {} },
+    { "type": "wokwi-mux-2", "id": "mux_0", "top": -410, "left": 860, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "rst_0", "top": -410, "left": 1010, "attrs": {} },
+    { "type": "wokwi-flip-flop-d", "id": "dff0", "top": -410, "left": 1160, "attrs": {} },
+    { "type": "wokwi-mux-2", "id": "mux_1", "top": -320, "left": 860, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "rst_1", "top": -320, "left": 1010, "attrs": {} },
+    { "type": "wokwi-flip-flop-d", "id": "dff1", "top": -320, "left": 1160, "attrs": {} },
+    { "type": "wokwi-mux-2", "id": "mux_2", "top": -230, "left": 860, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "rst_2", "top": -230, "left": 1010, "attrs": {} },
+    { "type": "wokwi-flip-flop-d", "id": "dff2", "top": -230, "left": 1160, "attrs": {} },
+    { "type": "wokwi-mux-2", "id": "mux_3", "top": -140, "left": 860, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "rst_3", "top": -140, "left": 1010, "attrs": {} },
+    { "type": "wokwi-flip-flop-d", "id": "dff3", "top": -140, "left": 1160, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "tens_inc", "top": -10, "left": 860, "attrs": {} },
+    { "type": "wokwi-gate-nand-2", "id": "t_not9", "top": 45, "left": 860, "attrs": {} },
+    { "type": "wokwi-gate-xor-2", "id": "t_x1", "top": 105, "left": 860, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "t_nt1", "top": 105, "left": 1010, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "t_c10", "top": 165, "left": 860, "attrs": {} },
+    { "type": "wokwi-gate-xor-2", "id": "t_x2", "top": 220, "left": 860, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "t_nt2", "top": 220, "left": 1010, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "t_c210", "top": 280, "left": 860, "attrs": {} },
+    { "type": "wokwi-gate-xor-2", "id": "t_x3", "top": 335, "left": 860, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "t_nt3", "top": 335, "left": 1010, "attrs": {} },
+    { "type": "wokwi-mux-2", "id": "tmux_0", "top": -10, "left": 1160, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "trst_0", "top": -10, "left": 1310, "attrs": {} },
+    { "type": "wokwi-flip-flop-d", "id": "tff0", "top": -10, "left": 1460, "attrs": {} },
+    { "type": "wokwi-mux-2", "id": "tmux_1", "top": 80, "left": 1160, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "trst_1", "top": 80, "left": 1310, "attrs": {} },
+    { "type": "wokwi-flip-flop-d", "id": "tff1", "top": 80, "left": 1460, "attrs": {} },
+    { "type": "wokwi-mux-2", "id": "tmux_2", "top": 170, "left": 1160, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "trst_2", "top": 170, "left": 1310, "attrs": {} },
+    { "type": "wokwi-flip-flop-d", "id": "tff2", "top": 170, "left": 1460, "attrs": {} },
+    { "type": "wokwi-mux-2", "id": "tmux_3", "top": 260, "left": 1160, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "trst_3", "top": 260, "left": 1310, "attrs": {} },
+    { "type": "wokwi-flip-flop-d", "id": "tff3", "top": 260, "left": 1460, "attrs": {} },
+    {
+      "type": "wokwi-7segment",
+      "id": "sevseg_tens",
+      "top": -180,
+      "left": 2340,
+      "attrs": { "common": "cathode" }
+    },
+    {
+      "type": "wokwi-7segment",
+      "id": "sevseg_ones",
+      "top": -180,
+      "left": 2440,
+      "attrs": { "common": "cathode" }
+    },
+    { "type": "wokwi-gnd", "id": "disp_gnd", "top": -40, "left": 2395, "attrs": {} },
+    { "type": "wokwi-gate-not", "id": "dt_n0", "top": -540, "left": 1830, "attrs": {} },
+    { "type": "wokwi-gate-not", "id": "dt_n1", "top": -490, "left": 1830, "attrs": {} },
+    { "type": "wokwi-gate-not", "id": "dt_n2", "top": -440, "left": 1830, "attrs": {} },
+    { "type": "wokwi-gate-not", "id": "dt_n3", "top": -390, "left": 1830, "attrs": {} },
+    { "type": "wokwi-gate-xnor-2", "id": "dt_x20", "top": -540, "left": 1945, "attrs": {} },
+    { "type": "wokwi-gate-xnor-2", "id": "dt_x10", "top": -490, "left": 1945, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "dt_a1", "top": -540, "left": 2060, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "dt_a", "top": -540, "left": 2175, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "dt_b", "top": -490, "left": 2175, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "dt_c1", "top": -440, "left": 2060, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "dt_c", "top": -440, "left": 2175, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "dt_d1", "top": -390, "left": 1945, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "dt_d2", "top": -340, "left": 1945, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "dt_d3", "top": -290, "left": 1945, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "dt_d4", "top": -340, "left": 2060, "attrs": {} },
+    { "type": "wokwi-gate-nand-2", "id": "dt_d", "top": -340, "left": 2175, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "dt_e1", "top": -240, "left": 2060, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "dt_e", "top": -240, "left": 2175, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "dt_f1", "top": -190, "left": 1945, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "dt_f2", "top": -140, "left": 1945, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "dt_f3", "top": -140, "left": 2060, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "dt_f4", "top": -190, "left": 2060, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "dt_f", "top": -165, "left": 2175, "attrs": {} },
+    { "type": "wokwi-gate-xor-2", "id": "dt_g1", "top": -90, "left": 1945, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "dt_g2", "top": -40, "left": 1945, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "dt_g3", "top": -90, "left": 2060, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "dt_g", "top": -90, "left": 2175, "attrs": {} },
+    { "type": "wokwi-gate-not", "id": "do_n0", "top": 60, "left": 1830, "attrs": {} },
+    { "type": "wokwi-gate-not", "id": "do_n1", "top": 110, "left": 1830, "attrs": {} },
+    { "type": "wokwi-gate-not", "id": "do_n2", "top": 160, "left": 1830, "attrs": {} },
+    { "type": "wokwi-gate-not", "id": "do_n3", "top": 210, "left": 1830, "attrs": {} },
+    { "type": "wokwi-gate-xnor-2", "id": "do_x20", "top": 60, "left": 1945, "attrs": {} },
+    { "type": "wokwi-gate-xnor-2", "id": "do_x10", "top": 110, "left": 1945, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "do_a1", "top": 60, "left": 2060, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "do_a", "top": 60, "left": 2175, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "do_b", "top": 110, "left": 2175, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "do_c1", "top": 160, "left": 2060, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "do_c", "top": 160, "left": 2175, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "do_d1", "top": 210, "left": 1945, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "do_d2", "top": 260, "left": 1945, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "do_d3", "top": 310, "left": 1945, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "do_d4", "top": 260, "left": 2060, "attrs": {} },
+    { "type": "wokwi-gate-nand-2", "id": "do_d", "top": 260, "left": 2175, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "do_e1", "top": 360, "left": 2060, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "do_e", "top": 360, "left": 2175, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "do_f1", "top": 410, "left": 1945, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "do_f2", "top": 460, "left": 1945, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "do_f3", "top": 460, "left": 2060, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "do_f4", "top": 410, "left": 2060, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "do_f", "top": 435, "left": 2175, "attrs": {} },
+    { "type": "wokwi-gate-xor-2", "id": "do_g1", "top": 510, "left": 1945, "attrs": {} },
+    { "type": "wokwi-gate-and-2", "id": "do_g2", "top": 560, "left": 1945, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "do_g3", "top": 510, "left": 2060, "attrs": {} },
+    { "type": "wokwi-gate-or-2", "id": "do_g", "top": 510, "left": 2175, "attrs": {} },
+    {
+      "type": "wokwi-text",
+      "id": "txt_title",
+      "top": -610,
+      "left": -760,
+      "attrs": {
+        "text": "2-Digit (00-99) Keypad Adding Calculator — Click 0-9 or press keys 0-9, C to Clear"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "txt_out",
+      "top": -240,
+      "left": 2330,
+      "attrs": { "text": "Total (00-99)" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "lbl_kp",
+      "top": -510,
+      "left": -760,
+      "attrs": { "text": "KEYPAD (0-9 + CLR)" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "lbl_enc",
+      "top": -510,
+      "left": -400,
+      "attrs": { "text": "BCD ENCODER" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "lbl_edge",
+      "top": -570,
+      "left": 210,
+      "attrs": { "text": "1. KEY EDGE DETECTOR" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "lbl_add",
+      "top": -430,
+      "left": 210,
+      "attrs": { "text": "2. 4-BIT ADDER" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "lbl_bcd",
+      "top": -430,
+      "left": 530,
+      "attrs": { "text": "3. BCD +6 CORRECTION" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "lbl_ones",
+      "top": -460,
+      "left": 860,
+      "attrs": { "text": "4. ONES REGISTER (0-9)" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "lbl_tens",
+      "top": -60,
+      "left": 860,
+      "attrs": { "text": "5. TENS COUNTER (0-9)" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "lbl_dt",
+      "top": -590,
+      "left": 1830,
+      "attrs": { "text": "TENS 7-SEG DECODER" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "lbl_do",
+      "top": 10,
+      "left": 1830,
+      "attrs": { "text": "ONES 7-SEG DECODER" }
+    }
+  ],
+  "connections": [
+    [ "kp_vcc:VCC", "r_1:1", "red", [ "h0" ] ],
+    [ "r_1:2", "btn_1:1.l", "green", [ "h0" ] ],
+    [ "btn_1:2.l", "kp_gnd:GND", "black", [ "h0" ] ],
+    [ "btn_1:1.r", "inv_1:IN", "green", [ "h0" ] ],
+    [ "kp_vcc:VCC", "r_2:1", "red", [ "h0" ] ],
+    [ "r_2:2", "btn_2:1.l", "green", [ "h0" ] ],
+    [ "btn_2:2.l", "kp_gnd:GND", "black", [ "h0" ] ],
+    [ "btn_2:1.r", "inv_2:IN", "green", [ "h0" ] ],
+    [ "kp_vcc:VCC", "r_3:1", "red", [ "h0" ] ],
+    [ "r_3:2", "btn_3:1.l", "green", [ "h0" ] ],
+    [ "btn_3:2.l", "kp_gnd:GND", "black", [ "h0" ] ],
+    [ "btn_3:1.r", "inv_3:IN", "green", [ "h0" ] ],
+    [ "kp_vcc:VCC", "r_4:1", "red", [ "h0" ] ],
+    [ "r_4:2", "btn_4:1.l", "green", [ "h0" ] ],
+    [ "btn_4:2.l", "kp_gnd:GND", "black", [ "h0" ] ],
+    [ "btn_4:1.r", "inv_4:IN", "green", [ "h0" ] ],
+    [ "kp_vcc:VCC", "r_5:1", "red", [ "h0" ] ],
+    [ "r_5:2", "btn_5:1.l", "green", [ "h0" ] ],
+    [ "btn_5:2.l", "kp_gnd:GND", "black", [ "h0" ] ],
+    [ "btn_5:1.r", "inv_5:IN", "green", [ "h0" ] ],
+    [ "kp_vcc:VCC", "r_6:1", "red", [ "h0" ] ],
+    [ "r_6:2", "btn_6:1.l", "green", [ "h0" ] ],
+    [ "btn_6:2.l", "kp_gnd:GND", "black", [ "h0" ] ],
+    [ "btn_6:1.r", "inv_6:IN", "green", [ "h0" ] ],
+    [ "kp_vcc:VCC", "r_7:1", "red", [ "h0" ] ],
+    [ "r_7:2", "btn_7:1.l", "green", [ "h0" ] ],
+    [ "btn_7:2.l", "kp_gnd:GND", "black", [ "h0" ] ],
+    [ "btn_7:1.r", "inv_7:IN", "green", [ "h0" ] ],
+    [ "kp_vcc:VCC", "r_8:1", "red", [ "h0" ] ],
+    [ "r_8:2", "btn_8:1.l", "green", [ "h0" ] ],
+    [ "btn_8:2.l", "kp_gnd:GND", "black", [ "h0" ] ],
+    [ "btn_8:1.r", "inv_8:IN", "green", [ "h0" ] ],
+    [ "kp_vcc:VCC", "r_9:1", "red", [ "h0" ] ],
+    [ "r_9:2", "btn_9:1.l", "green", [ "h0" ] ],
+    [ "btn_9:2.l", "kp_gnd:GND", "black", [ "h0" ] ],
+    [ "btn_9:1.r", "inv_9:IN", "green", [ "h0" ] ],
+    [ "kp_vcc:VCC", "r_0:1", "red", [ "h0" ] ],
+    [ "r_0:2", "btn_0:1.l", "green", [ "h0" ] ],
+    [ "btn_0:2.l", "kp_gnd:GND", "black", [ "h0" ] ],
+    [ "btn_0:1.r", "inv_0:IN", "green", [ "h0" ] ],
+    [ "kp_vcc:VCC", "r_clr:1", "red", [ "h0" ] ],
+    [ "r_clr:2", "btn_clr:1.l", "orange", [ "h0" ] ],
+    [ "btn_clr:2.l", "kp_gnd:GND", "black", [ "h0" ] ],
+    [ "btn_clr:1.r", "ttin:EXTRST_N", "orange", [ "h0" ] ],
+    [ "clock1:CLK", "ttin:EXTCLK", "blue", [ "h0" ] ],
+    [ "inv_1:OUT", "enc0_a:A", "green", [ "h0" ] ],
+    [ "inv_3:OUT", "enc0_a:B", "green", [ "h0" ] ],
+    [ "inv_5:OUT", "enc0_b:A", "green", [ "h0" ] ],
+    [ "inv_7:OUT", "enc0_b:B", "green", [ "h0" ] ],
+    [ "enc0_a:OUT", "enc0_c:A", "green", [ "h0" ] ],
+    [ "enc0_b:OUT", "enc0_c:B", "green", [ "h0" ] ],
+    [ "enc0_c:OUT", "enc0_d:A", "green", [ "h0" ] ],
+    [ "inv_9:OUT", "enc0_d:B", "green", [ "h0" ] ],
+    [ "inv_2:OUT", "enc1_a:A", "green", [ "h0" ] ],
+    [ "inv_3:OUT", "enc1_a:B", "green", [ "h0" ] ],
+    [ "inv_6:OUT", "enc1_b:A", "green", [ "h0" ] ],
+    [ "inv_7:OUT", "enc1_b:B", "green", [ "h0" ] ],
+    [ "enc1_a:OUT", "enc1_c:A", "green", [ "h0" ] ],
+    [ "enc1_b:OUT", "enc1_c:B", "green", [ "h0" ] ],
+    [ "inv_4:OUT", "enc2_a:A", "green", [ "h0" ] ],
+    [ "inv_5:OUT", "enc2_a:B", "green", [ "h0" ] ],
+    [ "inv_6:OUT", "enc2_b:A", "green", [ "h0" ] ],
+    [ "inv_7:OUT", "enc2_b:B", "green", [ "h0" ] ],
+    [ "enc2_a:OUT", "enc2_c:A", "green", [ "h0" ] ],
+    [ "enc2_b:OUT", "enc2_c:B", "green", [ "h0" ] ],
+    [ "inv_8:OUT", "enc3_a:A", "green", [ "h0" ] ],
+    [ "inv_9:OUT", "enc3_a:B", "green", [ "h0" ] ],
+    [ "enc0_d:OUT", "any_01:A", "blue", [ "h0" ] ],
+    [ "enc1_c:OUT", "any_01:B", "blue", [ "h0" ] ],
+    [ "enc2_c:OUT", "any_23:A", "blue", [ "h0" ] ],
+    [ "enc3_a:OUT", "any_23:B", "blue", [ "h0" ] ],
+    [ "any_01:OUT", "any_03:A", "blue", [ "h0" ] ],
+    [ "any_23:OUT", "any_03:B", "blue", [ "h0" ] ],
+    [ "any_03:OUT", "any_all:A", "blue", [ "h0" ] ],
+    [ "inv_0:OUT", "any_all:B", "blue", [ "h0" ] ],
+    [ "enc0_d:OUT", "ttin:EXTIN0", "green", [ "h0" ] ],
+    [ "enc1_c:OUT", "ttin:EXTIN1", "green", [ "h0" ] ],
+    [ "enc2_c:OUT", "ttin:EXTIN2", "green", [ "h0" ] ],
+    [ "enc3_a:OUT", "ttin:EXTIN3", "green", [ "h0" ] ],
+    [ "any_all:OUT", "ttin:EXTIN4", "blue", [ "h0" ] ],
+    [ "ttin:IN4", "dff_k1:D", "blue", [ "h0" ] ],
+    [ "ttin:CLK", "dff_k1:CLK", "blue", [ "h0" ] ],
+    [ "dff_k1:Q", "dff_k2:D", "blue", [ "h0" ] ],
+    [ "ttin:CLK", "dff_k2:CLK", "blue", [ "h0" ] ],
+    [ "dff_k1:Q", "key_fire:A", "blue", [ "h0" ] ],
+    [ "dff_k2:NOTQ", "key_fire:B", "blue", [ "h0" ] ],
+    [ "dff0:Q", "ha0_s:A", "cyan", [ "h0" ] ],
+    [ "ttin:IN0", "ha0_s:B", "green", [ "h0" ] ],
+    [ "dff0:Q", "ha0_c:A", "cyan", [ "h0" ] ],
+    [ "ttin:IN0", "ha0_c:B", "green", [ "h0" ] ],
+    [ "dff1:Q", "fa1_p:A", "cyan", [ "h0" ] ],
+    [ "ttin:IN1", "fa1_p:B", "green", [ "h0" ] ],
+    [ "dff1:Q", "fa1_g:A", "cyan", [ "h0" ] ],
+    [ "ttin:IN1", "fa1_g:B", "green", [ "h0" ] ],
+    [ "fa1_p:OUT", "fa1_s:A", "green", [ "h0" ] ],
+    [ "ha0_c:OUT", "fa1_s:B", "gold", [ "h0" ] ],
+    [ "fa1_p:OUT", "fa1_cp:A", "green", [ "h0" ] ],
+    [ "ha0_c:OUT", "fa1_cp:B", "gold", [ "h0" ] ],
+    [ "fa1_g:OUT", "fa1_c:A", "gold", [ "h0" ] ],
+    [ "fa1_cp:OUT", "fa1_c:B", "gold", [ "h0" ] ],
+    [ "dff2:Q", "fa2_p:A", "cyan", [ "h0" ] ],
+    [ "ttin:IN2", "fa2_p:B", "green", [ "h0" ] ],
+    [ "dff2:Q", "fa2_g:A", "cyan", [ "h0" ] ],
+    [ "ttin:IN2", "fa2_g:B", "green", [ "h0" ] ],
+    [ "fa2_p:OUT", "fa2_s:A", "green", [ "h0" ] ],
+    [ "fa1_c:OUT", "fa2_s:B", "gold", [ "h0" ] ],
+    [ "fa2_p:OUT", "fa2_cp:A", "green", [ "h0" ] ],
+    [ "fa1_c:OUT", "fa2_cp:B", "gold", [ "h0" ] ],
+    [ "fa2_g:OUT", "fa2_c:A", "gold", [ "h0" ] ],
+    [ "fa2_cp:OUT", "fa2_c:B", "gold", [ "h0" ] ],
+    [ "dff3:Q", "fa3_p:A", "cyan", [ "h0" ] ],
+    [ "ttin:IN3", "fa3_p:B", "green", [ "h0" ] ],
+    [ "dff3:Q", "fa3_g:A", "cyan", [ "h0" ] ],
+    [ "ttin:IN3", "fa3_g:B", "green", [ "h0" ] ],
+    [ "fa3_p:OUT", "fa3_s:A", "green", [ "h0" ] ],
+    [ "fa2_c:OUT", "fa3_s:B", "gold", [ "h0" ] ],
+    [ "fa3_p:OUT", "fa3_cp:A", "green", [ "h0" ] ],
+    [ "fa2_c:OUT", "fa3_cp:B", "gold", [ "h0" ] ],
+    [ "fa3_g:OUT", "fa3_c:A", "gold", [ "h0" ] ],
+    [ "fa3_cp:OUT", "fa3_c:B", "gold", [ "h0" ] ],
+    [ "fa2_s:OUT", "bcd_s21:A", "violet", [ "h0" ] ],
+    [ "fa1_s:OUT", "bcd_s21:B", "violet", [ "h0" ] ],
+    [ "fa3_s:OUT", "bcd_s3_21:A", "violet", [ "h0" ] ],
+    [ "bcd_s21:OUT", "bcd_s3_21:B", "violet", [ "h0" ] ],
+    [ "fa3_c:OUT", "bcd_gt9:A", "gold", [ "h0" ] ],
+    [ "bcd_s3_21:OUT", "bcd_gt9:B", "violet", [ "h0" ] ],
+    [ "fa1_s:OUT", "bcd_r1:A", "violet", [ "h0" ] ],
+    [ "bcd_gt9:OUT", "bcd_r1:B", "gold", [ "h0" ] ],
+    [ "fa1_s:OUT", "bcd_k1:A", "violet", [ "h0" ] ],
+    [ "bcd_gt9:OUT", "bcd_k1:B", "gold", [ "h0" ] ],
+    [ "fa2_s:OUT", "bcd_p2:A", "violet", [ "h0" ] ],
+    [ "bcd_gt9:OUT", "bcd_p2:B", "gold", [ "h0" ] ],
+    [ "fa2_s:OUT", "bcd_g2:A", "violet", [ "h0" ] ],
+    [ "bcd_gt9:OUT", "bcd_g2:B", "gold", [ "h0" ] ],
+    [ "bcd_p2:OUT", "bcd_r2:A", "violet", [ "h0" ] ],
+    [ "bcd_k1:OUT", "bcd_r2:B", "gold", [ "h0" ] ],
+    [ "bcd_p2:OUT", "bcd_cp2:A", "violet", [ "h0" ] ],
+    [ "bcd_k1:OUT", "bcd_cp2:B", "gold", [ "h0" ] ],
+    [ "bcd_g2:OUT", "bcd_k2:A", "gold", [ "h0" ] ],
+    [ "bcd_cp2:OUT", "bcd_k2:B", "gold", [ "h0" ] ],
+    [ "fa3_s:OUT", "bcd_r3:A", "violet", [ "h0" ] ],
+    [ "bcd_k2:OUT", "bcd_r3:B", "gold", [ "h0" ] ],
+    [ "dff0:Q", "mux_0:A", "cyan", [ "h0" ] ],
+    [ "ha0_s:OUT", "mux_0:B", "violet", [ "h0" ] ],
+    [ "key_fire:OUT", "mux_0:SEL", "blue", [ "h0" ] ],
+    [ "mux_0:OUT", "rst_0:A", "cyan", [ "h0" ] ],
+    [ "ttin:RST_N", "rst_0:B", "orange", [ "h0" ] ],
+    [ "rst_0:OUT", "dff0:D", "cyan", [ "h0" ] ],
+    [ "ttin:CLK", "dff0:CLK", "blue", [ "h0" ] ],
+    [ "dff0:Q", "ttout:OUT0", "violet", [ "h0" ] ],
+    [ "dff1:Q", "mux_1:A", "cyan", [ "h0" ] ],
+    [ "bcd_r1:OUT", "mux_1:B", "violet", [ "h0" ] ],
+    [ "key_fire:OUT", "mux_1:SEL", "blue", [ "h0" ] ],
+    [ "mux_1:OUT", "rst_1:A", "cyan", [ "h0" ] ],
+    [ "ttin:RST_N", "rst_1:B", "orange", [ "h0" ] ],
+    [ "rst_1:OUT", "dff1:D", "cyan", [ "h0" ] ],
+    [ "ttin:CLK", "dff1:CLK", "blue", [ "h0" ] ],
+    [ "dff1:Q", "ttout:OUT1", "violet", [ "h0" ] ],
+    [ "dff2:Q", "mux_2:A", "cyan", [ "h0" ] ],
+    [ "bcd_r2:OUT", "mux_2:B", "violet", [ "h0" ] ],
+    [ "key_fire:OUT", "mux_2:SEL", "blue", [ "h0" ] ],
+    [ "mux_2:OUT", "rst_2:A", "cyan", [ "h0" ] ],
+    [ "ttin:RST_N", "rst_2:B", "orange", [ "h0" ] ],
+    [ "rst_2:OUT", "dff2:D", "cyan", [ "h0" ] ],
+    [ "ttin:CLK", "dff2:CLK", "blue", [ "h0" ] ],
+    [ "dff2:Q", "ttout:OUT2", "violet", [ "h0" ] ],
+    [ "dff3:Q", "mux_3:A", "cyan", [ "h0" ] ],
+    [ "bcd_r3:OUT", "mux_3:B", "violet", [ "h0" ] ],
+    [ "key_fire:OUT", "mux_3:SEL", "blue", [ "h0" ] ],
+    [ "mux_3:OUT", "rst_3:A", "cyan", [ "h0" ] ],
+    [ "ttin:RST_N", "rst_3:B", "orange", [ "h0" ] ],
+    [ "rst_3:OUT", "dff3:D", "cyan", [ "h0" ] ],
+    [ "ttin:CLK", "dff3:CLK", "blue", [ "h0" ] ],
+    [ "dff3:Q", "ttout:OUT3", "violet", [ "h0" ] ],
+    [ "key_fire:OUT", "tens_inc:A", "blue", [ "h0" ] ],
+    [ "bcd_gt9:OUT", "tens_inc:B", "gold", [ "h0" ] ],
+    [ "tff3:Q", "t_not9:A", "cyan", [ "h0" ] ],
+    [ "tff0:Q", "t_not9:B", "cyan", [ "h0" ] ],
+    [ "tff1:Q", "t_x1:A", "cyan", [ "h0" ] ],
+    [ "tff0:Q", "t_x1:B", "cyan", [ "h0" ] ],
+    [ "t_x1:OUT", "t_nt1:A", "violet", [ "h0" ] ],
+    [ "t_not9:OUT", "t_nt1:B", "gold", [ "h0" ] ],
+    [ "tff1:Q", "t_c10:A", "cyan", [ "h0" ] ],
+    [ "tff0:Q", "t_c10:B", "cyan", [ "h0" ] ],
+    [ "tff2:Q", "t_x2:A", "cyan", [ "h0" ] ],
+    [ "t_c10:OUT", "t_x2:B", "gold", [ "h0" ] ],
+    [ "t_x2:OUT", "t_nt2:A", "violet", [ "h0" ] ],
+    [ "t_not9:OUT", "t_nt2:B", "gold", [ "h0" ] ],
+    [ "tff2:Q", "t_c210:A", "cyan", [ "h0" ] ],
+    [ "t_c10:OUT", "t_c210:B", "gold", [ "h0" ] ],
+    [ "tff3:Q", "t_x3:A", "cyan", [ "h0" ] ],
+    [ "t_c210:OUT", "t_x3:B", "gold", [ "h0" ] ],
+    [ "t_x3:OUT", "t_nt3:A", "violet", [ "h0" ] ],
+    [ "t_not9:OUT", "t_nt3:B", "gold", [ "h0" ] ],
+    [ "tff0:Q", "tmux_0:A", "cyan", [ "h0" ] ],
+    [ "tff0:NOTQ", "tmux_0:B", "violet", [ "h0" ] ],
+    [ "tens_inc:OUT", "tmux_0:SEL", "blue", [ "h0" ] ],
+    [ "tmux_0:OUT", "trst_0:A", "cyan", [ "h0" ] ],
+    [ "ttin:RST_N", "trst_0:B", "orange", [ "h0" ] ],
+    [ "trst_0:OUT", "tff0:D", "cyan", [ "h0" ] ],
+    [ "ttin:CLK", "tff0:CLK", "blue", [ "h0" ] ],
+    [ "tff0:Q", "ttout:OUT4", "violet", [ "h0" ] ],
+    [ "tff1:Q", "tmux_1:A", "cyan", [ "h0" ] ],
+    [ "t_nt1:OUT", "tmux_1:B", "violet", [ "h0" ] ],
+    [ "tens_inc:OUT", "tmux_1:SEL", "blue", [ "h0" ] ],
+    [ "tmux_1:OUT", "trst_1:A", "cyan", [ "h0" ] ],
+    [ "ttin:RST_N", "trst_1:B", "orange", [ "h0" ] ],
+    [ "trst_1:OUT", "tff1:D", "cyan", [ "h0" ] ],
+    [ "ttin:CLK", "tff1:CLK", "blue", [ "h0" ] ],
+    [ "tff1:Q", "ttout:OUT5", "violet", [ "h0" ] ],
+    [ "tff2:Q", "tmux_2:A", "cyan", [ "h0" ] ],
+    [ "t_nt2:OUT", "tmux_2:B", "violet", [ "h0" ] ],
+    [ "tens_inc:OUT", "tmux_2:SEL", "blue", [ "h0" ] ],
+    [ "tmux_2:OUT", "trst_2:A", "cyan", [ "h0" ] ],
+    [ "ttin:RST_N", "trst_2:B", "orange", [ "h0" ] ],
+    [ "trst_2:OUT", "tff2:D", "cyan", [ "h0" ] ],
+    [ "ttin:CLK", "tff2:CLK", "blue", [ "h0" ] ],
+    [ "tff2:Q", "ttout:OUT6", "violet", [ "h0" ] ],
+    [ "tff3:Q", "tmux_3:A", "cyan", [ "h0" ] ],
+    [ "t_nt3:OUT", "tmux_3:B", "violet", [ "h0" ] ],
+    [ "tens_inc:OUT", "tmux_3:SEL", "blue", [ "h0" ] ],
+    [ "tmux_3:OUT", "trst_3:A", "cyan", [ "h0" ] ],
+    [ "ttin:RST_N", "trst_3:B", "orange", [ "h0" ] ],
+    [ "trst_3:OUT", "tff3:D", "cyan", [ "h0" ] ],
+    [ "ttin:CLK", "tff3:CLK", "blue", [ "h0" ] ],
+    [ "tff3:Q", "ttout:OUT7", "violet", [ "h0" ] ],
+    [ "disp_gnd:GND", "sevseg_tens:COM.1", "black", [ "h0" ] ],
+    [ "disp_gnd:GND", "sevseg_ones:COM.1", "black", [ "h0" ] ],
+    [ "ttout:EXTOUT4", "dt_n0:IN", "cyan", [ "h0" ] ],
+    [ "ttout:EXTOUT5", "dt_n1:IN", "cyan", [ "h0" ] ],
+    [ "ttout:EXTOUT6", "dt_n2:IN", "cyan", [ "h0" ] ],
+    [ "ttout:EXTOUT7", "dt_n3:IN", "cyan", [ "h0" ] ],
+    [ "ttout:EXTOUT6", "dt_x20:A", "cyan", [ "h0" ] ],
+    [ "ttout:EXTOUT4", "dt_x20:B", "cyan", [ "h0" ] ],
+    [ "ttout:EXTOUT5", "dt_x10:A", "cyan", [ "h0" ] ],
+    [ "ttout:EXTOUT4", "dt_x10:B", "cyan", [ "h0" ] ],
+    [ "ttout:EXTOUT7", "dt_a1:A", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT5", "dt_a1:B", "green", [ "h0" ] ],
+    [ "dt_a1:OUT", "dt_a:A", "green", [ "h0" ] ],
+    [ "dt_x20:OUT", "dt_a:B", "green", [ "h0" ] ],
+    [ "dt_a:OUT", "sevseg_tens:A", "green", [ "h0" ] ],
+    [ "dt_n2:OUT", "dt_b:A", "green", [ "h0" ] ],
+    [ "dt_x10:OUT", "dt_b:B", "green", [ "h0" ] ],
+    [ "dt_b:OUT", "sevseg_tens:B", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT6", "dt_c1:A", "green", [ "h0" ] ],
+    [ "dt_n1:OUT", "dt_c1:B", "green", [ "h0" ] ],
+    [ "dt_c1:OUT", "dt_c:A", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT4", "dt_c:B", "green", [ "h0" ] ],
+    [ "dt_c:OUT", "sevseg_tens:C", "green", [ "h0" ] ],
+    [ "dt_n2:OUT", "dt_d1:A", "green", [ "h0" ] ],
+    [ "dt_n1:OUT", "dt_d1:B", "green", [ "h0" ] ],
+    [ "dt_d1:OUT", "dt_d2:A", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT4", "dt_d2:B", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT6", "dt_d3:A", "green", [ "h0" ] ],
+    [ "dt_x10:OUT", "dt_d3:B", "green", [ "h0" ] ],
+    [ "dt_d2:OUT", "dt_d4:A", "green", [ "h0" ] ],
+    [ "dt_d3:OUT", "dt_d4:B", "green", [ "h0" ] ],
+    [ "dt_n3:OUT", "dt_d:A", "green", [ "h0" ] ],
+    [ "dt_d4:OUT", "dt_d:B", "green", [ "h0" ] ],
+    [ "dt_d:OUT", "sevseg_tens:D", "green", [ "h0" ] ],
+    [ "dt_n2:OUT", "dt_e1:A", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT5", "dt_e1:B", "green", [ "h0" ] ],
+    [ "dt_n0:OUT", "dt_e:A", "green", [ "h0" ] ],
+    [ "dt_e1:OUT", "dt_e:B", "green", [ "h0" ] ],
+    [ "dt_e:OUT", "sevseg_tens:E", "green", [ "h0" ] ],
+    [ "dt_n1:OUT", "dt_f1:A", "green", [ "h0" ] ],
+    [ "dt_n0:OUT", "dt_f1:B", "green", [ "h0" ] ],
+    [ "dt_n1:OUT", "dt_f2:A", "green", [ "h0" ] ],
+    [ "dt_n0:OUT", "dt_f2:B", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT6", "dt_f3:A", "green", [ "h0" ] ],
+    [ "dt_f2:OUT", "dt_f3:B", "green", [ "h0" ] ],
+    [ "dt_f1:OUT", "dt_f4:A", "green", [ "h0" ] ],
+    [ "dt_f3:OUT", "dt_f4:B", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT7", "dt_f:A", "green", [ "h0" ] ],
+    [ "dt_f4:OUT", "dt_f:B", "green", [ "h0" ] ],
+    [ "dt_f:OUT", "sevseg_tens:F", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT6", "dt_g1:A", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT5", "dt_g1:B", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT5", "dt_g2:A", "green", [ "h0" ] ],
+    [ "dt_n0:OUT", "dt_g2:B", "green", [ "h0" ] ],
+    [ "dt_g1:OUT", "dt_g3:A", "green", [ "h0" ] ],
+    [ "dt_g2:OUT", "dt_g3:B", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT7", "dt_g:A", "green", [ "h0" ] ],
+    [ "dt_g3:OUT", "dt_g:B", "green", [ "h0" ] ],
+    [ "dt_g:OUT", "sevseg_tens:G", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT0", "do_n0:IN", "cyan", [ "h0" ] ],
+    [ "ttout:EXTOUT1", "do_n1:IN", "cyan", [ "h0" ] ],
+    [ "ttout:EXTOUT2", "do_n2:IN", "cyan", [ "h0" ] ],
+    [ "ttout:EXTOUT3", "do_n3:IN", "cyan", [ "h0" ] ],
+    [ "ttout:EXTOUT2", "do_x20:A", "cyan", [ "h0" ] ],
+    [ "ttout:EXTOUT0", "do_x20:B", "cyan", [ "h0" ] ],
+    [ "ttout:EXTOUT1", "do_x10:A", "cyan", [ "h0" ] ],
+    [ "ttout:EXTOUT0", "do_x10:B", "cyan", [ "h0" ] ],
+    [ "ttout:EXTOUT3", "do_a1:A", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT1", "do_a1:B", "green", [ "h0" ] ],
+    [ "do_a1:OUT", "do_a:A", "green", [ "h0" ] ],
+    [ "do_x20:OUT", "do_a:B", "green", [ "h0" ] ],
+    [ "do_a:OUT", "sevseg_ones:A", "green", [ "h0" ] ],
+    [ "do_n2:OUT", "do_b:A", "green", [ "h0" ] ],
+    [ "do_x10:OUT", "do_b:B", "green", [ "h0" ] ],
+    [ "do_b:OUT", "sevseg_ones:B", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT2", "do_c1:A", "green", [ "h0" ] ],
+    [ "do_n1:OUT", "do_c1:B", "green", [ "h0" ] ],
+    [ "do_c1:OUT", "do_c:A", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT0", "do_c:B", "green", [ "h0" ] ],
+    [ "do_c:OUT", "sevseg_ones:C", "green", [ "h0" ] ],
+    [ "do_n2:OUT", "do_d1:A", "green", [ "h0" ] ],
+    [ "do_n1:OUT", "do_d1:B", "green", [ "h0" ] ],
+    [ "do_d1:OUT", "do_d2:A", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT0", "do_d2:B", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT2", "do_d3:A", "green", [ "h0" ] ],
+    [ "do_x10:OUT", "do_d3:B", "green", [ "h0" ] ],
+    [ "do_d2:OUT", "do_d4:A", "green", [ "h0" ] ],
+    [ "do_d3:OUT", "do_d4:B", "green", [ "h0" ] ],
+    [ "do_n3:OUT", "do_d:A", "green", [ "h0" ] ],
+    [ "do_d4:OUT", "do_d:B", "green", [ "h0" ] ],
+    [ "do_d:OUT", "sevseg_ones:D", "green", [ "h0" ] ],
+    [ "do_n2:OUT", "do_e1:A", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT1", "do_e1:B", "green", [ "h0" ] ],
+    [ "do_n0:OUT", "do_e:A", "green", [ "h0" ] ],
+    [ "do_e1:OUT", "do_e:B", "green", [ "h0" ] ],
+    [ "do_e:OUT", "sevseg_ones:E", "green", [ "h0" ] ],
+    [ "do_n1:OUT", "do_f1:A", "green", [ "h0" ] ],
+    [ "do_n0:OUT", "do_f1:B", "green", [ "h0" ] ],
+    [ "do_n1:OUT", "do_f2:A", "green", [ "h0" ] ],
+    [ "do_n0:OUT", "do_f2:B", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT2", "do_f3:A", "green", [ "h0" ] ],
+    [ "do_f2:OUT", "do_f3:B", "green", [ "h0" ] ],
+    [ "do_f1:OUT", "do_f4:A", "green", [ "h0" ] ],
+    [ "do_f3:OUT", "do_f4:B", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT3", "do_f:A", "green", [ "h0" ] ],
+    [ "do_f4:OUT", "do_f:B", "green", [ "h0" ] ],
+    [ "do_f:OUT", "sevseg_ones:F", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT2", "do_g1:A", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT1", "do_g1:B", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT1", "do_g2:A", "green", [ "h0" ] ],
+    [ "do_n0:OUT", "do_g2:B", "green", [ "h0" ] ],
+    [ "do_g1:OUT", "do_g3:A", "green", [ "h0" ] ],
+    [ "do_g2:OUT", "do_g3:B", "green", [ "h0" ] ],
+    [ "ttout:EXTOUT3", "do_g:A", "green", [ "h0" ] ],
+    [ "do_g3:OUT", "do_g:B", "green", [ "h0" ] ],
+    [ "do_g:OUT", "sevseg_ones:G", "green", [ "h0" ] ]
+  ],
+  "dependencies": {}
 }</code></pre>
+  </div>
 
 </main>
 
@@ -511,6 +1283,16 @@
       const n = parseInt(likeCount.innerText, 10) || 0
       likeCount.innerText = n + 1
       likeBtn.style.color = 'var(--c-red-2)'
+    })
+  }
+
+  const copyBtn = document.getElementById('copy-diagram-btn')
+  const diagramCode = document.getElementById('diagram-json')
+  if (copyBtn && diagramCode) {
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard?.writeText(diagramCode.textContent)
+      copyBtn.innerText = 'Copied!'
+      setTimeout(() => { copyBtn.innerText = 'Copy code' }, 1400)
     })
   }
 </script>
