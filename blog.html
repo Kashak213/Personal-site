@@ -51,6 +51,26 @@
     .blog-posts a:hover {
       text-decoration: underline;
     }
+
+    .blog-post-row {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .blog-status {
+      font-family: var(--font-family-mono), monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 8px;
+      border-radius: var(--radius);
+      background: var(--c-green-soft);
+      color: var(--c-green-1);
+      vertical-align: middle;
+    }
   </style>
 </head>
 <body>
@@ -122,7 +142,10 @@
   <h2>2026</h2>
   <div class="blog-posts">
     <a href="post-template.html">Designing an Edge AI Pipeline for UAV Wildfire Detection</a>
-    <a href="post-template.html">Silicon Layout &amp; Logic Synthesis for GlobalFoundries NextGen Engineers</a>
+    <div class="blog-post-row">
+      <a href="gf-chip-design.html">Two-Digit BCD Adding Calculator — GlobalFoundries NextGen Engineers</a>
+      <span class="blog-status">completed</span>
+    </div>
     <a href="post-template.html">Swerve Drivetrain Kinematics &amp; Odometry in FIRST Robotics</a>
     <a href="post-template.html">Self-Hosting Local LLM Inference and Home Automation</a>
   </div>

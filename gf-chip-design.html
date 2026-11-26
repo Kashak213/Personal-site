@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f1ea">
+  <title>Two-Digit BCD Adding Calculator (Tiny Tapeout) – Michael</title>
+  <link rel="stylesheet" href="assets/css/global.css">
+
+  <script>
+    function applyTheme() {
+      let savedTheme = null
+      try {
+        savedTheme = localStorage.getItem('dark')
+      } catch (e) {}
+      const meta = document.querySelector('meta[name=theme-color]')
+      if (savedTheme !== null) {
+        if (savedTheme === 'true') {
+          document.documentElement.classList.add('dark')
+          meta.setAttribute('content', '#0c0c0e')
+        } else {
+          document.documentElement.classList.remove('dark')
+          meta.setAttribute('content', '#f4f1ea')
+        }
+      } else {
+        // dark by default; visitors can flip it with the toggle
+        {
+          document.documentElement.classList.add('dark')
+          meta.setAttribute('content', '#0c0c0e')
+        }
+      }
+    }
+    applyTheme()
+  </script>
+
+  <style>
+    .post-header-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 14px;
+      margin: -10px 0 28px;
+      font-family: var(--font-family-mono), monospace;
+      font-size: 12.5px;
+      color: var(--c-text-3);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 9px;
+      border-radius: var(--radius);
+      background: var(--c-green-soft);
+      color: var(--c-green-1);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+
+    .status-badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 24px 0 32px;
+    }
+
+    .spec-item {
+      padding: 12px 14px;
+      background: var(--c-bg-alt);
+      border: 1px solid var(--c-divider);
+      border-radius: var(--radius);
+    }
+
+    .spec-label {
+      display: block;
+      font-family: var(--font-family-mono), monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-text-3);
+      margin-bottom: 5px;
+    }
+
+    .spec-value {
+      font-family: var(--font-family-mono), monospace;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--c-text-1);
+    }
+
+    figure img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--c-divider);
+      box-shadow: var(--shadow-2);
+      background: #1e1e1e;
+    }
+
+    .stage-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 20px 0 28px;
+    }
+
+    .stage-card {
+      padding: 18px 20px;
+      background: var(--c-bg-alt);
+      border: 1px solid var(--c-divider);
+      border-left: 3px solid var(--c-brand-1);
+      border-radius: var(--radius);
+    }
+
+    .stage-card h3 {
+      margin: 0 0 8px;
+      font-size: 16.5px;
+      line-height: 1.3;
+      color: var(--c-text-1);
+    }
+
+    .stage-card .stage-tag {
+      font-family: var(--font-family-mono), monospace;
+      font-size: 11.5px;
+      color: var(--c-brand-1);
+      margin-right: 8px;
+      font-weight: 700;
+    }
+
+    .stage-card p {
+      margin: 0;
+      font-size: 15.5px;
+      line-height: 27px;
+      color: var(--c-text-2);
+    }
+
+    .post-meta-bar {
+      margin-inline: auto;
+      margin-top: 40px;
+      margin-bottom: 40px;
+      display: flex;
+      gap: 16px;
+      justify-content: space-between;
+      align-items: center;
+      padding-inline: var(--main-padding);
+      max-width: var(--max-width);
+      color: var(--c-text-2);
+      font-size: 15px;
+    }
+
+    .post-meta-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .post-meta-actions > div {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 16px;
+    }
+
+    .post-meta-actions button {
+      all: unset;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .post-meta-actions button:hover {
+      color: var(--c-brand-1);
+    }
+
+    .post-meta-actions button:active {
+      transform: translateY(1px);
+    }
+
+    /* Syntax highlight tokens */
+    .tok-kw { color: var(--c-red-2); font-weight: 600; }
+    .tok-ty { color: var(--c-indigo-2); }
+    .tok-fn { color: var(--c-green-2); }
+    .tok-cm { color: var(--c-text-3); font-style: italic; }
+    .tok-nu { color: var(--c-yellow-2); }
+    .tok-str { color: var(--c-green-2); }
+    .tok-key { color: var(--c-indigo-1); }
+
+    @media (max-width: 700px) {
+      .spec-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="nav-container">
+  <nav>
+    <div class="nav-title">
+      <a href="index.html">Michael</a>
+    </div>
+
+    <div class="nav-menu nav-mobile">
+      <div class="nav-element">
+        <button class="dark-toggle" role="switch" aria-label="Toggle dark mode">
+          <span class="dark-toggle__check">
+            <span class="dark-toggle__icon">
+              <svg class="sun" aria-hidden="true" focusable="false"><use xlink:href="#sun"></use></svg>
+              <svg class="moon" aria-hidden="true" focusable="false"><use xlink:href="#moon"></use></svg>
+            </span>
+          </span>
+        </button>
+      </div>
+      <div class="nav-element">
+        <a href="" class="hamburger-toggle" aria-label="Toggle menu">
+          <svg aria-hidden="true" focusable="false">
+            <use xlink:href="#menu"></use>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="nav-popup">
+      <a href="projects.html">projects</a>
+      <a href="blog.html">blog</a>
+      <a href="resume.html">resume</a>
+      <a href="https://github.com/Kashak213">github</a>
+    </div>
+
+    <div class="nav-menu nav-desktop">
+      <div class="nav-element">
+        <a href="projects.html">projects</a>
+        <a href="blog.html" style="color: var(--c-brand-1); font-weight: 600;">blog</a>
+        <a href="resume.html">resume</a>
+        <div class="my-time" data-timezone="America/New_York" title="Time in my timezone (EST)" tabindex="0">
+          19:33
+        </div>
+      </div>
+      <div class="nav-element">
+        <button class="dark-toggle" role="switch" aria-label="Toggle dark mode">
+          <span class="dark-toggle__check">
+            <span class="dark-toggle__icon">
+              <svg class="sun" aria-hidden="true" focusable="false"><use xlink:href="#sun"></use></svg>
+              <svg class="moon" aria-hidden="true" focusable="false"><use xlink:href="#moon"></use></svg>
+            </span>
+          </span>
+        </button>
+      </div>
+      <div class="nav-element">
+        <a href="https://github.com/Kashak213" aria-label="GitHub" title="GitHub profile">
+          <svg aria-hidden="true" focusable="false">
+            <use xlink:href="#github"></use>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<main>
+  <h1>Two-Digit BCD Adding Calculator (Tiny Tapeout)</h1>
+
+  <div class="post-header-meta">
+    <span class="status-badge">Completed</span>
+    <span>GlobalFoundries NextGen Engineers · Chip Design Shadowing</span>
+    <span>·</span>
+    <span>November 2026</span>
+  </div>
+
+  <p>
+    As part of my GlobalFoundries Next Generation Engineers chip design shadowing, I completed a custom two-digit decimal adding calculator designed entirely at the gate level for fabrication through Tiny Tapeout.
+  </p>
+
+  <p>
+    Inside the chip, a 4-bit Binary Coded Decimal (BCD) input from <code>0</code> to <code>9</code> is paired with a key strobe, a <code>100 Hz</code> system clock, and an active-low clear signal. To prevent a held button from adding repeatedly, the key strobe passes through a two-stage D flip-flop rising-edge detector that generates a single clock-cycle enable pulse per press. On each pulse, a 4-bit ripple-carry adder sums the incoming digit with the stored ones register, and a combinational BCD correction stage checks if the result is 10 or greater; when it overflows, the logic adds 6 to wrap the ones digit back into base 10 and sends a carry pulse to a synchronous mod-10 counter for the tens digit. Both digits are held in D flip-flop registers using 2-to-1 multiplexers for hold/update control and synchronous reset gating, then sent out across the chip's 8 output pins as two 4-bit BCD values (<code>00</code> through <code>99</code>) that drive a pair of 7-segment displays through external combinational decoders.
+  </p>
+
+  <div class="spec-grid">
+    <div class="spec-item">
+      <span class="spec-label">Target</span>
+      <span class="spec-value">Tiny Tapeout</span>
+    </div>
+    <div class="spec-item">
+      <span class="spec-label">System Clock</span>
+      <span class="spec-value">100 Hz</span>
+    </div>
+    <div class="spec-item">
+      <span class="spec-label">Range</span>
+      <span class="spec-value">00 – 99 (BCD)</span>
+    </div>
+    <div class="spec-item">
+      <span class="spec-label">Output Pins</span>
+      <span class="spec-value">8-bit (2 × 4-bit)</span>
+    </div>
+  </div>
+
+  <figure>
+    <img src="assets/images/gf-chip/full-workspace.png" alt="Full Wokwi workspace showing diagram.json on the left and the complete two-digit BCD adding calculator schematic on the right">
+    <figcaption>Full Wokwi simulation workspace: keypad &amp; BCD encoder on the left, Tiny Tapeout core logic in the center, and external 7-segment decoders driving the dual display on the right.</figcaption>
+  </figure>
+
+  <h2>Input Stage: Keypad &amp; BCD Encoder</h2>
+
+  <p>
+    Outside the chip boundary, the user interacts with a 0–9 numeric keypad plus a dedicated red <code>CLR</code> button. Each pushbutton is paired with a <code>1 kΩ</code> pull resistor and routed through a logic inverter (<code>wokwi-gate-not</code>) so every key press produces a clean, active-high signal for the combinational BCD encoder.
+  </p>
+
+  <p>
+    A tree of OR gates encodes the active key into a 4-bit BCD nibble (<code>0000</code> through <code>1001</code>) while simultaneously asserting a unified key strobe line whenever any digit key is pressed. The active-low clear line bypasses the encoder and feeds directly into the chip's synchronous reset gating.
+  </p>
+
+  <figure>
+    <img src="assets/images/gf-chip/keypad-input.png" alt="Zoomed-in view of the 0-9 keypad and active-low CLR pushbutton wired with 1k resistors">
+    <figcaption>Zoomed-in view of the external keypad (0–9 + CLR) with 1 kΩ resistors and power/ground rails feeding the BCD encoder.</figcaption>
+  </figure>
+
+  <h2>Inside the Chip: Gate-Level Architecture</h2>
+
+  <p>
+    Everything between the Tiny Tapeout input and output headers is built strictly from discrete logic gates, 2-to-1 multiplexers, and D flip-flops. The datapath is organized into five clean stages so signal timing and decimal carry propagation stay predictable at <code>100 Hz</code>.
+  </p>
+
+  <figure>
+    <img src="assets/images/gf-chip/core-stages.png" alt="Zoomed-in view of the five internal chip stages: Key Edge Detector, 4-Bit Adder, BCD +6 Correction, Ones Register, and Tens Counter">
+    <figcaption>Core Tiny Tapeout silicon logic broken into five stages: (1) Key Edge Detector, (2) 4-Bit Adder, (3) BCD +6 Correction, (4) Ones Register, and (5) Tens Counter.</figcaption>
+  </figure>
+
+  <div class="stage-list">
+    <div class="stage-card">
+      <h3><span class="stage-tag">STAGE 01</span>Key Edge Detector</h3>
+      <p>
+        A button held down by a human stays high for dozens of clock cycles at <code>100 Hz</code>. To make sure each press adds only once, the incoming key strobe passes through two cascaded D flip-flops. Comparing the first stage output (<code>Q1</code>) with the inverted second stage output (<code>~Q2</code>) through an AND gate emits a clean, single-clock-cycle rising-edge enable pulse.
+      </p>
+    </div>
+
+    <div class="stage-card">
+      <h3><span class="stage-tag">STAGE 02</span>4-Bit Ripple-Carry Adder</h3>
+      <p>
+        Combines the 4-bit incoming BCD digit with the current 4-bit value fed back from the ones register. Built from cascaded half/full-adder gate slices (XOR, AND, OR), it produces a raw 4-bit binary sum (<code>S3..S0</code>) along with a carry-out bit (<code>Cout</code>) whenever the sum exceeds 15.
+      </p>
+    </div>
+
+    <div class="stage-card">
+      <h3><span class="stage-tag">STAGE 03</span>Combinational BCD +6 Correction</h3>
+      <p>
+        Because binary addition wraps at 16 instead of 10, a combinational detector checks whether the raw sum is 10 or greater (<code>Cout || (S3 &amp;&amp; S2) || (S3 &amp;&amp; S1)</code>). When decimal overflow is detected, a second adder stage adds <code>6</code> (<code>0110₂</code>) to wrap the ones digit cleanly back into <code>0–9</code> and drives a carry pulse down to the tens counter.
+      </p>
+    </div>
+
+    <div class="stage-card">
+      <h3><span class="stage-tag">STAGE 04</span>Ones Register (0–9)</h3>
+      <p>
+        Stores the 4-bit ones digit across four D flip-flops. Each bit sits behind a 2-to-1 multiplexer controlled by the single-cycle enable pulse from Stage 1—holding the current digit on idle cycles and latching the corrected sum on a keypress—followed by synchronous AND-gate reset gating tied to the active-low <code>CLR</code> signal.
+      </p>
+    </div>
+
+    <div class="stage-card">
+      <h3><span class="stage-tag">STAGE 05</span>Tens Counter (0–9)</h3>
+      <p>
+        A synchronous mod-10 counter that increments whenever both a valid keypress enable pulse and a BCD overflow carry pulse are asserted simultaneously. Next-state combinational logic increments <code>0 → 9</code> and wraps <code>9 → 0</code> on the next carry, using the same 2-to-1 MUX hold/update selection and synchronous active-low reset gating across four D flip-flops.
+      </p>
+    </div>
+  </div>
+
+  <h2>Output Stage: 7-Segment Decoders &amp; Display</h2>
+
+  <p>
+    The chip exports its internal state across all 8 Tiny Tapeout output pins: four pins for the tens BCD digit and four pins for the ones BCD digit. Externally, two identical combinational BCD-to-7-segment decoders (<code>TENS 7-SEG DECODER</code> and <code>ONES 7-SEG DECODER</code>) translate each 4-bit value into the seven segment lines (<code>a–g</code>) using inverted inputs and minimized sum-of-products gate networks, driving the dual common-cathode display from <code>00</code> through <code>99</code>.
+  </p>
+
+  <figure>
+    <img src="assets/images/gf-chip/seven-seg-decoders.png" alt="Zoomed-in view of the external Tens and Ones 7-segment combinational decoders driving the dual 7-segment display">
+    <figcaption>External combinational 7-segment decoders for both digits wired directly to the dual 7-segment display (Total 00–99).</figcaption>
+  </figure>
+
+  <h2>Debugging with <code>diagram.json</code></h2>
+
+  <p>
+    When a gate-level schematic grows to dozens of logic gates, flip-flops, and overlapping buses, hunting down a single miswired pin or floating input visually on the canvas gets painful fast. For a bulk of debugging when the circuit wasn't behaving as expected, I worked directly inside Wokwi's underlying <code>diagram.json</code> netlist.
+  </p>
+
+  <p>
+    Inspecting and editing <code>diagram.json</code> directly let me verify exact part IDs, enforce consistent <code>1000 Ω</code> resistor values on every button, explicitly disable switch bounce (<code>"bounce": "0"</code>) during logic bring-up, bind keyboard shortcuts (<code>"key": "1"</code>–<code>"9"</code>) for rapid testing, and trace every connection pair line-by-line instead of guessing which green wire landed on which gate pin.
+  </p>
+
+  <figure>
+    <img src="assets/images/gf-chip/diagram-json-code.png" alt="Screenshot of the Wokwi diagram.json file used to inspect and debug parts, resistors, bounce settings, and inverters">
+    <figcaption>Editing <code>diagram.json</code> directly in Wokwi to audit button definitions, 1 kΩ resistors, inverter IDs, and netlist wiring during debugging.</figcaption>
+  </figure>
+
+<pre><code>{
+  <span class="tok-key">"version"</span>: <span class="tok-nu">1</span>,
+  <span class="tok-key">"author"</span>: <span class="tok-str">"Uri Shaked"</span>,
+  <span class="tok-key">"editor"</span>: <span class="tok-str">"wokwi"</span>,
+  <span class="tok-key">"parts"</span>: [
+    { <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-vcc"</span>, <span class="tok-key">"id"</span>: <span class="tok-str">"kp_vcc"</span> },
+    { <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-gnd"</span>, <span class="tok-key">"id"</span>: <span class="tok-str">"kp_gnd"</span> },
+    {
+      <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-resistor"</span>,
+      <span class="tok-key">"id"</span>: <span class="tok-str">"r_2"</span>,
+      <span class="tok-key">"top"</span>: <span class="tok-nu">-415</span>,
+      <span class="tok-key">"left"</span>: <span class="tok-nu">-675</span>,
+      <span class="tok-key">"attrs"</span>: { <span class="tok-key">"value"</span>: <span class="tok-str">"1000"</span> }
+    },
+    { <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-gate-not"</span>, <span class="tok-key">"id"</span>: <span class="tok-str">"inv_2"</span>, <span class="tok-key">"top"</span>: <span class="tok-nu">-408</span>, <span class="tok-key">"left"</span>: <span class="tok-nu">-400</span>, <span class="tok-key">"attrs"</span>: {} },
+    {
+      <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-pushbutton"</span>,
+      <span class="tok-key">"id"</span>: <span class="tok-str">"btn_3"</span>,
+      <span class="tok-key">"top"</span>: <span class="tok-nu">-460</span>,
+      <span class="tok-key">"left"</span>: <span class="tok-nu">-540</span>,
+      <span class="tok-key">"attrs"</span>: { <span class="tok-key">"color"</span>: <span class="tok-str">"blue"</span>, <span class="tok-key">"label"</span>: <span class="tok-str">"3"</span>, <span class="tok-key">"bounce"</span>: <span class="tok-str">"0"</span>, <span class="tok-key">"key"</span>: <span class="tok-str">"3"</span> }
+    },
+    {
+      <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-resistor"</span>,
+      <span class="tok-key">"id"</span>: <span class="tok-str">"r_3"</span>,
+      <span class="tok-key">"top"</span>: <span class="tok-nu">-415</span>,
+      <span class="tok-key">"left"</span>: <span class="tok-nu">-565</span>,
+      <span class="tok-key">"attrs"</span>: { <span class="tok-key">"value"</span>: <span class="tok-str">"1000"</span> }
+    },
+    { <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-gate-not"</span>, <span class="tok-key">"id"</span>: <span class="tok-str">"inv_3"</span>, <span class="tok-key">"top"</span>: <span class="tok-nu">-356</span>, <span class="tok-key">"left"</span>: <span class="tok-nu">-400</span>, <span class="tok-key">"attrs"</span>: {} },
+    {
+      <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-pushbutton"</span>,
+      <span class="tok-key">"id"</span>: <span class="tok-str">"btn_4"</span>,
+      <span class="tok-key">"top"</span>: <span class="tok-nu">-339.4</span>,
+      <span class="tok-key">"left"</span>: <span class="tok-nu">-758.4</span>,
+      <span class="tok-key">"attrs"</span>: { <span class="tok-key">"color"</span>: <span class="tok-str">"blue"</span>, <span class="tok-key">"label"</span>: <span class="tok-str">"4"</span>, <span class="tok-key">"bounce"</span>: <span class="tok-str">"0"</span>, <span class="tok-key">"key"</span>: <span class="tok-str">"4"</span> }
+    },
+    {
+      <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-resistor"</span>,
+      <span class="tok-key">"id"</span>: <span class="tok-str">"r_4"</span>,
+      <span class="tok-key">"top"</span>: <span class="tok-nu">-295</span>,
+      <span class="tok-key">"left"</span>: <span class="tok-nu">-785</span>,
+      <span class="tok-key">"attrs"</span>: { <span class="tok-key">"value"</span>: <span class="tok-str">"1000"</span> }
+    },
+    { <span class="tok-key">"type"</span>: <span class="tok-str">"wokwi-gate-not"</span>, <span class="tok-key">"id"</span>: <span class="tok-str">"inv_4"</span>, <span class="tok-key">"top"</span>: <span class="tok-nu">-304</span>, <span class="tok-key">"left"</span>: <span class="tok-nu">-400</span>, <span class="tok-key">"attrs"</span>: {} }
+    <span class="tok-cm">// ... remaining keypad, core logic stages, and 7-segment decoder parts &amp; connections</span>
+  ]
+}</code></pre>
+
+</main>
+
+<div class="post-meta-bar">
+  <div>November 2026 · <a href="blog.html">← all posts</a></div>
+  <div class="post-meta-actions">
+    <div>
+      <button id="like-btn" title="Leave a star on this write-up">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        <span id="like-count">1</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <div>© 2026 Michael</div>
+    <div style="font-family: Tahoma, sans-serif">
+      <span style="font-size: 8px" title="Page generation time">
+        0.010 sec,
+      </span>
+      <span style="font-size: 8px" title="Unique page views">
+        #1
+      </span>
+    </div>
+  </div>
+</footer>
+
+<svg style="display: none" aria-hidden="true" focusable="false">
+  <symbol id="sun" viewBox="0 0 24 24">
+    <path d="M12,18c-3.3,0-6-2.7-6-6s2.7-6,6-6s6,2.7,6,6S15.3,18,12,18zM12,8c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4c2.2,0,4-1.8,4-4C16,9.8,14.2,8,12,8z"></path>
+    <path d="M12,4c-0.6,0-1-0.4-1-1V1c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,3.6,12.6,4,12,4z"></path>
+    <path d="M12,24c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,23.6,12.6,24,12,24z"></path>
+    <path d="M5.6,6.6c-0.3,0-0.5-0.1-0.7-0.3L3.5,4.9c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l1.4,1.4c0.4,0.4,0.4,1,0,1.4C6.2,6.5,5.9,6.6,5.6,6.6z"></path>
+    <path d="M19.8,20.8c-0.3,0-0.5-0.1-0.7-0.3l-1.4-1.4c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l1.4,1.4c0.4,0.4,0.4,1,0,1.4C20.3,20.7,20,20.8,19.8,20.8z"></path>
+    <path d="M3,13H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S3.6,13,3,13z"></path>
+    <path d="M23,13h-2c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S23.6,13,23,13z"></path>
+    <path d="M4.2,20.8c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l1.4-1.4c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-1.4,1.4C4.7,20.7,4.5,20.8,4.2,20.8z"></path>
+    <path d="M18.4,6.6c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l1.4-1.4c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-1.4,1.4C18.9,6.5,18.6,6.6,18.4,6.6z"></path>
+  </symbol>
+  <symbol id="moon" viewBox="0 0 24 24">
+    <path d="M12.1,22c-0.3,0-0.6,0-0.9,0c-5.5-0.5-9.5-5.4-9-10.9c0.4-4.8,4.2-8.6,9-9c0.4,0,0.8,0.2,1,0.5c0.2,0.3,0.2,0.8-0.1,1.1c-2,2.7-1.4,6.4,1.3,8.4c2.1,1.6,5,1.6,7.1,0c0.3-0.2,0.7-0.3,1.1-0.1c0.3,0.2,0.5,0.6,0.5,1c-0.2,2.7-1.5,5.1-3.6,6.8C16.6,21.2,14.4,22,12.1,22zM9.3,4.4c-2.9,1-5,3.6-5.2,6.8c-0.4,4.4,2.8,8.3,7.2,8.7c2.1,0.2,4.2-0.4,5.8-1.8c1.1-0.9,1.9-2.1,2.4-3.4c-2.5,0.9-5.3,0.5-7.5-1.1C9.2,11.4,8.1,7.7,9.3,4.4z"></path>
+  </symbol>
+  <symbol id="github" viewBox="0 0 24 24">
+    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path>
+  </symbol>
+  <symbol id="menu" viewBox="0 0 24 24">
+    <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path>
+  </symbol>
+</svg>
+
+<script src="assets/js/main.js"></script>
+<script>
+  const likeBtn = document.getElementById('like-btn')
+  const likeCount = document.getElementById('like-count')
+  if (likeBtn && likeCount) {
+    likeBtn.addEventListener('click', () => {
+      const n = parseInt(likeCount.innerText, 10) || 0
+      likeCount.innerText = n + 1
+      likeBtn.style.color = 'var(--c-red-2)'
+    })
+  }
+</script>
+</body>
+</html>
