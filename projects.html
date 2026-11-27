@@ -115,8 +115,99 @@
       gap: 28px 24px;
     }
 
-    .wall.small .sticker {
+    .wall.three {
+      columns: unset;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .wall.small .sticker,
+    .wall.three .sticker {
       margin: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .wall.small .sticker .meta,
+    .wall.three .sticker .meta {
+      margin-top: auto;
+      padding-top: 14px;
+    }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin: 0 0 12px;
+    }
+
+    .filter-btn {
+      font-family: var(--font-family-mono), monospace;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: var(--radius);
+      border: 1px solid var(--c-divider);
+      background: var(--c-bg-alt);
+      color: var(--c-text-2);
+      cursor: pointer;
+      transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--c-brand-1);
+      color: var(--c-brand-1);
+    }
+
+    .filter-btn.active {
+      border-color: var(--c-brand-1);
+      background: var(--c-brand-soft);
+      color: var(--c-brand-1);
+    }
+
+    .project-group.hidden {
+      display: none;
+    }
+
+    .prereq-strip {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px 18px;
+      padding: 13px 18px;
+      border-radius: var(--radius);
+      border: 1px dashed var(--c-divider);
+      background: var(--c-bg-alt);
+      color: var(--c-text-2);
+      font-size: 13.5px;
+      line-height: 1.5;
+    }
+
+    .prereq-strip .prereq-label {
+      font-family: var(--font-family-mono), monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-text-3);
+      margin-right: 8px;
+    }
+
+    .prereq-strip strong {
+      color: var(--c-text-1);
+    }
+
+    .prereq-links {
+      display: inline-flex;
+      gap: 12px;
+      font-family: var(--font-family-mono), monospace;
+      font-size: 12px;
+      white-space: nowrap;
     }
 
     .sticker {
@@ -223,6 +314,16 @@
       color: var(--c-green-1);
     }
 
+    .sticker .status-pill.is-active {
+      background: var(--c-amber-soft);
+      color: var(--c-amber-1);
+    }
+
+    .sticker .status-pill.is-info {
+      background: var(--c-indigo-soft);
+      color: var(--c-indigo-1);
+    }
+
     /* Tape strip on top */
     .sticker .tape {
       position: absolute;
@@ -297,7 +398,8 @@
         columns: 1;
       }
 
-      .wall.small {
+      .wall.small,
+      .wall.three {
         grid-template-columns: 1fr;
       }
 
@@ -398,151 +500,184 @@
     </div>
   </header>
 
-  <h3 class="section-h">Current &amp; Core Projects</h3>
-  <div class="wall">
-    <a id="drone" href="post-template.html" class="sticker big" style="--tilt: -1deg; --tape-tilt: 5deg; --lang: #e0575b;">
-      <span class="tape" aria-hidden="true"></span>
-      <h2>fire-drone-ai</h2>
-      <p>Autonomous UAV edge-AI system using lightweight computer vision for real-time forest fire detection, integrated with custom drone avionics and airframe design.</p>
-      <div class="meta">
-        <span class="lang"><span class="dot"></span>Edge AI · Python</span>
-        <span class="status-pill">active</span>
-      </div>
-    </a>
-
-    <a id="gf-chip" href="gf-chip-design.html" class="sticker big" style="--tilt: 2deg; --tape-tilt: -3deg; --lang: #30a46c;">
-      <span class="tape" aria-hidden="true"></span>
-      <h2>gf-chip-design</h2>
-      <p>Custom two-digit BCD adding calculator designed at the gate level for Tiny Tapeout fabrication under the GlobalFoundries Next Generation Engineers initiative.</p>
-      <div class="meta">
-        <span class="lang"><span class="dot"></span>Digital Logic · Tiny Tapeout</span>
-        <span class="status-pill">completed</span>
-      </div>
-    </a>
-
-    <a id="logic-calc" href="post-template.html" class="sticker" style="--tilt: -2.5deg; --tape-tilt: 4deg; --lang: #3572A5;">
-      <span class="pin" aria-hidden="true"></span>
-      <h2>flipflop-adder</h2>
-      <p>Simulated binary addition calculator built from the ground up using D/JK flip-flop gates, full adders, and sequential state machines.</p>
-      <div class="meta">
-        <span class="lang"><span class="dot"></span>Digital Logic</span>
-      </div>
-    </a>
-
-    <a id="homelab" href="post-template.html" class="sticker" style="--tilt: 1.5deg; --tape-tilt: -4deg; --lang: #7952b3;">
-      <span class="tape" aria-hidden="true"></span>
-      <h2>homelab-stack</h2>
-      <p>Self-hosted private infrastructure running open-source smart home automations, lossless music streaming, and local LLM inference engines.</p>
-      <div class="meta">
-        <span class="lang"><span class="dot"></span>Linux · Docker</span>
-        <span class="status-pill">active</span>
-      </div>
-    </a>
-
-    <a href="post-template.html" class="sticker" style="--tilt: -2deg; --tape-tilt: -3deg; --lang: #555555;">
-      <span class="tape" aria-hidden="true"></span>
-      <h2>micrograd-c</h2>
-      <p>Zero-dependency reverse-mode automatic differentiation and SIMD tensor library in 900 lines of C99.</p>
-      <div class="meta">
-        <span class="lang"><span class="dot"></span>C99</span>
-        <span class="stars"><svg viewBox="0 0 16 16" width="12" height="12"><path fill="currentColor" d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>142</span>
-      </div>
-    </a>
-
-    <a href="post-template.html" class="sticker" style="--tilt: 2deg; --tape-tilt: -2deg; --lang: #f34b7d;">
-      <span class="tape" aria-hidden="true"></span>
-      <h2>raymarch</h2>
-      <p>Multithreaded BVH path tracer with next-event estimation, dielectric materials, and physically based camera lens model.</p>
-      <div class="meta">
-        <span class="lang"><span class="dot"></span>C++20</span>
-        <span class="stars"><svg viewBox="0 0 16 16" width="12" height="12"><path fill="currentColor" d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>89</span>
-      </div>
-    </a>
+  <div class="filter-bar" role="tablist" aria-label="Filter projects by category">
+    <button type="button" class="filter-btn active" data-filter="all">All (14)</button>
+    <button type="button" class="filter-btn" data-filter="hardware">Silicon &amp; Hardware</button>
+    <button type="button" class="filter-btn" data-filter="software">Software &amp; Systems</button>
+    <button type="button" class="filter-btn" data-filter="research">Robotics, Research &amp; Hackathons</button>
+    <button type="button" class="filter-btn" data-filter="leadership">Mentorship &amp; Leadership</button>
   </div>
 
-  <h3 class="section-h">Hardware, Robotics &amp; Research</h3>
-  <div class="wall small">
-    <a id="robotics" href="post-template.html" class="sticker" style="--tilt: -1.5deg; --tape-tilt: 4deg; --lang: #d5393e;">
-      <span class="tape" aria-hidden="true"></span>
-      <h2>FRC Robotics — Mechanical Captain</h2>
-      <p>Leading mechanical design, CAD modeling, precision machining, and swerve drive optimization for FIRST Robotics Competition robots.</p>
-      <div class="meta">
-        <span class="lang"><span class="dot"></span>CAD · Robotics</span>
-        <span class="status-pill">lead</span>
-      </div>
-    </a>
+  <div class="project-group" data-category="hardware">
+    <h3 class="section-h">Silicon, Hardware &amp; Embedded</h3>
+    <div class="wall small">
+      <a id="gf-chip" href="gf-chip-design.html" class="sticker big" style="--tilt: 1.5deg; --tape-tilt: -3deg; --lang: #30a46c;">
+        <span class="tape" aria-hidden="true"></span>
+        <h2>gf-chip-design</h2>
+        <p>Custom two-digit BCD adding calculator designed at the gate level for Tiny Tapeout fabrication under the GlobalFoundries Next Generation Engineers initiative.</p>
+        <div class="meta">
+          <span class="lang"><span class="dot"></span>Digital Logic · Tiny Tapeout</span>
+          <span class="status-pill">completed</span>
+        </div>
+      </a>
 
-    <a id="research" href="post-template.html" class="sticker" style="--tilt: 1.5deg; --tape-tilt: -4deg; --lang: #5672cd;">
-      <span class="pin" aria-hidden="true"></span>
-      <h2>Chemical Powder Production Research</h2>
-      <p>Active student researcher investigating industrial chemical powder synthesis, reaction mechanics, and material process optimization.</p>
-      <div class="meta">
-        <span class="lang"><span class="dot"></span>ChemE · Materials</span>
-        <span class="status-pill">research</span>
-      </div>
-    </a>
+      <a id="drone" href="post-template.html" class="sticker big" style="--tilt: -1deg; --tape-tilt: 5deg; --lang: #e0575b;">
+        <span class="tape" aria-hidden="true"></span>
+        <h2>fire-drone-ai</h2>
+        <p>Autonomous UAV edge-AI system using lightweight computer vision for real-time forest fire detection, integrated with custom drone avionics and airframe design.</p>
+        <div class="meta">
+          <span class="lang"><span class="dot"></span>Edge AI · UAV Hardware</span>
+          <span class="status-pill is-active">active</span>
+        </div>
+      </a>
 
-    <a href="post-template.html" class="sticker" style="--tilt: -2deg; --tape-tilt: 3deg; --lang: #E44D26;">
-      <span class="tape" aria-hidden="true"></span>
-      <h2>STM32 Flight Telemetry</h2>
-      <p>Bare-metal sensor fusion (extended Kalman filter at 500Hz) over SPI/I2C with LoRa packet radio downlink.</p>
-      <div class="meta">
-        <span class="lang"><span class="dot"></span>Embedded C</span>
-      </div>
-    </a>
+      <a id="logic-calc" href="post-template.html" class="sticker" style="--tilt: -1.5deg; --tape-tilt: 4deg; --lang: #3572A5;">
+        <span class="pin" aria-hidden="true"></span>
+        <h2>flipflop-adder</h2>
+        <p>Simulated binary addition calculator built from the ground up using D/JK flip-flop gates, full adders, and sequential state machines.</p>
+        <div class="meta">
+          <span class="lang"><span class="dot"></span>Digital Logic</span>
+          <span class="status-pill">completed</span>
+        </div>
+      </a>
 
-    <a href="post-template.html" class="sticker" style="--tilt: 1.8deg; --tape-tilt: -5deg; --lang: #f34b7d;">
-      <span class="tape" aria-hidden="true"></span>
-      <h2>Swerve Trajectory Planner</h2>
-      <p>Time-optimal cubic spline generator and closed-loop odometry estimator for autonomous competition robotics.</p>
-      <div class="meta">
-        <span class="lang"><span class="dot"></span>C++</span>
+      <a href="post-template.html" class="sticker" style="--tilt: 1.5deg; --tape-tilt: -3deg; --lang: #E44D26;">
+        <span class="tape" aria-hidden="true"></span>
+        <h2>STM32 Flight Telemetry</h2>
+        <p>Bare-metal sensor fusion (extended Kalman filter at 500Hz) over SPI/I2C with LoRa packet radio downlink.</p>
+        <div class="meta">
+          <span class="lang"><span class="dot"></span>Embedded C</span>
+          <span class="status-pill">completed</span>
+        </div>
+      </a>
+
+      <div class="prereq-strip">
+        <div>
+          <span class="prereq-label">Prereq</span>
+          <strong>101 Counter &amp; Sequence Lock</strong> — earlier Tiny Tapeout warm-up project practicing clocked flip-flops and Sky130A layout leading up to <code>gf-chip-design</code>.
+        </div>
+        <div class="prereq-links">
+          <a href="https://wokwi.com/projects/478889023003507713" target="_blank" rel="noopener">Wokwi ↗</a>
+          <a href="https://gds-viewer.tinytapeout.com/?pdk=sky130A&amp;model=https%3A%2F%2Fskyvk18.github.io%2F101-password-lock%2F%2Ftinytapeout.oas" target="_blank" rel="noopener">3D Silicon ↗</a>
+          <a href="https://github.com/Skyvk18/101-password-lock" target="_blank" rel="noopener">GitHub ↗</a>
+        </div>
       </div>
-    </a>
+    </div>
   </div>
 
-  <h3 class="section-h">Hackathons</h3>
-  <div class="wall small">
-    <a href="#" class="sticker" style="--tilt: -1.5deg; --tape-tilt: 3deg; --lang: #3572A5;">
-      <span class="tape" aria-hidden="true"></span>
-      <h2>NASA Space Apps 2026 (Agriculture pattern recognition)</h2>
-      <p style="min-height: 36px; color: var(--c-text-3); font-style: italic;">Write-up &amp; details coming soon...</p>
-      <div class="meta">
-        <span class="lang"><span class="dot"></span>Hackathon</span>
-      </div>
-    </a>
+  <div class="project-group" data-category="software">
+    <h3 class="section-h">Software &amp; Systems</h3>
+    <div class="wall three">
+      <a id="homelab" href="post-template.html" class="sticker" style="--tilt: -1deg; --tape-tilt: -4deg; --lang: #7952b3;">
+        <span class="tape" aria-hidden="true"></span>
+        <h2>homelab-stack</h2>
+        <p>Self-hosted private infrastructure running open-source smart home automations, lossless music streaming, and local LLM inference engines.</p>
+        <div class="meta">
+          <span class="lang"><span class="dot"></span>Linux · Docker</span>
+          <span class="status-pill is-active">active</span>
+        </div>
+      </a>
+
+      <a href="post-template.html" class="sticker" style="--tilt: 1deg; --tape-tilt: 3deg; --lang: #555555;">
+        <span class="tape" aria-hidden="true"></span>
+        <h2>micrograd-c</h2>
+        <p>Zero-dependency reverse-mode automatic differentiation and SIMD tensor library in 900 lines of C99.</p>
+        <div class="meta">
+          <span class="lang"><span class="dot"></span>C99</span>
+          <span class="stars"><svg viewBox="0 0 16 16" width="12" height="12"><path fill="currentColor" d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>142</span>
+        </div>
+      </a>
+
+      <a href="post-template.html" class="sticker" style="--tilt: -1.5deg; --tape-tilt: -2deg; --lang: #f34b7d;">
+        <span class="tape" aria-hidden="true"></span>
+        <h2>raymarch</h2>
+        <p>Multithreaded BVH path tracer with next-event estimation, dielectric materials, and physically based camera lens model.</p>
+        <div class="meta">
+          <span class="lang"><span class="dot"></span>C++20</span>
+          <span class="stars"><svg viewBox="0 0 16 16" width="12" height="12"><path fill="currentColor" d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>89</span>
+        </div>
+      </a>
+    </div>
   </div>
 
-  <h3 class="section-h">Mentorship &amp; Academic Leadership</h3>
-  <div class="wall small">
-    <a id="mathnasium" href="#" class="sticker big" style="--tilt: -1deg; --tape-tilt: 4deg; --lang: #f59e0b;">
-      <span class="tape" aria-hidden="true"></span>
-      <h2>Math Instructor — Mathnasium</h2>
-      <p>Newly hired as a math instructor at Mathnasium, teaching and tutoring students one-on-one and in small groups, and building on my peer tutoring and Y-Time mentoring experience.</p>
-      <div class="meta">
-        <span class="lang"><span class="dot"></span>Teaching</span>
-        <span class="status-pill">new</span>
-      </div>
-    </a>
-    <a href="#" class="sticker" style="--tilt: -1.5deg; --tape-tilt: -3deg; --lang: #10b981;">
-      <span class="pin" aria-hidden="true"></span>
-      <h2>STEM Peer Tutoring &amp; Tesago Y-Time</h2>
-      <p>Guiding elementary students through math homework (1:15 ratio) and volunteer tutoring high schoolers in AP STEM courses through Math, Science, and Technology Honor Societies.</p>
-      <div class="meta">
-        <span class="lang"><span class="dot"></span>Mentorship</span>
-        <span class="status-pill">active</span>
-      </div>
-    </a>
+  <div class="project-group" data-category="research">
+    <h3 class="section-h">Robotics, Research &amp; Hackathons</h3>
+    <div class="wall small">
+      <a id="robotics" href="post-template.html" class="sticker" style="--tilt: -1.2deg; --tape-tilt: 4deg; --lang: #d5393e;">
+        <span class="tape" aria-hidden="true"></span>
+        <h2>FRC Robotics — Mechanical Captain</h2>
+        <p>Leading mechanical design, CAD modeling, precision machining, and swerve drive optimization for FIRST Robotics Competition robots.</p>
+        <div class="meta">
+          <span class="lang"><span class="dot"></span>CAD · Robotics</span>
+          <span class="status-pill is-info">lead</span>
+        </div>
+      </a>
 
-    <a href="#" class="sticker" style="--tilt: 2deg; --tape-tilt: 4deg; --lang: #f59e0b;">
-      <span class="tape" aria-hidden="true"></span>
-      <h2>Seal of Biliteracy Candidate</h2>
-      <p>Trilingual in English, Russian, and Spanish, pursuing the New York State Seal of Biliteracy alongside advanced coursework in AP Spanish and literature.</p>
-      <div class="meta">
-        <span class="lang"><span class="dot"></span>Languages</span>
-        <span class="status-pill">honors</span>
-      </div>
-    </a>
+      <a id="research" href="post-template.html" class="sticker" style="--tilt: 1.2deg; --tape-tilt: -4deg; --lang: #5672cd;">
+        <span class="pin" aria-hidden="true"></span>
+        <h2>Chemical Powder Production Research</h2>
+        <p>Active student researcher investigating industrial chemical powder synthesis, reaction mechanics, and material process optimization.</p>
+        <div class="meta">
+          <span class="lang"><span class="dot"></span>ChemE · Materials</span>
+          <span class="status-pill is-info">research</span>
+        </div>
+      </a>
+
+      <a href="post-template.html" class="sticker" style="--tilt: 1.5deg; --tape-tilt: -5deg; --lang: #f34b7d;">
+        <span class="tape" aria-hidden="true"></span>
+        <h2>Swerve Trajectory Planner</h2>
+        <p>Time-optimal cubic spline generator and closed-loop odometry estimator for autonomous competition robotics.</p>
+        <div class="meta">
+          <span class="lang"><span class="dot"></span>C++</span>
+          <span class="status-pill">completed</span>
+        </div>
+      </a>
+
+      <a href="#" class="sticker" style="--tilt: -1.5deg; --tape-tilt: 3deg; --lang: #3572A5;">
+        <span class="tape" aria-hidden="true"></span>
+        <h2>NASA Space Apps 2026 (Agriculture pattern recognition)</h2>
+        <p style="min-height: 36px; color: var(--c-text-3); font-style: italic;">Write-up &amp; details coming soon...</p>
+        <div class="meta">
+          <span class="lang"><span class="dot"></span>Hackathon</span>
+          <span class="status-pill is-info">2026</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="project-group" data-category="leadership">
+    <h3 class="section-h">Mentorship &amp; Academic Leadership</h3>
+    <div class="wall three">
+      <a id="mathnasium" href="#" class="sticker" style="--tilt: -1deg; --tape-tilt: 4deg; --lang: #f59e0b;">
+        <span class="tape" aria-hidden="true"></span>
+        <h2>Math Instructor — Mathnasium</h2>
+        <p>Teaching and tutoring students one-on-one and in small groups, building on peer tutoring and Y-Time mentoring experience.</p>
+        <div class="meta">
+          <span class="lang"><span class="dot"></span>Teaching</span>
+          <span class="status-pill is-active">new</span>
+        </div>
+      </a>
+
+      <a href="#" class="sticker" style="--tilt: 1deg; --tape-tilt: -3deg; --lang: #10b981;">
+        <span class="pin" aria-hidden="true"></span>
+        <h2>STEM Peer Tutoring &amp; Tesago Y-Time</h2>
+        <p>Guiding elementary students through math homework (1:15 ratio) and volunteer tutoring high schoolers in AP STEM courses through Honor Societies.</p>
+        <div class="meta">
+          <span class="lang"><span class="dot"></span>Mentorship</span>
+          <span class="status-pill is-active">active</span>
+        </div>
+      </a>
+
+      <a href="#" class="sticker" style="--tilt: -1.5deg; --tape-tilt: 4deg; --lang: #f59e0b;">
+        <span class="tape" aria-hidden="true"></span>
+        <h2>Seal of Biliteracy Candidate</h2>
+        <p>Trilingual in English, Russian, and Spanish, pursuing the New York State Seal of Biliteracy alongside advanced AP Spanish coursework.</p>
+        <div class="meta">
+          <span class="lang"><span class="dot"></span>Languages</span>
+          <span class="status-pill is-info">honors</span>
+        </div>
+      </a>
+    </div>
   </div>
 </main>
 
@@ -584,5 +719,18 @@
 </svg>
 
 <script src="assets/js/main.js"></script>
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn')
+  const groups = document.querySelectorAll('.project-group')
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const cat = btn.dataset.filter
+      filterBtns.forEach((b) => b.classList.toggle('active', b === btn))
+      groups.forEach((g) => {
+        g.classList.toggle('hidden', cat !== 'all' && g.dataset.category !== cat)
+      })
+    })
+  })
+</script>
 </body>
 </html>
