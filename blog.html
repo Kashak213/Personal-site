@@ -73,6 +73,18 @@
       color: var(--c-green-1);
       vertical-align: middle;
     }
+
+    .blog-status.is-wip {
+      background: var(--c-amber-soft);
+      color: var(--c-amber-1);
+    }
+
+    .blog-posts .post-wip {
+      font-size: 28px;
+      line-height: 1.5;
+      font-weight: 500;
+      color: var(--c-text-2);
+    }
   </style>
 </head>
 <body>
@@ -143,20 +155,22 @@
 <main>
   <h2>2026</h2>
   <div class="blog-posts">
-    <a href="post-template.html">Designing an Edge AI Pipeline for UAV Wildfire Detection</a>
     <div class="blog-post-row">
       <a href="gf-chip-design.html">Two-Digit BCD Adding Calculator — GlobalFoundries NextGen Engineers</a>
       <span class="blog-status">completed</span>
     </div>
-    <a href="post-template.html">Swerve Drivetrain Kinematics &amp; Odometry in FIRST Robotics</a>
-    <a href="post-template.html">Self-Hosting Local LLM Inference and Home Automation</a>
-  </div>
-
-  <h2>2025</h2>
-  <div class="blog-posts">
-    <a href="post-template.html">Building a Binary Adder from Discrete Flip-Flops &amp; Gates</a>
-    <a href="post-template.html">Chemical Powder Production Research: Process Modeling &amp; Synthesis</a>
-    <a href="post-template.html">Debugging Sensor Fusion and I2C Buses on Bare-Metal Microcontrollers</a>
+    <div class="blog-post-row">
+      <span class="post-wip">Designing an Edge AI Pipeline for UAV Wildfire Detection</span>
+      <span class="blog-status is-wip">in progress</span>
+    </div>
+    <div class="blog-post-row">
+      <span class="post-wip">Self-Hosting Local LLM Inference and Home Automation</span>
+      <span class="blog-status is-wip">in progress</span>
+    </div>
+    <div class="blog-post-row">
+      <span class="post-wip">Chemical Powder Production Research: Process Modeling &amp; Synthesis</span>
+      <span class="blog-status is-wip">in progress</span>
+    </div>
   </div>
 </main>
 
