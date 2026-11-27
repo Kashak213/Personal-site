@@ -37,106 +37,40 @@
 
   <style>
     main {
-      max-width: 980px;
+      max-width: 860px;
     }
 
-    .wall-header {
+    .page-head {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 28px;
+      align-items: baseline;
+      justify-content: space-between;
       flex-wrap: wrap;
-      margin: 28px 0 36px;
+      gap: 8px 16px;
+      margin: 28px 0 18px;
     }
 
-    .title-sticker {
-      display: inline-block;
+    .page-head h1 {
       margin: 0;
-      padding: 14px 32px 16px;
-      font-size: 56px;
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -0.04em;
-      color: var(--c-text-1);
-      background: #fff8c5;
-      transform: rotate(-3deg);
-      box-shadow:
-        0 1px 2px rgba(0,0,0,.08),
-        0 12px 24px -10px rgba(0,0,0,.25);
-      position: relative;
     }
 
-    html.dark .title-sticker {
-      background: #3a3614;
-      color: #ffe27a;
-    }
-
-    .stars-sticker {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 10px 16px;
+    .page-counts {
       font-family: var(--font-family-mono), monospace;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--c-text-1);
-      background: var(--c-bg-alt);
-      border: 1px dashed var(--c-divider);
-      border-radius: var(--radius);
-      transform: rotate(2deg);
-    }
-
-    .stars-sticker svg {
-      color: var(--c-yellow-1);
-    }
-
-    .wall {
-      columns: 3 280px;
-      column-gap: 24px;
-      padding: 18px 0 12px;
-    }
-
-    .wall.small {
-      columns: unset;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 28px 24px;
-    }
-
-    .wall.three {
-      columns: unset;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    .wall.small .sticker,
-    .wall.three .sticker {
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    .wall.small .sticker .meta,
-    .wall.three .sticker .meta {
-      margin-top: auto;
-      padding-top: 14px;
+      font-size: 12.5px;
+      color: var(--c-text-3);
     }
 
     .filter-bar {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
       gap: 8px;
-      margin: 0 0 12px;
+      margin: 0 0 24px;
     }
 
     .filter-btn {
       font-family: var(--font-family-mono), monospace;
       font-size: 12px;
-      font-weight: 600;
-      padding: 6px 12px;
+      font-weight: 500;
+      padding: 5px 11px;
       border-radius: var(--radius);
       border: 1px solid var(--c-divider);
       background: var(--c-bg-alt);
@@ -154,29 +88,63 @@
       border-color: var(--c-brand-1);
       background: var(--c-brand-soft);
       color: var(--c-brand-1);
+      font-weight: 600;
+    }
+
+    .project-group {
+      margin-bottom: 12px;
     }
 
     .project-group.hidden {
       display: none;
     }
 
+    .wall.small {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      padding: 4px 0 8px;
+    }
+
+    .wall.three {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding: 4px 0 8px;
+    }
+
+    .sticker {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 18px 20px 16px;
+      border-radius: 6px;
+      background: color-mix(in oklch, var(--lang) 11%, var(--c-bg-alt));
+      border: 1px solid color-mix(in oklch, var(--lang) 26%, var(--c-divider));
+      color: var(--c-text-1);
+      text-decoration: none;
+      position: relative;
+      transition: border-color 0.15s ease, transform 0.15s ease, background-color 0.15s ease;
+    }
+
+    a.sticker:hover {
+      transform: translateY(-2px);
+      border-color: color-mix(in oklch, var(--lang) 55%, var(--c-border));
+      background: color-mix(in oklch, var(--lang) 16%, var(--c-bg-alt));
+      text-decoration: none;
+      color: var(--c-text-1);
+    }
+
     .sticker.is-targeted {
       outline: 2px solid var(--c-brand-1);
-      outline-offset: 4px;
-      transform: rotate(0deg) scale(1.02);
+      outline-offset: 3px;
     }
 
     .sticker.prereq-note {
-      border: 1px dashed var(--c-border);
-      opacity: 0.9;
-    }
-
-    .sticker.prereq-note:hover {
-      opacity: 1;
-    }
-
-    .sticker.prereq-note h2 {
-      counter-increment: none;
+      border-style: dashed;
+      background: color-mix(in oklch, var(--lang) 7%, var(--c-bg-alt));
     }
 
     .sticker.prereq-note h2::before {
@@ -196,90 +164,11 @@
       font-size: 12px;
     }
 
-    .prereq-strip {
-      grid-column: 1 / -1;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px 18px;
-      padding: 13px 18px;
-      border-radius: var(--radius);
-      border: 1px dashed var(--c-divider);
-      background: var(--c-bg-alt);
-      color: var(--c-text-2);
-      font-size: 13.5px;
-      line-height: 1.5;
-    }
-
-    .prereq-strip .prereq-label {
-      font-family: var(--font-family-mono), monospace;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--c-text-3);
-      margin-right: 8px;
-    }
-
-    .prereq-strip strong {
-      color: var(--c-text-1);
-    }
-
-    .prereq-links {
-      display: inline-flex;
-      gap: 12px;
-      font-family: var(--font-family-mono), monospace;
-      font-size: 12px;
-      white-space: nowrap;
-    }
-
-    .sticker {
-      display: inline-block;
-      width: 100%;
-      break-inside: avoid;
-      page-break-inside: avoid;
-      -webkit-column-break-inside: avoid;
-      margin: 0 0 28px;
-      padding: 22px 20px 18px;
-      border-radius: 4px;
-      background: color-mix(in oklch, var(--lang) 14%, var(--c-bg-alt));
-      color: var(--c-text-1);
-      text-decoration: none;
-      position: relative;
-      transform: rotate(var(--tilt, 0deg));
-      transform-origin: center;
-      box-shadow:
-        0 1px 2px rgba(0,0,0,.08),
-        0 10px 20px -10px rgba(0,0,0,.2);
-      transition: transform .25s cubic-bezier(.2,.8,.2,1.1), box-shadow .25s, opacity .25s, filter .25s;
-      will-change: transform;
-    }
-
-    .sticker:hover {
-      transform: rotate(0deg) translateY(-4px) scale(1.03);
-      box-shadow:
-        0 2px 4px rgba(0,0,0,.1),
-        0 22px 36px -12px rgba(0,0,0,.32);
-      text-decoration: none;
-      color: var(--c-text-1);
-      z-index: 1;
-    }
-
-    .sticker.big {
-      padding: 28px 24px 22px;
-      background: color-mix(in oklch, var(--lang) 22%, var(--c-bg-alt));
-    }
-
-    .sticker.big h2 {
-      font-size: 26px;
-    }
-
     .sticker h2 {
-      font-size: 19px;
-      font-weight: 800;
-      line-height: 1.25;
-      letter-spacing: -0.015em;
+      font-size: 17.5px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
       margin: 0 0 8px;
       padding: 0;
       border-bottom: none;
@@ -288,7 +177,7 @@
 
     .sticker p {
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.55;
       margin: 0;
       color: var(--c-text-2);
     }
@@ -296,9 +185,10 @@
     .sticker .meta {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       font-size: 12px;
-      margin-top: 14px;
+      margin-top: auto;
+      padding-top: 14px;
       color: var(--c-text-3);
       font-family: var(--font-family-mono), monospace;
     }
@@ -310,33 +200,21 @@
     }
 
     .sticker .dot {
-      width: 9px;
-      height: 9px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: var(--lang);
-      box-shadow: 0 0 0 2px rgba(255,255,255,.5) inset;
-    }
-
-    .sticker .stars {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-weight: 700;
-      color: var(--c-text-2);
-    }
-
-    .sticker .stars svg {
-      color: var(--c-yellow-1);
     }
 
     .sticker .status-pill {
       margin-left: auto;
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 600;
       padding: 2px 7px;
       border-radius: var(--radius);
       background: var(--c-green-soft);
       color: var(--c-green-1);
+      white-space: nowrap;
     }
 
     .sticker .status-pill.is-active {
@@ -349,104 +227,24 @@
       color: var(--c-indigo-1);
     }
 
-    /* Tape strip on top */
-    .sticker .tape {
-      position: absolute;
-      top: -9px;
-      left: 50%;
-      width: 64px;
-      height: 16px;
-      transform: translateX(-50%) rotate(var(--tape-tilt, -3deg));
-      background:
-        linear-gradient(90deg, rgba(255,236,150,0) 0%, rgba(255,236,150,.85) 12%, rgba(255,236,150,.85) 88%, rgba(255,236,150,0) 100%);
-      box-shadow: 0 2px 3px rgba(0,0,0,.08);
-      pointer-events: none;
-      break-inside: avoid;
-      -webkit-column-break-inside: avoid;
-    }
-
-    html.dark .sticker .tape {
-      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.18) 12%, rgba(255,255,255,.18) 88%, rgba(255,255,255,0) 100%);
-    }
-
-    /* Red thumbtack pin */
     .sticker .pin {
-      position: absolute;
-      top: 10px;
-      left: 14px;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #ff8e8e 0%, #d6262e 55%, #7c0d11 100%);
-      box-shadow:
-        0 2px 4px rgba(0,0,0,.35),
-        inset -1px -1px 2px rgba(0,0,0,.35),
-        inset 1px 1px 2px rgba(255,255,255,.3);
-      pointer-events: none;
-      break-inside: avoid;
-      -webkit-column-break-inside: avoid;
-    }
-
-    .sticker.archived {
-      opacity: 0.6;
-      filter: grayscale(0.45);
-    }
-
-    .sticker.archived:hover {
-      opacity: 1;
-      filter: none;
+      display: none;
     }
 
     .section-h {
-      font-family: var(--font-family-mono), monospace;
-      font-size: 12px;
+      margin: 28px 0 12px;
+      padding-bottom: 6px;
+      font-size: 18px;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: var(--c-text-3);
-      margin: 48px 0 8px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .section-h::before,
-    .section-h::after {
-      content: "";
-      flex: 1;
-      height: 0;
-      border-top: 1px dashed var(--c-divider);
+      letter-spacing: -0.015em;
+      color: var(--c-text-1);
+      border-bottom: 1px solid var(--c-divider);
     }
 
     @media (max-width: 768px) {
-      .wall {
-        columns: 1;
-      }
-
       .wall.small,
       .wall.three {
         grid-template-columns: 1fr;
-      }
-
-      .title-sticker {
-        font-size: 42px;
-        padding: 12px 24px 14px;
-      }
-
-      .sticker {
-        transform: rotate(calc(var(--tilt, 0deg) * 0.5));
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .sticker,
-      .sticker:hover {
-        transform: none;
-        transition: none;
-      }
-      .title-sticker,
-      .stars-sticker {
-        transform: none;
       }
     }
   </style>
@@ -517,13 +315,10 @@
 </div>
 
 <main>
-  <header class="wall-header">
-    <h1 class="title-sticker">Projects</h1>
-    <div class="stars-sticker" title="In-progress &amp; completed projects">
-      <svg viewBox="0 0 16 16" width="14" height="14"><path fill="currentColor" d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
-      4 in progress · 3 completed
-    </div>
-  </header>
+  <div class="page-head">
+    <h1>Projects</h1>
+    <div class="page-counts">4 in progress · 3 completed</div>
+  </div>
 
   <div class="filter-bar" role="tablist" aria-label="Filter projects by category">
     <button type="button" class="filter-btn active" data-filter="all">All (10)</button>
