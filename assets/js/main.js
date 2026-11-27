@@ -1,3 +1,5 @@
+document.title = 'vert.study'
+
 function toggleDarkTheme() {
   const dark = document.documentElement.classList.toggle('dark')
   try {
