@@ -59,41 +59,103 @@
       color: var(--c-amber-1);
     }
 
+    .status-badge.is-current {
+      background: rgba(250, 204, 21, 0.18);
+      color: #a16207;
+    }
+
+    .dark .status-badge.is-current {
+      background: rgba(253, 224, 71, 0.14);
+      color: #fde047;
+    }
+
     .status-badge.is-award {
       background: var(--c-yellow-soft);
       color: var(--c-yellow-1);
     }
 
     .category-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 0 0 28px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      padding: 5px;
+      margin: 24px 0 30px;
+      background: var(--c-bg-alt);
+      border: 1px solid var(--c-divider);
+      border-radius: 8px;
     }
 
     .category-btn {
-      font-family: var(--font-family-mono), monospace;
-      font-size: 12px;
-      font-weight: 500;
-      padding: 6px 12px;
-      border-radius: var(--radius);
-      border: 1px solid var(--c-divider);
-      background: var(--c-bg-alt);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+      text-align: left;
+      padding: 11px 14px;
+      border-radius: 5px;
+      border: 1px solid transparent;
+      background: transparent;
       color: var(--c-text-2);
       cursor: pointer;
-      transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+      transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .category-btn:hover {
-      border-color: var(--c-brand-1);
-      color: var(--c-brand-1);
+    .category-btn .tab-title {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font-family-mono), monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: inherit;
+    }
+
+    .category-btn .tab-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--c-text-3);
+      opacity: 0.45;
+      flex-shrink: 0;
+    }
+
+    .category-btn .tab-sub {
+      font-size: 12px;
+      color: var(--c-text-3);
+      padding-left: 14px;
+    }
+
+    .category-btn:hover:not(.active) {
+      background: var(--c-bg);
+      border-color: var(--c-divider);
+      color: var(--c-text-1);
     }
 
     .category-btn.active {
+      background: var(--c-brand-1);
       border-color: var(--c-brand-1);
-      background: var(--c-brand-soft);
-      color: var(--c-brand-1);
-      font-weight: 600;
+      color: var(--c-on-brand);
+      box-shadow: var(--shadow-1);
+    }
+
+    .category-btn.active .tab-title {
+      font-weight: 700;
+    }
+
+    .category-btn.active .tab-dot {
+      background: var(--c-on-brand);
+      opacity: 1;
+    }
+
+    .category-btn.active .tab-sub {
+      color: var(--c-on-brand);
+      opacity: 0.85;
+    }
+
+    @media (max-width: 560px) {
+      .category-bar {
+        grid-template-columns: 1fr;
+      }
     }
 
     .research-section.hidden {
@@ -476,7 +538,7 @@
   <h1>Dye-Sensitized Solar Cell Production</h1>
 
   <div class="post-header-meta">
-    <span class="status-badge is-active">In Progress</span>
+    <span class="status-badge is-current">Currently working on</span>
     <span>ChemE · Materials &amp; Photovoltaics</span>
     <span>·</span>
     <span>2026 – Present</span>
@@ -486,14 +548,19 @@
     Bio-inspired solar cell research focused on fabricating low-cost, environmentally friendly dye-sensitized solar cells (DSSCs) using titanium dioxide (TiO<sub>2</sub>) semiconductor pastes, natural anthocyanin fruit dyes, iodine-based electrolytes, and graphite counter electrodes. This work is organized into two phases: our initial group development at Rose-Hulman Institute of Technology and my ongoing continuation research.
   </p>
 
-  <div class="category-bar" role="tablist" aria-label="Filter research phase">
-    <button type="button" class="category-btn active" data-phase="all">All Phases (2)</button>
-    <button type="button" class="category-btn" data-phase="initial">01 · Initial Development</button>
-    <button type="button" class="category-btn" data-phase="current">02 · Current Research</button>
+  <div class="category-bar" role="tablist" aria-label="Select research phase">
+    <button type="button" class="category-btn" role="tab" aria-selected="false" aria-controls="initial-development" data-phase="initial">
+      <span class="tab-title"><span class="tab-dot" aria-hidden="true"></span>Initial Development</span>
+      <span class="tab-sub">Rose-Hulman Operation Catapult 2026</span>
+    </button>
+    <button type="button" class="category-btn active" role="tab" aria-selected="true" aria-controls="current-research" data-phase="current">
+      <span class="tab-title"><span class="tab-dot" aria-hidden="true"></span>Current Research</span>
+      <span class="tab-sub">Ongoing Continuation · Active</span>
+    </button>
   </div>
 
   <!-- PHASE 01: INITIAL DEVELOPMENT -->
-  <section id="initial-development" class="research-section" data-phase="initial">
+  <section id="initial-development" class="research-section hidden" role="tabpanel" data-phase="initial">
     <div class="category-header">
       <h2><span class="category-tag">01</span>Initial Development — Operation Catapult 2026</h2>
       <span class="status-badge">Completed</span>
@@ -679,16 +746,19 @@
   </section>
 
   <!-- PHASE 02: CURRENT RESEARCH -->
-  <section id="current-research" class="research-section" data-phase="current">
+  <section id="current-research" class="research-section" role="tabpanel" data-phase="current">
     <div class="category-header">
       <h2><span class="category-tag">02</span>Current Research</h2>
-      <span class="status-badge is-active">In Progress</span>
+      <span class="status-badge is-current">Currently working on</span>
     </div>
 
     <div class="wip-card">
       <strong style="color: var(--c-text-1); font-family: var(--font-family-mono), monospace; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.06em;">Ongoing Continuation Research</strong>
       <p>
         Detailed methodology, experimental data, and findings from the current phase of dye-sensitized solar cell production research are actively being documented and will be added here shortly.
+      </p>
+      <p style="margin-top: 14px;">
+        <button type="button" class="b" id="jump-to-initial" style="cursor: pointer; font-family: var(--font-family-mono), monospace; font-size: 12.5px; padding: 7px 11px; border: 1px solid var(--c-divider); border-radius: var(--radius); background: var(--c-bg); color: var(--c-brand-1);">← Read Initial Development (Operation Catapult 2026)</button>
       </p>
     </div>
   </section>
@@ -751,9 +821,13 @@
   const sections = document.querySelectorAll('.research-section')
 
   function activatePhase(phase) {
-    phaseBtns.forEach((b) => b.classList.toggle('active', b.dataset.phase === phase))
+    phaseBtns.forEach((b) => {
+      const isActive = b.dataset.phase === phase
+      b.classList.toggle('active', isActive)
+      b.setAttribute('aria-selected', isActive ? 'true' : 'false')
+    })
     sections.forEach((s) => {
-      s.classList.toggle('hidden', phase !== 'all' && s.dataset.phase !== phase)
+      s.classList.toggle('hidden', s.dataset.phase !== phase)
     })
   }
 
@@ -761,10 +835,18 @@
     btn.addEventListener('click', () => activatePhase(btn.dataset.phase))
   })
 
+  const jumpToInitial = document.getElementById('jump-to-initial')
+  if (jumpToInitial) {
+    jumpToInitial.addEventListener('click', () => {
+      activatePhase('initial')
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    })
+  }
+
   function openPhaseFromHash() {
     const hash = window.location.hash ? window.location.hash.slice(1) : ''
     if (hash === 'initial-development') activatePhase('initial')
-    else if (hash === 'current-research') activatePhase('current')
+    else activatePhase('current')
   }
 
   openPhaseFromHash()
