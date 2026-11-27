@@ -115,7 +115,6 @@ function initHeadingKerning() {
 document.addEventListener('DOMContentLoaded', function () {
   initMyTime()
   initTooltips()
-  initHeadingKerning()
 
   for (const element of document.querySelectorAll('.dark-toggle')) {
     element.addEventListener('click', toggleDarkTheme)

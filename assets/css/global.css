@@ -606,30 +606,6 @@ a.b svg, a.b img {
   border-color: #ece9e2;
 }
 
-/* H1 character blink & optical kerning */
-h1 span.ch {
-  display: inline-block;
-  transform-origin: left center;
-  animation: blink 220ms;
-}
-
-h1 span.word {
-  white-space: pre;
-}
-
-@keyframes blink {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.10);
-    color: var(--c-brand-1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
 /* Code & Blog styles */
 pre {
   border-radius: var(--radius);
