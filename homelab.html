@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f1ea">
+  <title>vert.study</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/images/logo.jpg">
+  <link rel="stylesheet" href="assets/css/global.css">
+
+  <script>
+    function applyTheme() {
+      let savedTheme = null
+      try {
+        savedTheme = localStorage.getItem('dark')
+      } catch (e) {}
+      const meta = document.querySelector('meta[name=theme-color]')
+      if (savedTheme !== null) {
+        if (savedTheme === 'true') {
+          document.documentElement.classList.add('dark')
+          meta.setAttribute('content', '#0c0c0e')
+        } else {
+          document.documentElement.classList.remove('dark')
+          meta.setAttribute('content', '#f4f1ea')
+        }
+      } else {
+        {
+          document.documentElement.classList.add('dark')
+          meta.setAttribute('content', '#0c0c0e')
+        }
+      }
+    }
+    applyTheme()
+  </script>
+
+  <style>
+    .post-header-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 14px;
+      margin: -10px 0 28px;
+      font-family: var(--font-family-mono), monospace;
+      font-size: 12.5px;
+      color: var(--c-text-3);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 9px;
+      border-radius: var(--radius);
+      background: var(--c-green-soft);
+      color: var(--c-green-1);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+
+    .status-badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 24px 0 30px;
+    }
+
+    .spec-item {
+      padding: 12px 14px;
+      background: var(--c-bg-alt);
+      border: 1px solid var(--c-divider);
+      border-radius: var(--radius);
+    }
+
+    .spec-label {
+      display: block;
+      font-family: var(--font-family-mono), monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-text-3);
+      margin-bottom: 5px;
+    }
+
+    .spec-value {
+      font-family: var(--font-family-mono), monospace;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--c-text-1);
+    }
+
+    .hw-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin: 18px 0 28px;
+    }
+
+    .hw-card {
+      padding: 16px 18px;
+      background: var(--c-bg-alt);
+      border: 1px solid var(--c-divider);
+      border-radius: var(--radius);
+    }
+
+    .hw-card h3 {
+      margin: 0 0 10px;
+      font-size: 15px;
+      font-family: var(--font-family-mono), monospace;
+      color: var(--c-brand-1);
+    }
+
+    .hw-card ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      list-style: disc;
+    }
+
+    .hw-card li {
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--c-text-2);
+      margin-top: 4px;
+    }
+
+    .hw-card li strong {
+      color: var(--c-text-1);
+    }
+
+    .data-table-wrap {
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--c-divider);
+      border-radius: var(--radius);
+      background: var(--c-bg-alt);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .data-table th,
+    .data-table td {
+      text-align: left;
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--c-divider);
+      vertical-align: top;
+    }
+
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .data-table th {
+      font-family: var(--font-family-mono), monospace;
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-3);
+      background: var(--c-bg);
+    }
+
+    .data-table td {
+      color: var(--c-text-2);
+    }
+
+    .data-table td strong {
+      color: var(--c-text-1);
+      font-family: var(--font-family-mono), monospace;
+      font-size: 13px;
+    }
+
+    .stage-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin: 18px 0 26px;
+    }
+
+    .stage-card {
+      padding: 16px 20px;
+      background: var(--c-bg-alt);
+      border: 1px solid var(--c-divider);
+      border-left: 3px solid var(--c-brand-1);
+      border-radius: var(--radius);
+    }
+
+    .stage-card h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      line-height: 1.3;
+      color: var(--c-text-1);
+    }
+
+    .stage-card p {
+      margin: 0;
+      font-size: 15.5px;
+      line-height: 27px;
+      color: var(--c-text-2);
+    }
+
+    .privacy-note {
+      margin: 24px 0;
+      padding: 14px 18px;
+      background: var(--c-bg-alt);
+      border: 1px dashed var(--c-divider);
+      border-radius: var(--radius);
+      font-size: 14.5px;
+      line-height: 1.65;
+      color: var(--c-text-2);
+    }
+
+    .post-meta-bar {
+      margin-inline: auto;
+      margin-top: 40px;
+      margin-bottom: 40px;
+      display: flex;
+      gap: 16px;
+      justify-content: space-between;
+      align-items: center;
+      padding-inline: var(--main-padding);
+      max-width: var(--max-width);
+      color: var(--c-text-2);
+      font-size: 15px;
+    }
+
+    .post-meta-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .post-meta-actions > div {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 16px;
+    }
+
+    .post-meta-actions button {
+      all: unset;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .post-meta-actions button:hover {
+      color: var(--c-brand-1);
+    }
+
+    @media (max-width: 700px) {
+      .spec-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hw-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="nav-container">
+  <nav>
+    <div class="nav-title">
+      <a href="index.html">Michael</a>
+    </div>
+
+    <div class="nav-menu nav-mobile">
+      <div class="nav-element">
+        <button class="dark-toggle" role="switch" aria-label="Toggle dark mode">
+          <span class="dark-toggle__check">
+            <span class="dark-toggle__icon">
+              <svg class="sun" aria-hidden="true" focusable="false"><use xlink:href="#sun"></use></svg>
+              <svg class="moon" aria-hidden="true" focusable="false"><use xlink:href="#moon"></use></svg>
+            </span>
+          </span>
+        </button>
+      </div>
+      <div class="nav-element">
+        <a href="" class="hamburger-toggle" aria-label="Toggle menu">
+          <svg aria-hidden="true" focusable="false">
+            <use xlink:href="#menu"></use>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="nav-popup">
+      <a href="projects.html">projects</a>
+      <a href="blog.html">blog</a>
+      <a href="resume.html">resume</a>
+      <a href="https://github.com/Kashak213">github</a>
+    </div>
+
+    <div class="nav-menu nav-desktop">
+      <div class="nav-element">
+        <a href="projects.html">projects</a>
+        <a href="blog.html" style="color: var(--c-brand-1); font-weight: 600;">blog</a>
+        <a href="resume.html">resume</a>
+        <div class="my-time" data-timezone="America/New_York" title="Time in my timezone (EST)" tabindex="0">
+          19:33
+        </div>
+      </div>
+      <div class="nav-element">
+        <button class="dark-toggle" role="switch" aria-label="Toggle dark mode">
+          <span class="dark-toggle__check">
+            <span class="dark-toggle__icon">
+              <svg class="sun" aria-hidden="true" focusable="false"><use xlink:href="#sun"></use></svg>
+              <svg class="moon" aria-hidden="true" focusable="false"><use xlink:href="#moon"></use></svg>
+            </span>
+          </span>
+        </button>
+      </div>
+      <div class="nav-element">
+        <a href="https://github.com/Kashak213" aria-label="GitHub" title="GitHub profile">
+          <svg aria-hidden="true" focusable="false">
+            <use xlink:href="#github"></use>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<main>
+  <h1>Self-Hosted Homelab &amp; AI Camera NVR</h1>
+
+  <div class="post-header-meta">
+    <span class="status-badge">Running</span>
+    <span>Dell OptiPlex 5070 · Ubuntu 26.04.1 LTS · 6 Docker Services</span>
+    <span>·</span>
+    <span>November 2026</span>
+  </div>
+
+  <p>
+    I repurposed a compact Dell OptiPlex 5070 desktop into a fully local, subscription-free home server running six Dockerized services: network-wide DNS ad-blocking, self-hosted music streaming, MQTT messaging, container management, smart-home orchestration, and an Intel iGPU-accelerated AI Network Video Recorder (NVR).
+  </p>
+
+  <p>
+    The biggest engineering focus was building a privacy-first, multi-camera security system using Frigate NVR and Home Assistant with zero cloud subscriptions. Along the way I solved hardware-accelerated video decoding, cross-device Android codec compatibility, custom camera API control for spotlights and sirens, remote VPN access, cellular push notifications with lock-screen snapshots, and self-healing DHCP tracking.
+  </p>
+
+  <div class="spec-grid">
+    <div class="spec-item">
+      <span class="spec-label">Host</span>
+      <span class="spec-value">OptiPlex 5070</span>
+    </div>
+    <div class="spec-item">
+      <span class="spec-label">AI Inference</span>
+      <span class="spec-value">~11-13 ms (iGPU)</span>
+    </div>
+    <div class="spec-item">
+      <span class="spec-label">Active RAM</span>
+      <span class="spec-value">~3.1 / 8 GB</span>
+    </div>
+    <div class="spec-item">
+      <span class="spec-label">Open Ports</span>
+      <span class="spec-value">0 (Tailscale)</span>
+    </div>
+  </div>
+
+  <h2>Host Hardware &amp; Storage</h2>
+
+  <div class="hw-grid">
+    <div class="hw-card">
+      <h3>Compute &amp; Graphics</h3>
+      <ul>
+        <li><strong>Machine:</strong> Dell OptiPlex 5070</li>
+        <li><strong>CPU:</strong> Intel Core i5-8500 (6 cores / 6 threads @ 3.00 GHz)</li>
+        <li><strong>iGPU:</strong> Intel UHD Graphics 630 passed into Frigate via <code>/dev/dri/renderD128</code> for VAAPI decode and OpenVINO inference</li>
+        <li><strong>RAM:</strong> 8 GB DDR4 (about 3.1 GiB active across all 6 containers)</li>
+        <li><strong>NIC:</strong> Intel I219-V Gigabit Ethernet</li>
+      </ul>
+    </div>
+    <div class="hw-card">
+      <h3>OS &amp; Storage</h3>
+      <ul>
+        <li><strong>OS:</strong> Ubuntu 26.04.1 LTS (Linux 7.0)</li>
+        <li><strong>Boot Drive:</strong> 233 GB NVMe SSD for OS and Docker layers</li>
+        <li><strong>Media Drive:</strong> 1 TB SATA HDD mounted at <code>/mnt/storage</code> for Frigate clips, Home Assistant state, Mosquitto data, and Navidrome music</li>
+        <li><strong>Access:</strong> Passwordless Ed25519 SSH over LAN and Tailscale</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Docker Service Stack</h2>
+
+  <div class="data-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Container</th>
+          <th>Ports / Network</th>
+          <th>Role in Homelab</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>frigate</strong></td>
+          <td><code>5000</code>, <code>8971</code>, <code>8554</code>, <code>8555</code></td>
+          <td>Local AI object detection (OpenVINO on Intel iGPU), go2rtc restreaming, 90-105 day event retention, and custom Reolink camera controls.</td>
+        </tr>
+        <tr>
+          <td><strong>homeassistant</strong></td>
+          <td><code>8123</code> (host)</td>
+          <td>Unified web and mobile dashboard for family Android phones with live camera feeds, Frigate integration, and a custom Security Panel.</td>
+        </tr>
+        <tr>
+          <td><strong>mosquitto</strong></td>
+          <td><code>1883</code> (host)</td>
+          <td>Real-time MQTT message bus linking Frigate detection events, camera states, and toggles into Home Assistant.</td>
+        </tr>
+        <tr>
+          <td><strong>pihole</strong></td>
+          <td><code>53</code>, <code>80/443</code></td>
+          <td>Network-wide DNS sinkhole blocking ads and trackers across LAN devices.</td>
+        </tr>
+        <tr>
+          <td><strong>navidrome</strong></td>
+          <td><code>4533</code></td>
+          <td>Self-hosted music streaming server indexing <code>/mnt/storage/music</code> over web and Subsonic mobile apps.</td>
+        </tr>
+        <tr>
+          <td><strong>portainer</strong></td>
+          <td><code>9000</code>, <code>9443</code></td>
+          <td>Web UI for inspecting Docker containers, logs, volumes, and restarts.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>System Architecture &amp; Data Flow</h2>
+
+<pre><code>[Reolink Duo 2 PoE]                       [TP-Link Tapo Window Cam]
+Static LAN IP                             Auto-Healed DHCP IP
+Main: 4608x1728 H.265 (20fps)             Main: 2560x1440 H.264 (#media=video)
+Sub:  1536x576 H.264 (10fps)              Sub:  640x360 H.264 (#media=video)
+         |                                         |
+         +--------------------+--------------------+
+                              v
+      +-----------------------------------------------+
+      |        FRIGATE NVR (Docker + Intel iGPU)      |
+      | - go2rtc restreamer (2560x960 H.264 live +    |
+      |   2-way PCMU backchannel on garage_cam)       |
+      | - OpenVINO GPU detector (~11-13 ms)           |
+      | - Custom reolink_controller.py (:15080/15081) |
+      +--------+----------------------+---------------+
+               |                      |
+     MQTT (:1883) &amp; RTSP/API    Read-only /public_snap/
+               v                      v
+      +-----------------+    +------------------------+
+      | Mosquitto &amp;     |    | Cloudflared Quick      |
+      | Home Assistant  |    | Tunnel (HTTPS only)    |
+      +--------+--------+    +-----------+------------+
+               |                         |
+     LAN Wi-Fi / Tailscale VPN     One-time 128-bit URL
+               |                         |
+               +------------+------------+
+                            v
+               Family Android Mobile Devices</code></pre>
+
+  <h2>Camera &amp; NVR Engineering</h2>
+
+  <div class="stage-list">
+    <div class="stage-card">
+      <h3>Multi-Stream Pipeline (4K Recording vs. Mobile Compatibility)</h3>
+      <p>
+        The Reolink Duo 2 PoE records its native <code>4608x1728</code> H.265 stream at 20 fps directly from <code>go2rtc</code> with zero video re-encoding. For live viewing, however, <code>4608px</code> exceeds the <code>4096px</code> hardware decode limit of several Android WebViews (causing infinite loading on a Motorola Edge). Splitting live view into an on-demand <code>2560x960</code> H.264 stream with Opus audio and PCMU 2-way talk fixed mobile playback while keeping full 4K recordings untouched. Object detection runs on the lightweight <code>1536x576</code> sub-stream at 5 fps on the UHD 630 iGPU in <code>11-13 ms</code>.
+      </p>
+    </div>
+
+    <div class="stage-card">
+      <h3>Video-Only Indoor Camera &amp; Yard Zoning</h3>
+      <p>
+        The indoor Tapo window camera uses <code>#media=video</code> in <code>go2rtc</code> so audio tracks and backchannels are rejected at the RTSP SDP handshake, with recording disabled so it only sends snapshot push alerts. Outside, a polygon <code>yard</code> zone and road/neighbor masks block street traffic, tuned using daytime and night-time captures (including a 3-4% downward bounding-box shift from headlight glare) alongside per-object area and confidence thresholds.
+      </p>
+    </div>
+
+    <div class="stage-card">
+      <h3>Custom Reolink Microservice &amp; IR-Conditional Spotlight</h3>
+      <p>
+        Because Frigate does not natively control Reolink spotlights or sirens, I wrote a small Python microservice (<code>reolink_controller.py</code>) and an injected UI script (<code>reolink_ui.js</code>) persisted via a 1-minute host cron job. It analyzes HSV color saturation on Frigate's local snapshot to detect IR night mode without adding camera load, locks firmware <code>WhiteLed.mode = 0</code> so manual toggles never fight the camera, triggers the spotlight only on verified <code>yard</code> detections at night, and enforces a 60s manual-off cooldown plus a 15s IR-cut settling delay to stop color-to-IR feedback loops.
+      </p>
+    </div>
+
+    <div class="stage-card">
+      <h3>Cellular Snapshot Alerts &amp; Self-Healing Networking</h3>
+      <p>
+        To deliver rich lock-screen snapshot alerts over cellular data without opening router ports or exposing Home Assistant, a sync script reads registered mobile devices and sends high-priority FCM pushes pointing to ephemeral, one-time 128-bit random URLs (<code>/public_snap/&lt;32-hex&gt;.jpg</code>) on a read-only local port behind a <code>cloudflared</code> Quick Tunnel. The Reolink stays locked to a static IP, while a 1-minute watchdog scans ports <code>554</code> and <code>2020</code> to auto-update <code>config.yml</code> if the router ever reassigns the Tapo camera's DHCP address.
+      </p>
+    </div>
+  </div>
+
+  <h2>Key Troubleshooting Milestones</h2>
+
+  <div class="data-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Issue</th>
+          <th>Root Cause</th>
+          <th>Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Frigate crash loop (2,767 restarts)</strong></td>
+          <td>YAML indentation put <code>detect:</code> at 2 spaces instead of 4, plus a stream name typo.</td>
+          <td>Fixed YAML hierarchy, validated with <code>FrigateConfig.parse_yaml</code>, and added an explicit OpenVINO model block.</td>
+        </tr>
+        <tr>
+          <td><strong>Greyed-out UI &amp; Reolink error -5</strong></td>
+          <td>NGINX edit broke <code>mqtt_ws</code> port <code>5002</code>, and 1-second login polling exhausted camera session slots.</td>
+          <td>Moved custom API to isolated port <code>15080</code>, restored <code>mqtt_ws</code>, and added 3600s token caching.</td>
+        </tr>
+        <tr>
+          <td><strong>Infinite spinner on Android</strong></td>
+          <td><code>4608x1728</code> H.265 main stream exceeded Android WebView 4K decode limits.</td>
+          <td>Split <code>garage_cam_raw</code> (4K H.265 record) from <code>garage_cam</code> (on-demand <code>2560x960</code> H.264 live view).</td>
+        </tr>
+        <tr>
+          <td><strong>Playback stutter (11 stalls/hr)</strong></td>
+          <td>Slow keyframes (<code>gop: 2/4</code>), high bitrate, and erratic RTSP timestamps.</td>
+          <td>Set <code>gop: 1</code>, 6144 kbps main stream, 10 fps sub-stream, and added <code>-fflags +genpts+discardcorrupt</code>.</td>
+        </tr>
+        <tr>
+          <td><strong>HA 2026.10 2nd camera error</strong></td>
+          <td>Custom Frigate integration passed deprecated <code>via_device</code> in <code>device_info</code>.</td>
+          <td>Patched out the deprecated <code>via_device</code> key so <code>camera.window_cam</code> registered cleanly.</td>
+        </tr>
+        <tr>
+          <td><strong>YOLOX-s vs. MobileNetV2</strong></td>
+          <td>YOLOX-s took ~71 ms on the UHD 630 iGPU and triggered overload warnings.</td>
+          <td>Kept <code>ssdlite_mobilenet_v2</code> (~11 ms) paired with tuned area/score filters and zone masks.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="privacy-note">
+    <strong>Security &amp; Privacy:</strong> Zero router ports are forwarded to the public internet. Remote admin and live camera viewing run exclusively over encrypted Tailscale WireGuard tunnels, and cellular alert snapshots use one-time 128-bit read-only tokens.
+  </div>
+</main>
+
+<div class="post-meta-bar">
+  <div>November 2026 · <a href="blog.html">← all posts</a></div>
+  <div class="post-meta-actions">
+    <div>
+      <button id="like-btn" title="Leave a star on this write-up">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        <span id="like-count">1</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <div>© 2026 Michael</div>
+    <div style="font-family: Tahoma, sans-serif">
+      <span style="font-size: 8px" title="Page generation time">
+        0.009 sec,
+      </span>
+      <span style="font-size: 8px" title="Unique page views">
+        #1
+      </span>
+    </div>
+  </div>
+</footer>
+
+<svg style="display: none" aria-hidden="true" focusable="false">
+  <symbol id="sun" viewBox="0 0 24 24">
+    <path d="M12,18c-3.3,0-6-2.7-6-6s2.7-6,6-6s6,2.7,6,6S15.3,18,12,18zM12,8c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4c2.2,0,4-1.8,4-4C16,9.8,14.2,8,12,8z"></path>
+    <path d="M12,4c-0.6,0-1-0.4-1-1V1c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,3.6,12.6,4,12,4z"></path>
+    <path d="M12,24c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,23.6,12.6,24,12,24z"></path>
+    <path d="M5.6,6.6c-0.3,0-0.5-0.1-0.7-0.3L3.5,4.9c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l1.4,1.4c0.4,0.4,0.4,1,0,1.4C6.2,6.5,5.9,6.6,5.6,6.6z"></path>
+    <path d="M19.8,20.8c-0.3,0-0.5-0.1-0.7-0.3l-1.4-1.4c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l1.4,1.4c0.4,0.4,0.4,1,0,1.4C20.3,20.7,20,20.8,19.8,20.8z"></path>
+    <path d="M3,13H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S3.6,13,3,13z"></path>
+    <path d="M23,13h-2c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S23.6,13,23,13z"></path>
+    <path d="M4.2,20.8c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l1.4-1.4c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-1.4,1.4C4.7,20.7,4.5,20.8,4.2,20.8z"></path>
+    <path d="M18.4,6.6c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l1.4-1.4c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-1.4,1.4C18.9,6.5,18.6,6.6,18.4,6.6z"></path>
+  </symbol>
+  <symbol id="moon" viewBox="0 0 24 24">
+    <path d="M12.1,22c-0.3,0-0.6,0-0.9,0c-5.5-0.5-9.5-5.4-9-10.9c0.4-4.8,4.2-8.6,9-9c0.4,0,0.8,0.2,1,0.5c0.2,0.3,0.2,0.8-0.1,1.1c-2,2.7-1.4,6.4,1.3,8.4c2.1,1.6,5,1.6,7.1,0c0.3-0.2,0.7-0.3,1.1-0.1c0.3,0.2,0.5,0.6,0.5,1c-0.2,2.7-1.5,5.1-3.6,6.8C16.6,21.2,14.4,22,12.1,22zM9.3,4.4c-2.9,1-5,3.6-5.2,6.8c-0.4,4.4,2.8,8.3,7.2,8.7c2.1,0.2,4.2-0.4,5.8-1.8c1.1-0.9,1.9-2.1,2.4-3.4c-2.5,0.9-5.3,0.5-7.5-1.1C9.2,11.4,8.1,7.7,9.3,4.4z"></path>
+  </symbol>
+  <symbol id="github" viewBox="0 0 24 24">
+    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path>
+  </symbol>
+  <symbol id="menu" viewBox="0 0 24 24">
+    <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path>
+  </symbol>
+</svg>
+
+<script src="assets/js/main.js"></script>
+<script>
+  const likeBtn = document.getElementById('like-btn')
+  const likeCount = document.getElementById('like-count')
+  if (likeBtn && likeCount) {
+    likeBtn.addEventListener('click', () => {
+      const n = parseInt(likeCount.innerText, 10) || 0
+      likeCount.innerText = n + 1
+      likeBtn.style.color = 'var(--c-red-2)'
+    })
+  }
+</script>
+</body>
+</html>
