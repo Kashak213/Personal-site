@@ -52,81 +52,92 @@
   --c-amber-soft: rgba(255, 180, 84, .12);
 }
 
-/* Single amber accent drives links, headings, hover states */
+/* Classic developer blue accent (danfiumara.com) + subtle medv.io restraint */
 :root {
   --c-default-soft: var(--c-gray-soft);
-  --c-brand-1: var(--c-amber-1);
-  --c-brand-2: var(--c-amber-2);
-  --c-brand-3: var(--c-amber-3);
-  --c-brand-soft: var(--c-amber-soft);
+  --c-brand-1: #268bd2;
+  --c-brand-2: #1c6ea4;
+  --c-brand-3: #3a9be0;
+  --c-brand-soft: rgba(38, 139, 210, .12);
   --c-on-brand: #fff;
 }
 
 .dark {
-  --c-on-brand: #1a1204;
+  --c-brand-1: #4aa8e8;
+  --c-brand-2: #72bef2;
+  --c-brand-3: #268bd2;
+  --c-brand-soft: rgba(74, 168, 232, .14);
+  --c-on-brand: #121212;
 }
 
 :root {
-  --font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --code-color: var(--c-brand-1);
-  --code-bg: var(--c-default-soft);
-  --code-block-bg: var(--c-bg-alt);
-  --code-block-color: var(--c-text-1);
-  --code-line-height: 1.7;
-  --code-font-size: 15.25px;
-  --radius: 3px;
-}
-
-/* Warm paper (light) */
-:root {
-  --c-bg: #f4f1ea;
-  --c-bg-alt: #ebe7dc;
-  --c-bg-elv: rgb(244 241 234 / 0.82);
-  --c-dot: rgba(60, 50, 30, .13);
-}
-
-/* Warm graphite (dark) */
-.dark {
-  --c-bg: #0c0c0e;
-  --c-bg-alt: #131316;
-  --c-bg-elv: rgb(12 12 14 / 0.82);
-  --c-dot: rgba(255, 245, 225, .07);
-}
-
-:root {
-  --c-border: #cbc4b2;
-  --c-divider: #dcd6c6;
+  --code-color: var(--c-text-1);
+  --code-bg: #e5e5e5;
+  --code-block-bg: #272822;
+  --code-block-color: #f8f8f2;
+  --code-line-height: 1.65;
+  --code-font-size: 14.5px;
+  --radius: 4px;
 }
 
 .dark {
-  --c-border: #2e2e35;
-  --c-divider: #212127;
+  --code-color: #eee;
+  --code-bg: #2a2a2e;
+  --code-block-bg: #1b1c18;
+  --code-block-color: #f8f8f2;
+}
+
+/* Clean off-white paper (light, danfiumara.com) */
+:root {
+  --c-bg: #faf9f6;
+  --c-bg-alt: #f1f0ec;
+  --c-bg-elv: rgb(250 249 246 / 0.92);
+  --c-dot: transparent;
+}
+
+/* Flat charcoal dark (danfiumara.com) */
+.dark {
+  --c-bg: #121212;
+  --c-bg-alt: #1b1b1d;
+  --c-bg-elv: rgb(18 18 18 / 0.92);
+  --c-dot: transparent;
 }
 
 :root {
-  --shadow-1: 0 1px 2px rgba(0, 0, 0, .04), 0 1px 2px rgba(0, 0, 0, .06);
-  --shadow-2: 0 3px 12px rgba(0, 0, 0, .07), 0 1px 4px rgba(0, 0, 0, .07);
-  --shadow-3: 0 12px 32px rgba(0, 0, 0, .1), 0 2px 6px rgba(0, 0, 0, .08);
-  --shadow-4: 0 14px 44px rgba(0, 0, 0, .12), 0 3px 9px rgba(0, 0, 0, .12);
-  --shadow-5: 0 18px 56px rgba(0, 0, 0, .16), 0 4px 12px rgba(0, 0, 0, .16);
-}
-
-:root {
-  --c-text-1: rgb(28, 27, 25);
-  --c-text-2: rgba(28, 27, 25, .72);
-  --c-text-3: rgba(28, 27, 25, .48);
+  --c-border: #d8d6cf;
+  --c-divider: #e5e5e2;
 }
 
 .dark {
-  --c-text-1: rgb(236, 233, 226);
-  --c-text-2: rgba(236, 233, 226, .66);
-  --c-text-3: rgba(236, 233, 226, .4);
+  --c-border: #333338;
+  --c-divider: #26262a;
 }
 
 :root {
-  --max-width: 860px;
-  --main-padding: 32px;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, .05);
+  --shadow-2: 0 3px 10px rgba(0, 0, 0, .08);
+  --shadow-3: 0 10px 24px rgba(0, 0, 0, .12);
+  --shadow-4: 0 14px 36px rgba(0, 0, 0, .15);
+  --shadow-5: 0 18px 48px rgba(0, 0, 0, .2);
+}
+
+:root {
+  --c-text-1: #222222;
+  --c-text-2: #555555;
+  --c-text-3: #767676;
+}
+
+.dark {
+  --c-text-1: #eeeeee;
+  --c-text-2: #a8a8a8;
+  --c-text-3: #7c7c7c;
+}
+
+:root {
+  --max-width: 780px;
+  --main-padding: 28px;
 }
 
 * {
@@ -140,15 +151,10 @@ html.dark {
 body {
   margin: 0;
   font-family: var(--font-family), sans-serif;
-  font-size: 17px;
-  line-height: 1;
+  font-size: 16.5px;
+  line-height: 1.5;
   color: var(--c-text-1);
   background-color: var(--c-bg);
-  /* faint dot grid, like engineering paper */
-  background-image: radial-gradient(var(--c-dot) 1px, transparent 1px);
-  background-size: 22px 22px;
-  background-position: -1px -1px;
-  counter-reset: sec;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -197,47 +203,31 @@ a, area, button, [role='button'], input, label, select, summary, textarea {
 }
 
 h1 {
-  margin: 30px 0 26px;
-  letter-spacing: -.035em;
-  line-height: 1.1;
-  font-size: 40px;
+  margin: 30px 0 22px;
+  letter-spacing: -.025em;
+  line-height: 1.18;
+  font-size: 34px;
   font-weight: 700;
   color: var(--c-text-1);
 }
 
-/* Section headings read like numbered datasheet labels: "01 / links" */
 h2 {
-  counter-increment: sec;
-  margin: 16px 0 16px;
-  padding-top: 28px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  font-family: var(--font-family-mono), monospace;
-  line-height: 20px;
-  font-size: 12.5px;
+  margin: 36px 0 14px;
+  padding-bottom: 6px;
+  letter-spacing: -.015em;
+  line-height: 1.3;
+  font-size: 21px;
   font-weight: 700;
-  color: var(--c-text-3);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-h2::before {
-  content: counter(sec, decimal-leading-zero);
-  color: var(--c-brand-1);
-}
-
-h2::after {
-  content: "";
-  flex: 1;
-  border-top: 1px solid var(--c-divider);
+  color: var(--c-text-1);
+  border-bottom: 1px solid var(--c-divider);
 }
 
 h3 {
-  margin: 32px 0 0;
+  margin: 26px 0 8px;
   letter-spacing: -.01em;
-  line-height: 28px;
-  font-size: 18px;
+  line-height: 1.35;
+  font-size: 17.5px;
+  color: var(--c-text-1);
 }
 
 hr {
@@ -341,39 +331,17 @@ nav a:hover {
 }
 
 .nav-title a {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1;
   font-weight: 700;
-  letter-spacing: 0;
+  letter-spacing: -0.01em;
   color: var(--c-text-1);
   text-decoration: none;
-}
-
-.nav-title a::before {
-  content: "~/";
-  color: var(--c-brand-1);
-  margin-right: 1px;
-}
-
-.nav-title a::after {
-  content: "";
-  display: inline-block;
-  width: 7px;
-  height: 14px;
-  margin-left: 4px;
-  vertical-align: -2px;
-  background: var(--c-brand-1);
-  animation: caret 1.1s steps(1) infinite;
 }
 
 .nav-title a:hover {
-  color: var(--c-text-1);
+  color: var(--c-brand-1);
   text-decoration: none;
-}
-
-@keyframes caret {
-  0%, 55% { opacity: 1; }
-  56%, 100% { opacity: 0; }
 }
 
 .nav-menu {

@@ -180,7 +180,11 @@
     }
 
     .sticker.prereq-note h2::before {
-      content: "00";
+      content: "00 ";
+      font-family: var(--font-family-mono), monospace;
+      font-size: 13px;
+      color: var(--c-brand-1);
+      margin-right: 4px;
     }
 
     .sticker.prereq-note .prereq-card-links {
@@ -274,10 +278,11 @@
     .sticker h2 {
       font-size: 19px;
       font-weight: 800;
-      line-height: 1.2;
+      line-height: 1.25;
       letter-spacing: -0.015em;
       margin: 0 0 8px;
-      padding-top: 0;
+      padding: 0;
+      border-bottom: none;
       color: var(--c-text-1);
     }
 

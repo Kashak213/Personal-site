@@ -39,14 +39,27 @@
     .blog-posts {
       display: flex;
       flex-direction: column;
+      margin: 12px 0 36px;
+    }
+
+    .blog-post-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
       flex-wrap: wrap;
-      gap: 28px;
-      margin-block: 40px;
+      gap: 6px 16px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--c-divider);
+    }
+
+    .blog-post-row:last-child {
+      border-bottom: none;
     }
 
     .blog-posts a {
-      font-size: 28px;
-      line-height: 1.5;
+      font-size: 18px;
+      line-height: 1.45;
+      font-weight: 600;
       text-decoration: none;
     }
 
@@ -54,36 +67,36 @@
       text-decoration: underline;
     }
 
-    .blog-post-row {
-      display: flex;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 12px;
+    .blog-posts .post-wip {
+      font-size: 18px;
+      line-height: 1.45;
+      font-weight: 500;
+      color: var(--c-text-2);
+    }
+
+    .post-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-family-mono), monospace;
+      font-size: 12px;
+      color: var(--c-text-3);
+      white-space: nowrap;
     }
 
     .blog-status {
       font-family: var(--font-family-mono), monospace;
       font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 3px 8px;
+      font-weight: 600;
+      padding: 2px 7px;
       border-radius: var(--radius);
       background: var(--c-green-soft);
       color: var(--c-green-1);
-      vertical-align: middle;
     }
 
     .blog-status.is-wip {
-      background: var(--c-amber-soft);
-      color: var(--c-amber-1);
-    }
-
-    .blog-posts .post-wip {
-      font-size: 28px;
-      line-height: 1.5;
-      font-weight: 500;
-      color: var(--c-text-2);
+      background: var(--c-default-soft);
+      color: var(--c-text-3);
     }
   </style>
 </head>
@@ -153,23 +166,25 @@
 </div>
 
 <main>
+  <h1>Posts</h1>
+
   <h2>2026</h2>
   <div class="blog-posts">
     <div class="blog-post-row">
-      <a href="gf-chip-design.html">Two-Digit BCD Adding Calculator — GlobalFoundries NextGen Engineers</a>
-      <span class="blog-status">completed</span>
+      <a href="homelab.html">Self-Hosted Homelab &amp; Intel iGPU AI Camera NVR</a>
+      <span class="post-right"><span>Nov 2026</span><span class="blog-status">published</span></span>
+    </div>
+    <div class="blog-post-row">
+      <a href="gf-chip-design.html">Two-Digit BCD Adding Calculator (GlobalFoundries NextGen Engineers)</a>
+      <span class="post-right"><span>Nov 2026</span><span class="blog-status">published</span></span>
     </div>
     <div class="blog-post-row">
       <span class="post-wip">Designing an Edge AI Pipeline for UAV Wildfire Detection</span>
-      <span class="blog-status is-wip">in progress</span>
-    </div>
-    <div class="blog-post-row">
-      <a href="homelab.html">Self-Hosted Homelab &amp; Intel iGPU AI Camera NVR</a>
-      <span class="blog-status">completed</span>
+      <span class="post-right"><span class="blog-status is-wip">in progress</span></span>
     </div>
     <div class="blog-post-row">
       <span class="post-wip">Chemical Powder Production Research: Process Modeling &amp; Synthesis</span>
-      <span class="blog-status is-wip">in progress</span>
+      <span class="post-right"><span class="blog-status is-wip">in progress</span></span>
     </div>
   </div>
 </main>
