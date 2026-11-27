@@ -178,6 +178,32 @@
       transform: rotate(0deg) scale(1.02);
     }
 
+    .sticker.prereq-note {
+      border: 1px dashed var(--c-border);
+      opacity: 0.9;
+    }
+
+    .sticker.prereq-note:hover {
+      opacity: 1;
+    }
+
+    .sticker.prereq-note h2 {
+      counter-increment: none;
+    }
+
+    .sticker.prereq-note h2::before {
+      content: "00";
+    }
+
+    .sticker.prereq-note .prereq-card-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+      font-family: var(--font-family-mono), monospace;
+      font-size: 12px;
+    }
+
     .prereq-strip {
       grid-column: 1 / -1;
       display: flex;
@@ -502,12 +528,12 @@
     <h1 class="title-sticker">Projects</h1>
     <div class="stars-sticker" title="Active &amp; shipped projects">
       <svg viewBox="0 0 16 16" width="14" height="14"><path fill="currentColor" d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
-      3 active · 7 completed
+      3 active · 8 completed
     </div>
   </header>
 
   <div class="filter-bar" role="tablist" aria-label="Filter projects by category">
-    <button type="button" class="filter-btn active" data-filter="all">All (12)</button>
+    <button type="button" class="filter-btn active" data-filter="all">All (13)</button>
     <button type="button" class="filter-btn" data-filter="hardware">Silicon &amp; Hardware</button>
     <button type="button" class="filter-btn" data-filter="software">Software &amp; Systems</button>
     <button type="button" class="filter-btn" data-filter="research">Robotics, Research &amp; Hackathons</button>
@@ -516,7 +542,22 @@
 
   <div class="project-group" data-category="hardware">
     <h3 class="section-h">Silicon, Hardware &amp; Embedded</h3>
-    <div class="wall small">
+    <div class="wall three">
+      <div id="prereq-101" class="sticker prereq-note" style="--tilt: -1.5deg; --tape-tilt: 3deg; --lang: #30a46c;">
+        <span class="pin" aria-hidden="true"></span>
+        <h2>101-counter-lock</h2>
+        <p>Earlier Tiny Tapeout warm-up project practicing gate-level logic, clocked flip-flops, and the Sky130A silicon layout flow leading up to <code>gf-chip-design</code>.</p>
+        <div class="prereq-card-links">
+          <a href="https://wokwi.com/projects/478889023003507713" target="_blank" rel="noopener">Wokwi ↗</a>
+          <a href="https://gds-viewer.tinytapeout.com/?pdk=sky130A&amp;model=https%3A%2F%2Fskyvk18.github.io%2F101-password-lock%2F%2Ftinytapeout.oas" target="_blank" rel="noopener">3D Silicon ↗</a>
+          <a href="https://github.com/Skyvk18/101-password-lock" target="_blank" rel="noopener">GitHub ↗</a>
+        </div>
+        <div class="meta">
+          <span class="lang"><span class="dot"></span>Tiny Tapeout</span>
+          <span class="status-pill is-info">prereq project</span>
+        </div>
+      </div>
+
       <a id="gf-chip" href="gf-chip-design.html" class="sticker big" style="--tilt: 1.5deg; --tape-tilt: -3deg; --lang: #30a46c;">
         <span class="tape" aria-hidden="true"></span>
         <h2>gf-chip-design</h2>
@@ -536,18 +577,6 @@
           <span class="status-pill is-active">active</span>
         </div>
       </a>
-
-      <div class="prereq-strip">
-        <div>
-          <span class="prereq-label">Prereq</span>
-          <strong>101 Counter &amp; Sequence Lock</strong> — earlier Tiny Tapeout warm-up project practicing clocked flip-flops and Sky130A layout leading up to <code>gf-chip-design</code>.
-        </div>
-        <div class="prereq-links">
-          <a href="https://wokwi.com/projects/478889023003507713" target="_blank" rel="noopener">Wokwi ↗</a>
-          <a href="https://gds-viewer.tinytapeout.com/?pdk=sky130A&amp;model=https%3A%2F%2Fskyvk18.github.io%2F101-password-lock%2F%2Ftinytapeout.oas" target="_blank" rel="noopener">3D Silicon ↗</a>
-          <a href="https://github.com/Skyvk18/101-password-lock" target="_blank" rel="noopener">GitHub ↗</a>
-        </div>
-      </div>
     </div>
   </div>
 
