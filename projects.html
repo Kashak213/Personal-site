@@ -172,6 +172,12 @@
       display: none;
     }
 
+    .sticker.is-targeted {
+      outline: 2px solid var(--c-brand-1);
+      outline-offset: 4px;
+      transform: rotate(0deg) scale(1.02);
+    }
+
     .prereq-strip {
       grid-column: 1 / -1;
       display: flex;
@@ -578,7 +584,7 @@
         </div>
       </a>
 
-      <a href="post-template.html" class="sticker" style="--tilt: 1deg; --tape-tilt: 3deg; --lang: #555555;">
+      <a id="micrograd" href="post-template.html" class="sticker" style="--tilt: 1deg; --tape-tilt: 3deg; --lang: #555555;">
         <span class="tape" aria-hidden="true"></span>
         <h2>micrograd-c</h2>
         <p>Zero-dependency reverse-mode automatic differentiation and SIMD tensor library in 900 lines of C99.</p>
@@ -722,15 +728,39 @@
 <script>
   const filterBtns = document.querySelectorAll('.filter-btn')
   const groups = document.querySelectorAll('.project-group')
+
+  function activateCategory(cat) {
+    filterBtns.forEach((b) => b.classList.toggle('active', b.dataset.filter === cat))
+    groups.forEach((g) => {
+      g.classList.toggle('hidden', cat !== 'all' && g.dataset.category !== cat)
+    })
+  }
+
   filterBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
-      const cat = btn.dataset.filter
-      filterBtns.forEach((b) => b.classList.toggle('active', b === btn))
-      groups.forEach((g) => {
-        g.classList.toggle('hidden', cat !== 'all' && g.dataset.category !== cat)
-      })
+      activateCategory(btn.dataset.filter)
+      document.querySelectorAll('.sticker.is-targeted').forEach((el) => el.classList.remove('is-targeted'))
     })
   })
+
+  function openTargetFromUrl() {
+    const hash = window.location.hash ? window.location.hash.slice(1) : ''
+    if (!hash) return
+    const target = document.getElementById(hash)
+    if (!target) return
+    const group = target.closest('.project-group')
+    if (group && group.dataset.category) {
+      activateCategory(group.dataset.category)
+    }
+    document.querySelectorAll('.sticker.is-targeted').forEach((el) => el.classList.remove('is-targeted'))
+    target.classList.add('is-targeted')
+    requestAnimationFrame(() => {
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    })
+  }
+
+  openTargetFromUrl()
+  window.addEventListener('hashchange', openTargetFromUrl)
 </script>
 </body>
 </html>
