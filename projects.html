@@ -526,17 +526,16 @@
 <main>
   <header class="wall-header">
     <h1 class="title-sticker">Projects</h1>
-    <div class="stars-sticker" title="Active &amp; shipped projects">
+    <div class="stars-sticker" title="In-progress &amp; completed projects">
       <svg viewBox="0 0 16 16" width="14" height="14"><path fill="currentColor" d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
-      3 active · 8 completed
+      5 in progress · 2 completed
     </div>
   </header>
 
   <div class="filter-bar" role="tablist" aria-label="Filter projects by category">
-    <button type="button" class="filter-btn active" data-filter="all">All (13)</button>
+    <button type="button" class="filter-btn active" data-filter="all">All (10)</button>
     <button type="button" class="filter-btn" data-filter="hardware">Silicon &amp; Hardware</button>
-    <button type="button" class="filter-btn" data-filter="software">Software &amp; Systems</button>
-    <button type="button" class="filter-btn" data-filter="research">Robotics, Research &amp; Hackathons</button>
+    <button type="button" class="filter-btn" data-filter="research">Robotics, Research &amp; Systems</button>
     <button type="button" class="filter-btn" data-filter="leadership">Mentorship &amp; Leadership</button>
   </div>
 
@@ -568,95 +567,60 @@
         </div>
       </a>
 
-      <a id="drone" href="post-template.html" class="sticker big" style="--tilt: -1deg; --tape-tilt: 5deg; --lang: #e0575b;">
+      <div id="drone" class="sticker big" style="--tilt: -1deg; --tape-tilt: 5deg; --lang: #e0575b;">
         <span class="tape" aria-hidden="true"></span>
         <h2>fire-drone-ai</h2>
-        <p>Autonomous UAV edge-AI system using lightweight computer vision for real-time forest fire detection, integrated with custom drone avionics and airframe design.</p>
+        <p>Autonomous UAV edge-AI project for early forest fire detection, currently working on the detection model and drone hardware design.</p>
         <div class="meta">
           <span class="lang"><span class="dot"></span>Edge AI · UAV Hardware</span>
-          <span class="status-pill is-active">active</span>
+          <span class="status-pill is-active">in progress</span>
         </div>
-      </a>
-    </div>
-  </div>
-
-  <div class="project-group" data-category="software">
-    <h3 class="section-h">Software &amp; Systems</h3>
-    <div class="wall three">
-      <a id="homelab" href="post-template.html" class="sticker" style="--tilt: -1deg; --tape-tilt: -4deg; --lang: #7952b3;">
-        <span class="tape" aria-hidden="true"></span>
-        <h2>homelab-stack</h2>
-        <p>Self-hosted private infrastructure running open-source smart home automations, lossless music streaming, and local LLM inference engines.</p>
-        <div class="meta">
-          <span class="lang"><span class="dot"></span>Linux · Docker</span>
-          <span class="status-pill is-active">active</span>
-        </div>
-      </a>
-
-      <a id="micrograd" href="post-template.html" class="sticker" style="--tilt: 1deg; --tape-tilt: 3deg; --lang: #555555;">
-        <span class="tape" aria-hidden="true"></span>
-        <h2>micrograd-c</h2>
-        <p>Zero-dependency reverse-mode automatic differentiation and SIMD tensor library in 900 lines of C99.</p>
-        <div class="meta">
-          <span class="lang"><span class="dot"></span>C99</span>
-          <span class="stars"><svg viewBox="0 0 16 16" width="12" height="12"><path fill="currentColor" d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>142</span>
-        </div>
-      </a>
-
-      <a href="post-template.html" class="sticker" style="--tilt: -1.5deg; --tape-tilt: -2deg; --lang: #f34b7d;">
-        <span class="tape" aria-hidden="true"></span>
-        <h2>raymarch</h2>
-        <p>Multithreaded BVH path tracer with next-event estimation, dielectric materials, and physically based camera lens model.</p>
-        <div class="meta">
-          <span class="lang"><span class="dot"></span>C++20</span>
-          <span class="stars"><svg viewBox="0 0 16 16" width="12" height="12"><path fill="currentColor" d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>89</span>
-        </div>
-      </a>
+      </div>
     </div>
   </div>
 
   <div class="project-group" data-category="research">
-    <h3 class="section-h">Robotics, Research &amp; Hackathons</h3>
+    <h3 class="section-h">Robotics, Research &amp; Systems</h3>
     <div class="wall small">
-      <a id="robotics" href="post-template.html" class="sticker" style="--tilt: -1.2deg; --tape-tilt: 4deg; --lang: #d5393e;">
+      <div id="homelab" class="sticker" style="--tilt: -1deg; --tape-tilt: -4deg; --lang: #7952b3;">
+        <span class="tape" aria-hidden="true"></span>
+        <h2>homelab-stack</h2>
+        <p>Self-hosted private infrastructure running open-source smart home automations, music streaming, and local AI experiments. Write-up in progress.</p>
+        <div class="meta">
+          <span class="lang"><span class="dot"></span>Linux · Self-Hosting</span>
+          <span class="status-pill is-active">in progress</span>
+        </div>
+      </div>
+
+      <div id="robotics" class="sticker" style="--tilt: 1.2deg; --tape-tilt: 4deg; --lang: #d5393e;">
         <span class="tape" aria-hidden="true"></span>
         <h2>FRC Robotics — Mechanical Captain</h2>
-        <p>Leading mechanical design, CAD modeling, precision machining, and swerve drive optimization for FIRST Robotics Competition robots.</p>
+        <p>Leading mechanical design, CAD modeling, precision machining, and swerve drive integration for Shenendehowa FIRST Robotics Competition robots.</p>
         <div class="meta">
           <span class="lang"><span class="dot"></span>CAD · Robotics</span>
-          <span class="status-pill is-info">lead</span>
+          <span class="status-pill is-active">in progress</span>
         </div>
-      </a>
+      </div>
 
-      <a id="research" href="post-template.html" class="sticker" style="--tilt: 1.2deg; --tape-tilt: -4deg; --lang: #5672cd;">
+      <div id="research" class="sticker" style="--tilt: -1.2deg; --tape-tilt: -4deg; --lang: #5672cd;">
         <span class="pin" aria-hidden="true"></span>
         <h2>Chemical Powder Production Research</h2>
         <p>Active student researcher investigating industrial chemical powder synthesis, reaction mechanics, and material process optimization.</p>
         <div class="meta">
           <span class="lang"><span class="dot"></span>ChemE · Materials</span>
-          <span class="status-pill is-info">research</span>
+          <span class="status-pill is-active">in progress</span>
         </div>
-      </a>
+      </div>
 
-      <a href="post-template.html" class="sticker" style="--tilt: 1.5deg; --tape-tilt: -5deg; --lang: #f34b7d;">
-        <span class="tape" aria-hidden="true"></span>
-        <h2>Swerve Trajectory Planner</h2>
-        <p>Time-optimal cubic spline generator and closed-loop odometry estimator for autonomous competition robotics.</p>
-        <div class="meta">
-          <span class="lang"><span class="dot"></span>C++</span>
-          <span class="status-pill">completed</span>
-        </div>
-      </a>
-
-      <a href="#" class="sticker" style="--tilt: -1.5deg; --tape-tilt: 3deg; --lang: #3572A5;">
+      <div class="sticker" style="--tilt: 1.5deg; --tape-tilt: 3deg; --lang: #3572A5;">
         <span class="tape" aria-hidden="true"></span>
         <h2>NASA Space Apps 2026 (Agriculture pattern recognition)</h2>
-        <p style="min-height: 36px; color: var(--c-text-3); font-style: italic;">Write-up &amp; details coming soon...</p>
+        <p style="min-height: 36px; color: var(--c-text-3); font-style: italic;">Write-up &amp; details in progress...</p>
         <div class="meta">
           <span class="lang"><span class="dot"></span>Hackathon</span>
-          <span class="status-pill is-info">2026</span>
+          <span class="status-pill is-active">in progress</span>
         </div>
-      </a>
+      </div>
     </div>
   </div>
 
