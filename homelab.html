@@ -343,17 +343,17 @@
 
   <div class="post-header-meta">
     <span class="status-badge">Running</span>
-    <span>Dell OptiPlex 5070 · Ubuntu 26.04.1 LTS · 6 Docker Services</span>
+    <span>Dell OptiPlex 5070 · Ubuntu LTS · 6 Docker Services</span>
     <span>·</span>
     <span>November 2026</span>
   </div>
 
   <p>
-    I repurposed a compact Dell OptiPlex 5070 desktop into a fully local, subscription-free home server running six Dockerized services: network-wide DNS ad-blocking, self-hosted music streaming, MQTT messaging, container management, smart-home orchestration, and an Intel iGPU-accelerated AI Network Video Recorder (NVR).
+    I repurposed a compact Dell OptiPlex 5070 desktop into a local, subscription-free home server running six Dockerized services: network-wide DNS ad-blocking, self-hosted music streaming, MQTT messaging, container management, smart-home orchestration, and an Intel iGPU-accelerated AI Network Video Recorder (NVR).
   </p>
 
   <p>
-    The biggest engineering focus was building a privacy-first, multi-camera security system using Frigate NVR and Home Assistant with zero cloud subscriptions. Along the way I solved hardware-accelerated video decoding, cross-device Android codec compatibility, custom camera API control for spotlights and sirens, remote VPN access, cellular push notifications with lock-screen snapshots, and self-healing DHCP tracking.
+    The main engineering challenge was building a privacy-first local NVR pipeline with Frigate and Home Assistant using zero cloud subscriptions. Most of the work went into hardware-accelerated video decoding, cross-device mobile codec compatibility, a custom Python microservice for hardware camera controls, encrypted VPN access, and reliable push notifications over cellular data.
   </p>
 
   <div class="spec-grid">
@@ -371,7 +371,7 @@
     </div>
     <div class="spec-item">
       <span class="spec-label">Open Ports</span>
-      <span class="spec-value">0 (Tailscale)</span>
+      <span class="spec-value">0 (VPN Only)</span>
     </div>
   </div>
 
@@ -381,20 +381,20 @@
     <div class="hw-card">
       <h3>Compute &amp; Graphics</h3>
       <ul>
-        <li><strong>Machine:</strong> Dell OptiPlex 5070</li>
+        <li><strong>Machine:</strong> Repurposed Dell OptiPlex 5070</li>
         <li><strong>CPU:</strong> Intel Core i5-8500 (6 cores / 6 threads @ 3.00 GHz)</li>
-        <li><strong>iGPU:</strong> Intel UHD Graphics 630 passed into Frigate via <code>/dev/dri/renderD128</code> for VAAPI decode and OpenVINO inference</li>
+        <li><strong>iGPU:</strong> Intel UHD Graphics 630 passed into Docker via VAAPI and OpenVINO for video decode and local inference</li>
         <li><strong>RAM:</strong> 8 GB DDR4 (about 3.1 GiB active across all 6 containers)</li>
-        <li><strong>NIC:</strong> Intel I219-V Gigabit Ethernet</li>
+        <li><strong>Networking:</strong> Gigabit Ethernet with key-based SSH administration</li>
       </ul>
     </div>
     <div class="hw-card">
-      <h3>OS &amp; Storage</h3>
+      <h3>OS &amp; Storage Layout</h3>
       <ul>
-        <li><strong>OS:</strong> Ubuntu 26.04.1 LTS (Linux 7.0)</li>
-        <li><strong>Boot Drive:</strong> 233 GB NVMe SSD for OS and Docker layers</li>
-        <li><strong>Media Drive:</strong> 1 TB SATA HDD mounted at <code>/mnt/storage</code> for Frigate clips, Home Assistant state, Mosquitto data, and Navidrome music</li>
-        <li><strong>Access:</strong> Passwordless Ed25519 SSH over LAN and Tailscale</li>
+        <li><strong>OS:</strong> Ubuntu LTS with Docker Compose stacks</li>
+        <li><strong>Boot Drive:</strong> NVMe SSD dedicated to the OS and container images</li>
+        <li><strong>Data Drive:</strong> Dedicated 1 TB SATA HDD for NVR media retention, smart-home state, MQTT data, and personal music library</li>
+        <li><strong>Remote Access:</strong> Encrypted WireGuard mesh VPN with zero exposed router ports</li>
       </ul>
     </div>
   </div>
@@ -405,41 +405,41 @@
     <table class="data-table">
       <thead>
         <tr>
-          <th>Container</th>
-          <th>Ports / Network</th>
+          <th>Service</th>
+          <th>Category</th>
           <th>Role in Homelab</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><strong>frigate</strong></td>
-          <td><code>5000</code>, <code>8971</code>, <code>8554</code>, <code>8555</code></td>
-          <td>Local AI object detection (OpenVINO on Intel iGPU), go2rtc restreaming, 90-105 day event retention, and custom Reolink camera controls.</td>
+          <td><strong>Frigate NVR</strong></td>
+          <td>AI Video NVR</td>
+          <td>Local object detection on the Intel iGPU via OpenVINO, <code>go2rtc</code> restreaming, rolling event retention, and custom hardware controls.</td>
         </tr>
         <tr>
-          <td><strong>homeassistant</strong></td>
-          <td><code>8123</code> (host)</td>
-          <td>Unified web and mobile dashboard for family Android phones with live camera feeds, Frigate integration, and a custom Security Panel.</td>
+          <td><strong>Home Assistant</strong></td>
+          <td>Smart Home</td>
+          <td>Unified web and mobile dashboard aggregating live feeds, detection events, and synchronized device controls.</td>
         </tr>
         <tr>
-          <td><strong>mosquitto</strong></td>
-          <td><code>1883</code> (host)</td>
-          <td>Real-time MQTT message bus linking Frigate detection events, camera states, and toggles into Home Assistant.</td>
+          <td><strong>Mosquitto</strong></td>
+          <td>MQTT Broker</td>
+          <td>Lightweight real-time message bus connecting NVR detection states and toggles directly into Home Assistant.</td>
         </tr>
         <tr>
-          <td><strong>pihole</strong></td>
-          <td><code>53</code>, <code>80/443</code></td>
-          <td>Network-wide DNS sinkhole blocking ads and trackers across LAN devices.</td>
+          <td><strong>Pi-hole</strong></td>
+          <td>DNS / AdBlock</td>
+          <td>Network-wide DNS sinkhole filtering ad and tracker domains across local devices.</td>
         </tr>
         <tr>
-          <td><strong>navidrome</strong></td>
-          <td><code>4533</code></td>
-          <td>Self-hosted music streaming server indexing <code>/mnt/storage/music</code> over web and Subsonic mobile apps.</td>
+          <td><strong>Navidrome</strong></td>
+          <td>Media Server</td>
+          <td>Self-hosted Subsonic-compatible music streaming server for web and mobile clients.</td>
         </tr>
         <tr>
-          <td><strong>portainer</strong></td>
-          <td><code>9000</code>, <code>9443</code></td>
-          <td>Web UI for inspecting Docker containers, logs, volumes, and restarts.</td>
+          <td><strong>Portainer</strong></td>
+          <td>Container UI</td>
+          <td>Web interface for monitoring container health, logs, volumes, and stack updates.</td>
         </tr>
       </tbody>
     </table>
@@ -447,62 +447,58 @@
 
   <h2>System Architecture &amp; Data Flow</h2>
 
-<pre><code>[Reolink Duo 2 PoE]                       [TP-Link Tapo Window Cam]
-Static LAN IP                             Auto-Healed DHCP IP
-Main: 4608x1728 H.265 (20fps)             Main: 2560x1440 H.264 (#media=video)
-Sub:  1536x576 H.264 (10fps)              Sub:  640x360 H.264 (#media=video)
-         |                                         |
-         +--------------------+--------------------+
-                              v
-      +-----------------------------------------------+
-      |        FRIGATE NVR (Docker + Intel iGPU)      |
-      | - go2rtc restreamer (2560x960 H.264 live +    |
-      |   2-way PCMU backchannel on garage_cam)       |
-      | - OpenVINO GPU detector (~11-13 ms)           |
-      | - Custom reolink_controller.py (:15080/15081) |
-      +--------+----------------------+---------------+
-               |                      |
-     MQTT (:1883) &amp; RTSP/API    Read-only /public_snap/
-               v                      v
-      +-----------------+    +------------------------+
-      | Mosquitto &amp;     |    | Cloudflared Quick      |
-      | Home Assistant  |    | Tunnel (HTTPS only)    |
-      +--------+--------+    +-----------+------------+
+<pre><code>         [Local IP Cameras (RTSP / PoE / Wi-Fi)]
+      High-res record stream + lightweight sub-stream
+                            |
+                            v
+      +-------------------------------------------+
+      |     FRIGATE NVR (Docker + Intel iGPU)     |
+      | - go2rtc restreaming &amp; on-demand H.264    |
+      | - OpenVINO GPU detector (~11-13 ms)       |
+      | - Custom Python camera-control service    |
+      +--------+-------------------------+--------+
                |                         |
-     LAN Wi-Fi / Tailscale VPN     One-time 128-bit URL
+        MQTT &amp; local API       Read-only snapshot relay
+               v                         v
+      +-----------------+      +--------------------+
+      | Mosquitto &amp;     |      | Ephemeral HTTPS    |
+      | Home Assistant  |      | Tunnel (read-only) |
+      +--------+--------+      +---------+----------+
+               |                         |
+        LAN / WireGuard VPN      One-time token URL
                |                         |
                +------------+------------+
                             v
-               Family Android Mobile Devices</code></pre>
+                      Mobile Clients</code></pre>
 
-  <h2>Camera &amp; NVR Engineering</h2>
+  <h2>Video Pipeline &amp; Automation</h2>
 
   <div class="stage-list">
     <div class="stage-card">
-      <h3>Multi-Stream Pipeline (4K Recording vs. Mobile Compatibility)</h3>
+      <h3>Multi-Stream Pipeline (4K Recording vs. Mobile Decode Limits)</h3>
       <p>
-        The Reolink Duo 2 PoE records its native <code>4608x1728</code> H.265 stream at 20 fps directly from <code>go2rtc</code> with zero video re-encoding. For live viewing, however, <code>4608px</code> exceeds the <code>4096px</code> hardware decode limit of several Android WebViews (causing infinite loading on a Motorola Edge). Splitting live view into an on-demand <code>2560x960</code> H.264 stream with Opus audio and PCMU 2-way talk fixed mobile playback while keeping full 4K recordings untouched. Object detection runs on the lightweight <code>1536x576</code> sub-stream at 5 fps on the UHD 630 iGPU in <code>11-13 ms</code>.
+        High-resolution streams (<code>4608x1728</code> H.265) are recorded directly from <code>go2rtc</code> with zero video re-encoding to keep CPU usage low. During testing, streams wider than <code>4096px</code> caused infinite loading spinners on certain mobile Android WebViews due to hardware decoder limits. Splitting live viewing into an on-demand <code>2560x960</code> H.264 stream with Opus audio solved cross-device playback while keeping raw recordings untouched. Object detection runs separately on a lightweight 5 fps sub-stream via OpenVINO on the UHD 630 iGPU in about <code>11-13 ms</code> per frame.
       </p>
     </div>
 
     <div class="stage-card">
-      <h3>Video-Only Indoor Camera &amp; Yard Zoning</h3>
+      <h3>RTSP Stream Hardening &amp; Zone Filtering</h3>
       <p>
-        The indoor Tapo window camera uses <code>#media=video</code> in <code>go2rtc</code> so audio tracks and backchannels are rejected at the RTSP SDP handshake, with recording disabled so it only sends snapshot push alerts. Outside, a polygon <code>yard</code> zone and road/neighbor masks block street traffic, tuned using daytime and night-time captures (including a 3-4% downward bounding-box shift from headlight glare) alongside per-object area and confidence thresholds.
+        Where audio is not needed, <code>go2rtc</code> strips audio tracks and backchannels directly at the RTSP SDP handshake (<code>#media=video</code>). To cut false alerts from passing traffic and night-time headlight glare, polygon detection zones and exclusion masks were tuned against real daytime and night-time capture logs alongside per-object area and confidence thresholds.
       </p>
     </div>
 
     <div class="stage-card">
-      <h3>Custom Reolink Microservice &amp; IR-Conditional Spotlight</h3>
+      <h3>Custom Camera Microservice &amp; Night-Mode State Machine</h3>
       <p>
-        Because Frigate does not natively control Reolink spotlights or sirens, I wrote a small Python microservice (<code>reolink_controller.py</code>) and an injected UI script (<code>reolink_ui.js</code>) persisted via a 1-minute host cron job. It analyzes HSV color saturation on Frigate's local snapshot to detect IR night mode without adding camera load, locks firmware <code>WhiteLed.mode = 0</code> so manual toggles never fight the camera, triggers the spotlight only on verified <code>yard</code> detections at night, and enforces a 60s manual-off cooldown plus a 15s IR-cut settling delay to stop color-to-IR feedback loops.
+        Because Frigate does not natively expose every vendor-specific hardware control, I built a small Python microservice and web UI integration that persists across container restarts. It checks HSV color saturation on local snapshots to tell IR night mode from daylight without adding extra camera load, overrides conflicting firmware auto-light behavior, and enforces cooldown timers after manual toggles and IR-cut transitions so the light never oscillates in a feedback loop.
       </p>
     </div>
 
     <div class="stage-card">
-      <h3>Cellular Snapshot Alerts &amp; Self-Healing Networking</h3>
+      <h3>Cellular Snapshot Alerts &amp; DHCP Self-Healing</h3>
       <p>
-        To deliver rich lock-screen snapshot alerts over cellular data without opening router ports or exposing Home Assistant, a sync script reads registered mobile devices and sends high-priority FCM pushes pointing to ephemeral, one-time 128-bit random URLs (<code>/public_snap/&lt;32-hex&gt;.jpg</code>) on a read-only local port behind a <code>cloudflared</code> Quick Tunnel. The Reolink stays locked to a static IP, while a 1-minute watchdog scans ports <code>554</code> and <code>2020</code> to auto-update <code>config.yml</code> if the router ever reassigns the Tapo camera's DHCP address.
+        To get lock-screen snapshot previews over cellular data without opening router ports or exposing the NVR, notifications serve short-lived, unguessable 128-bit random URLs through a read-only tunnel. On the network side, critical PoE hardware uses static addressing while Wi-Fi cameras are monitored by a lightweight watchdog script that automatically updates the NVR config if a router reassigns a DHCP lease.
       </p>
     </div>
   </div>
@@ -520,41 +516,41 @@ Sub:  1536x576 H.264 (10fps)              Sub:  640x360 H.264 (#media=video)
       </thead>
       <tbody>
         <tr>
-          <td><strong>Frigate crash loop (2,767 restarts)</strong></td>
-          <td>YAML indentation put <code>detect:</code> at 2 spaces instead of 4, plus a stream name typo.</td>
-          <td>Fixed YAML hierarchy, validated with <code>FrigateConfig.parse_yaml</code>, and added an explicit OpenVINO model block.</td>
+          <td><strong>Container crash loop</strong></td>
+          <td>YAML indentation misplaced the <code>detect:</code> block alongside a stream path typo.</td>
+          <td>Fixed YAML hierarchy, validated with Frigate's config parser, and added an explicit OpenVINO model config.</td>
         </tr>
         <tr>
-          <td><strong>Greyed-out UI &amp; Reolink error -5</strong></td>
-          <td>NGINX edit broke <code>mqtt_ws</code> port <code>5002</code>, and 1-second login polling exhausted camera session slots.</td>
-          <td>Moved custom API to isolated port <code>15080</code>, restored <code>mqtt_ws</code>, and added 3600s token caching.</td>
+          <td><strong>UI disconnect &amp; session exhaustion</strong></td>
+          <td>Reverse-proxy edit broke WebSocket proxying, and rapid polling hit the camera's concurrent session cap.</td>
+          <td>Isolated the custom API service, restored WebSocket routing, and added 1-hour API token caching.</td>
         </tr>
         <tr>
-          <td><strong>Infinite spinner on Android</strong></td>
-          <td><code>4608x1728</code> H.265 main stream exceeded Android WebView 4K decode limits.</td>
-          <td>Split <code>garage_cam_raw</code> (4K H.265 record) from <code>garage_cam</code> (on-demand <code>2560x960</code> H.264 live view).</td>
+          <td><strong>Infinite spinner on mobile</strong></td>
+          <td>Wide 4K H.265 main stream exceeded mobile WebView hardware decode width limits.</td>
+          <td>Separated the raw 4K recording stream from an on-demand <code>2560x960</code> H.264 live stream.</td>
         </tr>
         <tr>
-          <td><strong>Playback stutter (11 stalls/hr)</strong></td>
-          <td>Slow keyframes (<code>gop: 2/4</code>), high bitrate, and erratic RTSP timestamps.</td>
-          <td>Set <code>gop: 1</code>, 6144 kbps main stream, 10 fps sub-stream, and added <code>-fflags +genpts+discardcorrupt</code>.</td>
+          <td><strong>Playback stutter &amp; stalls</strong></td>
+          <td>Slow keyframe intervals (GOP) and inconsistent RTSP timestamps caused periodic decoder stalls.</td>
+          <td>Tuned camera GOP to 1, capped bitrate, and added <code>-fflags +genpts+discardcorrupt</code> to FFmpeg inputs.</td>
         </tr>
         <tr>
-          <td><strong>HA 2026.10 2nd camera error</strong></td>
-          <td>Custom Frigate integration passed deprecated <code>via_device</code> in <code>device_info</code>.</td>
-          <td>Patched out the deprecated <code>via_device</code> key so <code>camera.window_cam</code> registered cleanly.</td>
+          <td><strong>Home Assistant integration bug</strong></td>
+          <td>Upstream integration passed a deprecated <code>via_device</code> key during device registration.</td>
+          <td>Patched the deprecated key out of the custom component so new entities registered cleanly.</td>
         </tr>
         <tr>
           <td><strong>YOLOX-s vs. MobileNetV2</strong></td>
-          <td>YOLOX-s took ~71 ms on the UHD 630 iGPU and triggered overload warnings.</td>
-          <td>Kept <code>ssdlite_mobilenet_v2</code> (~11 ms) paired with tuned area/score filters and zone masks.</td>
+          <td>YOLOX-s ran ~71 ms on the UHD 630 iGPU and triggered detector overload warnings.</td>
+          <td>Benchmarked both and stayed on <code>ssdlite_mobilenet_v2</code> (~11 ms) paired with tuned zone masks and area filters.</td>
         </tr>
       </tbody>
     </table>
   </div>
 
   <div class="privacy-note">
-    <strong>Security &amp; Privacy:</strong> Zero router ports are forwarded to the public internet. Remote admin and live camera viewing run exclusively over encrypted Tailscale WireGuard tunnels, and cellular alert snapshots use one-time 128-bit read-only tokens.
+    <strong>Security Note:</strong> Specific hostnames, internal IP ranges, ports, camera placements, and credentials are intentionally omitted. No router ports are forwarded to the public internet, and all remote access runs over an encrypted WireGuard VPN.
   </div>
 </main>
 
