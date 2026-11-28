@@ -33,6 +33,14 @@
   </script>
 
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    h2[id] {
+      scroll-margin-top: 72px;
+    }
+
     .post-header-meta {
       display: flex;
       flex-wrap: wrap;
@@ -56,7 +64,7 @@
 
     .spec-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 0;
       margin: 22px 0 28px;
       border-top: 1px solid var(--c-divider);
@@ -340,18 +348,12 @@
       <span class="spec-label">Team Size</span>
       <span class="spec-value">6 Students</span>
     </div>
-    <div class="spec-item">
-      <span class="spec-label">Sensor Node</span>
-      <span class="spec-value">&lt; $40 (Uno R3)</span>
-    </div>
-    <div class="spec-item">
-      <span class="spec-label">Enclosure</span>
-      <span class="spec-value">v6 Truss (Fusion)</span>
-    </div>
   </div>
 
   <div style="display: flex; flex-wrap: wrap; gap: 10px; margin: -12px 0 28px;">
     <a class="b" href="https://farmingaura.earth" target="_blank" rel="noopener">Open Live Platform (farmingaura.earth) ↗</a>
+    <a class="b" href="#backend">Skip to Backend ↓</a>
+    <a class="b" href="#hardware">Skip to Hardware ↓</a>
   </div>
 
   <h2>Leadership &amp; System Architecture</h2>
@@ -364,23 +366,7 @@
     Beyond coordinating milestones and system integration, I owned the physical hardware and telemetry pipeline end-to-end: wiring and soldering the sensor circuits from scratch, scripting and 3D-printing the weather-resistant enclosure in Autodesk Fusion 360, building the backend API endpoints that ingest live serial telemetry, and co-designing the multi-criteria crop rotation scoring model alongside Aiden Weng.
   </p>
 
-<pre><code>  [Mobile Measurement Station (&lt;$40)]       [NASA Earth Observation]       [USDA Soil Intelligence]
-  Elegoo Uno R3 + 4 field sensors           POWER, GPM, SMAP, MODIS        SSURGO &amp; NRCS profiles
-  (9600 baud JSON every 2s)                 (climate, rain, GWETROOT)      (pH, OC%, sand/clay)
-                  \                                    |                                /
-                   \                                   v                               /
-                    +--------------------&gt; [Python Backend API] &lt;---------------------+
-                                           - NASA POWER ingestion &amp; caching
-                                           - Live MMS telemetry override/calibration
-                                           - Multi-criteria 3-year rotation scoring
-                                                       |
-                                                       v
-                                  [Web Dashboard — farmingaura.earth]
-                                  - Google Maps JS &amp; Places field planner
-                                  - 5-metric rotation breakdown &amp; 5-yr trends
-                                  - Google Gemini API plain-English rationale</code></pre>
-
-  <h2>Core Platform Capabilities</h2>
+  <h2 id="backend">Backend &amp; Platform Capabilities</h2>
 
   <div class="stage-list">
     <div class="stage-card">
@@ -412,7 +398,7 @@
     </div>
   </div>
 
-  <h2>Hardware Deep Dive: Mobile Measurement Station (MMS)</h2>
+  <h2 id="hardware">Hardware Deep Dive: Mobile Measurement Station (MMS)</h2>
 
   <p>
     To prove that ground-truth telemetry does not require a four-figure commercial weather station, I built a sub-$40 sensor node around an Elegoo Uno R3. Every two seconds, the microcontroller samples four field sensors and streams calibrated JSON over USB-B serial (<code>9600</code> baud) directly into the backend telemetry endpoints.
@@ -469,7 +455,7 @@
     </table>
   </div>
 
-  <h2>CAD &amp; 3D-Printing Iteration (Fusion 360 → Ender 3)</h2>
+  <h2>CAD &amp; 3D-Printing Iteration</h2>
 
   <p>
     Rather than clicking together a one-off box by hand, I wrote a parametric Python API script (<code>FarmingAuraWeatherBox.py</code>) for Autodesk Fusion 360 to generate the entire enclosure geometry—sensor cutouts, breadboard bay, lid lip, and cable slots—and iterated through three major structural revisions on a Creality Ender 3 after real-world print failures.
@@ -490,55 +476,15 @@
     </div>
   </div>
 
-  <h2>Team Roster &amp; Contributions</h2>
+  <h2>My Contribution &amp; End-to-End Delivery</h2>
 
   <p>
-    Deployed live on Google Cloud at <a href="https://farmingaura.earth" target="_blank" rel="noopener">farmingaura.earth</a> with a clean terracotta Figma design system, Farming Aura came together because every member owned a concrete slice of the stack:
+    While my teammates focused on building out the frontend interface, Figma layouts, and Maps/Gemini UI views, I led backend development, cloud deployment, and full-stack integration—wiring the frontend and backend together into a single live deployment on Google Cloud at <a href="https://farmingaura.earth" target="_blank" rel="noopener">farmingaura.earth</a>.
   </p>
 
-  <div class="data-table-wrap">
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>Team Member</th>
-          <th>Role</th>
-          <th>Key Contributions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Michael Vert</strong></td>
-          <td>Team Leader, Full-Stack, Hardware &amp; Scoring</td>
-          <td>Organized and led the 6-student team; engineered, wired, and soldered the MMS hardware; scripted and iterated the 3D-printed Fusion 360 enclosure; built telemetry API endpoints; co-designed the multi-criteria agronomic scoring engine.</td>
-        </tr>
-        <tr>
-          <td><strong>Aiden Weng</strong></td>
-          <td>Backend &amp; Scoring Architecture</td>
-          <td>Teamed closely on core backend workflows and the mathematical foundation of the weighted crop rotation scoring model using NASA weather and USDA soil records.</td>
-        </tr>
-        <tr>
-          <td><strong>Aniket Dixit</strong></td>
-          <td>Frontend Architecture, Figma &amp; APIs</td>
-          <td>Lead frontend developer coordinating UI structure and state transitions, Figma layouts, and Google Gemini API integration for plain-English agronomic insights.</td>
-        </tr>
-        <tr>
-          <td><strong>Rishabh Nagarkar</strong></td>
-          <td>UI/UX Design, QA &amp; Documentation</td>
-          <td>Created the terracotta Figma design system, led edge-case QA and debugging, and authored team overview and technical documentation.</td>
-        </tr>
-        <tr>
-          <td><strong>Gautham Reddy Sagili</strong></td>
-          <td>Frontend &amp; Maps Integration</td>
-          <td>Lead frontend developer integrating Google Maps JavaScript &amp; Places APIs for the satellite field boundary planner; co-designed the demo slide deck.</td>
-        </tr>
-        <tr>
-          <td><strong>Charles Wang</strong></td>
-          <td>Presentation, QA &amp; Full-Stack Integration</td>
-          <td>Co-created the demo slide deck, assisted with Figma polish and API-to-frontend connections, analyzed agricultural data tables, and tested platform UX.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <p>
+    On the hardware side, I single-handedly finished the Mobile Measurement Station overnight while the rest of the team was asleep—completing the sensor wiring and soldering, debugging the 3D-printed enclosure iterations on the Ender 3, verifying the serial JSON telemetry stream, and hooking live hardware readings directly into the backend API before demo time.
+  </p>
 
   <div class="callout-note">
     <strong>Stack Summary:</strong> Elegoo Uno R3 (C++/Serial JSON) · Fusion 360 Python API + Creality Ender 3 · Python backend (NASA POWER, GPM, SMAP, MODIS, USDA SSURGO/NRCS) · HTML/CSS/JavaScript frontend · Google Maps JavaScript &amp; Places APIs · Google Gemini API · Google Cloud (<a href="https://farmingaura.earth" target="_blank" rel="noopener">farmingaura.earth</a>).
