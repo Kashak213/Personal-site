@@ -231,6 +231,70 @@
       color: var(--c-text-2);
     }
 
+    .paper-block {
+      margin: 22px 0 28px;
+      padding: 22px 24px;
+      background: var(--c-bg-alt);
+      border: 1px solid var(--c-divider);
+      border-radius: var(--radius);
+    }
+
+    .paper-label {
+      font-family: var(--font-family-mono), monospace;
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-brand-1);
+      margin-bottom: 10px;
+    }
+
+    .paper-block .qa-q {
+      margin: 22px 0 8px;
+      font-size: 16.5px;
+      line-height: 1.4;
+      color: var(--c-text-1);
+    }
+
+    .paper-block .qa-q:first-of-type {
+      margin-top: 10px;
+    }
+
+    .paper-block .qa-num {
+      font-family: var(--font-family-mono), monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--c-brand-1);
+      margin-right: 8px;
+    }
+
+    .paper-block p {
+      margin: 8px 0 12px;
+      font-size: 15px;
+      line-height: 27px;
+      color: var(--c-text-2);
+    }
+
+    .paper-block ul {
+      margin: 8px 0 12px;
+      padding-left: 1.25rem;
+      list-style: disc;
+    }
+
+    .paper-block li {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--c-text-2);
+      margin-top: 6px;
+    }
+
+    .paper-block li strong {
+      color: var(--c-text-1);
+    }
+
+    .paper-block p:last-child {
+      margin-bottom: 0;
+    }
+
     .post-meta-bar {
       margin-inline: auto;
       margin-top: 40px;
@@ -287,6 +351,7 @@
     <div class="nav-popup">
       <a href="projects.html">projects</a>
       <a href="blog.html">blog</a>
+      <a href="tech-yap.html">tech yap</a>
       <a href="resume.html">resume</a>
       <a href="https://github.com/Kashak213">github</a>
     </div>
@@ -295,6 +360,7 @@
       <div class="nav-element">
         <a href="projects.html" style="color: var(--c-brand-1); font-weight: 600;">projects</a>
         <a href="blog.html">blog</a>
+      <a href="tech-yap.html">tech yap</a>
         <a href="resume.html">resume</a>
         <div class="my-time" data-timezone="America/New_York" title="Time in my timezone (EST)" tabindex="0">
           19:33
@@ -485,6 +551,57 @@
   <p>
     On the hardware side, I single-handedly finished the Mobile Measurement Station overnight while the rest of the team was asleep—completing the sensor wiring and soldering, debugging the 3D-printed enclosure iterations on the Ender 3, verifying the serial JSON telemetry stream, and hooking live hardware readings directly into the backend API before demo time.
   </p>
+
+  <h2 id="solve">Samsung MIT 2026–2027 SOLVE Challenge Submission</h2>
+
+  <p>
+    Following Space Apps, we submitted Farming Aura to the <strong>Samsung MIT 2026–2027 SOLVE Challenge</strong>. We believe the project is a natural fit for the exact problems the competition targets—especially because we built it completely independently before even knowing about the competition, tackling a concrete climate-change challenge facing local farmers rather than retrofitting an idea to a prompt.
+  </p>
+
+  <p>
+    Two things make our submission stand out in competitions like this. First, AI is deeply integrated into the actual farmer workflow: instead of leaving growers with raw CSVs or satellite tables, the platform processes NASA climate history, USDA soil metrics, and live field telemetry into usable graphs and direct, plain-English crop rotation advice that speaks straight to the farmer. Second, while software-only submissions are the norm at hackathons and STEM competitions, we engineered a real physical Mobile Measurement Station under $40—custom-wired, soldered, and housed in a 3D-printed triangular-core enclosure—so recommendations are grounded in live soil data rather than regional estimates alone.
+  </p>
+
+  <article class="paper-block">
+    <div class="paper-label">Official Submission Responses · Samsung MIT 2026–2027 SOLVE Challenge</div>
+    <p style="font-style: italic; color: var(--c-text-1); margin-top: 0;">
+      Farming Aura combines NASA satellite data, soil metrics, and live field sensors to recommend resilient, climate change adjusted crop rotations.
+    </p>
+
+    <h3 class="qa-q"><span class="qa-num">01</span>What specific community challenge or issue are you planning to tackle?</h3>
+    <p>
+      Small and mid-sized farms in the Northeast are getting hit hard by unpredictable weather, wet springs that delay planting, sudden summer dry spells, and shifting soil temperatures. Traditional crop rotation schedules that worked for decades don't always hold up anymore, and guessing wrong can deplete soil nitrogen, waste water, or ruin a season's yield. Commercial precision-agriculture platforms exist, but they cost thousands of dollars and rely on proprietary sensors that small family farms and community growers can't afford. On the other hand, free satellite climate datasets like NASA POWER are accurate regionally, but they're hard for a busy farmer to interpret and can't capture micro-conditions in a specific field—like a low-lying patch that stays waterlogged or dries out early. We want to tackle that gap: giving local growers an affordable, easy-to-use way to plan resilient multi-year crop rotations backed by both satellite history and real-time measurements from their own soil.
+    </p>
+
+    <h3 class="qa-q"><span class="qa-num">02</span>What is your project and how will STEM be applied to address this challenge or issue?</h3>
+    <p>
+      Our project, Farming Aura, combines a low-cost physical sensor station with a web-based crop rotation planner. On the hardware side, we engineered a Mobile Measurement Station (MMS) using an Elegoo Uno R3, a capacitive soil moisture sensor, a waterproof DS18B20 soil temperature probe, a DHT11 air temperature and humidity sensor, and a raindrop sensor. We designed a custom 3D-printed PLA weatherproof enclosure in Fusion 360, iterating through multiple prototypes and switching to a triangular-core wall structure so it stays rigid when pushed directly into soil.
+    </p>
+    <p>
+      On the software side, our Python backend pulls multi-year rainfall, temperature, and root-zone moisture data from the NASA POWER API alongside USDA soil profiles. We built a weighted multi-criteria scoring algorithm that evaluates crop sequences across five factors: soil health, nitrogen fixation, water safety, yield potential, and climate resilience. When the MMS streams live soil readings over serial, the algorithm dynamically adjusts its 3-year rotation recommendations to match real field conditions.
+    </p>
+
+    <h3 class="qa-q"><span class="qa-num">03</span>Who will your solution serve and what steps have you taken to understand their needs?</h3>
+    <p>
+      Farming Aura is built for small family farms, local specialty growers, and community or school gardens across New England and New York. These are people who care deeply about keeping their soil healthy, but they do not have the budget or technical staff for industrial agritech.
+    </p>
+    <p>
+      To understand what actually matters on the ground, we researched USDA soil survey profiles (like Hudson silt loam), regional extension guides, and multi-year NASA climate records for Northeast crops ranging from field corn and alfalfa to onions, potatoes, and berries. That research changed how we designed the tool. Instead of forcing every grower into one "max yield" formula, we added adjustable priority profiles like Water Conservation, Soil Health First, and Climate Resilient, because a small vegetable grower has very different goals than a dairy feed farm. We also designed the hardware to cost under $40 using off-the-shelf components, and our next step is testing the enclosure and dashboard directly with local growers and agriculture teachers to gather usability feedback.
+    </p>
+
+    <h3 class="qa-q"><span class="qa-num">04</span>What activities will you put in place to achieve your goals?</h3>
+    <ul>
+      <li><strong>Hardware Assembly &amp; Calibration:</strong> Finish wiring and soldering our v6 triangular-core 3D-printed Weather Box, calibrate the capacitive moisture sensor against dry air and saturated soil baselines, and verify reliable JSON telemetry from all four sensors over USB serial.</li>
+      <li><strong>Backend &amp; Data Integration:</strong> Connect our live MMS telemetry pipeline directly to our Python scoring engine and NASA POWER API cache, removing demo placeholders and ensuring every dashboard metric (rainfall, soil temperature, and weighted rotation scores) stays mathematically consistent.</li>
+      <li><strong>Field Testing:</strong> Deploy the Weather Box outdoors in varied soil conditions (dry, damp, and post-rain) over several weeks to stress-test weather sealing, sensor drift, and enclosure durability.</li>
+      <li><strong>Community Feedback &amp; Iteration:</strong> Demo Farming Aura with local growers, school garden coordinators, and agriculture educators, using their feedback to simplify the field-mapping interface and publish our CAD files and code openly so other communities can build their own.</li>
+    </ul>
+
+    <h3 class="qa-q"><span class="qa-num">05</span>How will you define and measure success?</h3>
+    <p>
+      We measure success across three areas: hardware reliability, data accuracy, and real-world usefulness for growers. Technically, our Mobile Measurement Station succeeds if it survives multi-week outdoor exposure without water intrusion or structural bending, maintains stable readings across temperature swings, and matches manual reference checks (within ±1°C for the DS18B20 soil probe and consistent dry-to-wet calibration curves for moisture). On the software side, we verify our scoring engine with automated unit tests so that changing a field's moisture, rainfall, or priority weights produces logical, transparent rotation shifts (such as prioritizing drought-tolerant legumes when soil moisture drops) with zero broken or contradictory numbers. Most importantly, we will measure community impact by putting the tool in front of local farmers and school garden leads. If a non-technical grower can set up the station, read their field's data, and understand why a 3-year rotation was recommended in under five minutes at a hardware cost under $40, we will consider the project a success.
+    </p>
+  </article>
 
   <div class="callout-note">
     <strong>Stack Summary:</strong> Elegoo Uno R3 (C++/Serial JSON) · Fusion 360 Python API + Creality Ender 3 · Python backend (NASA POWER, GPM, SMAP, MODIS, USDA SSURGO/NRCS) · HTML/CSS/JavaScript frontend · Google Maps JavaScript &amp; Places APIs · Google Gemini API · Google Cloud (<a href="https://farmingaura.earth" target="_blank" rel="noopener">farmingaura.earth</a>).
