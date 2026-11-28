@@ -15,9 +15,10 @@ function toggleDarkTheme() {
 function initMyTime() {
   const myTime = document.querySelector('.my-time')
   if (!myTime) return
-  const tz = myTime.dataset.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/New_York'
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
+  myTime.setAttribute('title', tz ? `Your local time (${tz})` : 'Your local time')
   const format = new Intl.DateTimeFormat('en-GB', {
-    timeZone: tz,
+    ...(tz ? { timeZone: tz } : {}),
     hour: '2-digit',
     minute: '2-digit',
     hour12: false,
