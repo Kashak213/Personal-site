@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f1ea">
+  <title>vert.study — Farming Aura (NASA Space Apps 2026)</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/images/logo.jpg">
+  <link rel="stylesheet" href="assets/css/global.css">
+
+  <script>
+    function applyTheme() {
+      let savedTheme = null
+      try {
+        savedTheme = localStorage.getItem('dark')
+      } catch (e) {}
+      const meta = document.querySelector('meta[name=theme-color]')
+      if (savedTheme !== null) {
+        if (savedTheme === 'true') {
+          document.documentElement.classList.add('dark')
+          meta.setAttribute('content', '#0c0c0e')
+        } else {
+          document.documentElement.classList.remove('dark')
+          meta.setAttribute('content', '#f4f1ea')
+        }
+      } else {
+        document.documentElement.classList.add('dark')
+        meta.setAttribute('content', '#0c0c0e')
+      }
+    }
+    applyTheme()
+  </script>
+
+  <style>
+    .post-header-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 14px;
+      margin: -10px 0 28px;
+      font-family: var(--font-family-mono), monospace;
+      font-size: 12.5px;
+      color: var(--c-text-3);
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: var(--radius);
+      background: var(--c-green-soft);
+      color: var(--c-green-1);
+      font-weight: 600;
+      font-size: 11.5px;
+    }
+
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin: 22px 0 28px;
+      border-top: 1px solid var(--c-divider);
+      border-bottom: 1px solid var(--c-divider);
+    }
+
+    .spec-item {
+      padding: 10px 12px 10px 0;
+      background: transparent;
+      border: none;
+    }
+
+    .spec-label {
+      display: block;
+      font-family: var(--font-family-mono), monospace;
+      font-size: 11px;
+      color: var(--c-text-3);
+      margin-bottom: 3px;
+    }
+
+    .spec-value {
+      font-family: var(--font-family-mono), monospace;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--c-text-1);
+    }
+
+    .two-col-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin: 18px 0 26px;
+    }
+
+    .info-card {
+      padding: 16px 18px;
+      background: var(--c-bg-alt);
+      border: 1px solid var(--c-divider);
+      border-radius: var(--radius);
+    }
+
+    .info-card h3 {
+      margin: 0 0 10px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--c-text-1);
+    }
+
+    .info-card p {
+      margin: 0;
+      font-size: 14.5px;
+      line-height: 1.65;
+      color: var(--c-text-2);
+    }
+
+    .info-card ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      list-style: disc;
+    }
+
+    .info-card li {
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--c-text-2);
+      margin-top: 4px;
+    }
+
+    .info-card li strong {
+      color: var(--c-text-1);
+    }
+
+    .data-table-wrap {
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--c-divider);
+      border-radius: var(--radius);
+      background: var(--c-bg-alt);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .data-table th,
+    .data-table td {
+      text-align: left;
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--c-divider);
+      vertical-align: top;
+    }
+
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .data-table th {
+      font-family: var(--font-family-mono), monospace;
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-3);
+      background: var(--c-bg);
+    }
+
+    .data-table td {
+      color: var(--c-text-2);
+    }
+
+    .data-table td strong {
+      color: var(--c-text-1);
+      font-family: var(--font-family-mono), monospace;
+      font-size: 13px;
+    }
+
+    .stage-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin: 18px 0 28px;
+    }
+
+    .stage-card {
+      padding: 2px 0 2px 16px;
+      background: transparent;
+      border: none;
+      border-left: 2px solid var(--c-divider);
+      border-radius: 0;
+    }
+
+    .stage-card h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      line-height: 1.3;
+      color: var(--c-text-1);
+    }
+
+    .stage-card .stage-tag {
+      font-family: var(--font-family-mono), monospace;
+      font-size: 11.5px;
+      color: var(--c-brand-1);
+      margin-right: 8px;
+      font-weight: 700;
+    }
+
+    .stage-card p {
+      margin: 0;
+      font-size: 15.5px;
+      line-height: 27px;
+      color: var(--c-text-2);
+    }
+
+    .callout-note {
+      margin: 22px 0 28px;
+      padding: 14px 18px;
+      background: var(--c-bg-alt);
+      border: 1px dashed var(--c-divider);
+      border-radius: var(--radius);
+      font-size: 14.5px;
+      line-height: 1.65;
+      color: var(--c-text-2);
+    }
+
+    .post-meta-bar {
+      margin-inline: auto;
+      margin-top: 40px;
+      margin-bottom: 40px;
+      display: flex;
+      gap: 16px;
+      justify-content: space-between;
+      align-items: center;
+      padding-inline: var(--main-padding);
+      max-width: var(--max-width);
+      color: var(--c-text-2);
+      font-size: 15px;
+    }
+
+    @media (max-width: 700px) {
+      .spec-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .two-col-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="nav-container">
+  <nav>
+    <div class="nav-title">
+      <a href="index.html">Michael</a>
+    </div>
+
+    <div class="nav-menu nav-mobile">
+      <div class="nav-element">
+        <button class="dark-toggle" role="switch" aria-label="Toggle dark mode">
+          <span class="dark-toggle__check">
+            <span class="dark-toggle__icon">
+              <svg class="sun" aria-hidden="true" focusable="false"><use xlink:href="#sun"></use></svg>
+              <svg class="moon" aria-hidden="true" focusable="false"><use xlink:href="#moon"></use></svg>
+            </span>
+          </span>
+        </button>
+      </div>
+      <div class="nav-element">
+        <a href="" class="hamburger-toggle" aria-label="Toggle menu">
+          <svg aria-hidden="true" focusable="false">
+            <use xlink:href="#menu"></use>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="nav-popup">
+      <a href="projects.html">projects</a>
+      <a href="blog.html">blog</a>
+      <a href="resume.html">resume</a>
+      <a href="https://github.com/Kashak213">github</a>
+    </div>
+
+    <div class="nav-menu nav-desktop">
+      <div class="nav-element">
+        <a href="projects.html" style="color: var(--c-brand-1); font-weight: 600;">projects</a>
+        <a href="blog.html">blog</a>
+        <a href="resume.html">resume</a>
+        <div class="my-time" data-timezone="America/New_York" title="Time in my timezone (EST)" tabindex="0">
+          19:33
+        </div>
+      </div>
+      <div class="nav-element">
+        <button class="dark-toggle" role="switch" aria-label="Toggle dark mode">
+          <span class="dark-toggle__check">
+            <span class="dark-toggle__icon">
+              <svg class="sun" aria-hidden="true" focusable="false"><use xlink:href="#sun"></use></svg>
+              <svg class="moon" aria-hidden="true" focusable="false"><use xlink:href="#moon"></use></svg>
+            </span>
+          </span>
+        </button>
+      </div>
+      <div class="nav-element">
+        <a href="https://github.com/Kashak213" aria-label="GitHub" title="GitHub profile">
+          <svg aria-hidden="true" focusable="false">
+            <use xlink:href="#github"></use>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<main>
+  <h1>Farming Aura — NASA Space Apps 2026 (Field Shift)</h1>
+
+  <div class="post-header-meta">
+    <span class="status-badge">Completed</span>
+    <span>Team Leader · Hardware, CAD &amp; Backend</span>
+    <span>·</span>
+    <span>NASA Space Apps Challenge 2026</span>
+  </div>
+
+  <p>
+    Small and mid-sized farms in the Northeast deal with increasingly erratic seasons—wet springs that delay planting, abrupt summer dry spells, and shifting soil temperatures. Commercial precision-agriculture suites cost thousands of dollars and lock growers into proprietary hardware, while free satellite datasets like NASA POWER are hard to parse and miss field-level micro-conditions.
+  </p>
+
+  <p>
+    For the <strong>NASA Space Apps Challenge 2026 (Field Shift)</strong>, I assembled and led a six-student high school team to build <strong>Farming Aura</strong> (<em>"Know the Past. Grow the Future."</em>). The platform combines NASA Earth observation data, USDA soil survey records, Google Maps satellite field mapping, and a sub-$40 custom 3D-printed <strong>Mobile Measurement Station (MMS)</strong> to generate adaptive, 3-year crop rotation plans tailored to a farmer's exact coordinates and priorities.
+  </p>
+
+  <div class="spec-grid">
+    <div class="spec-item">
+      <span class="spec-label">My Role</span>
+      <span class="spec-value">Team Lead · HW/BE</span>
+    </div>
+    <div class="spec-item">
+      <span class="spec-label">Team Size</span>
+      <span class="spec-value">6 Students</span>
+    </div>
+    <div class="spec-item">
+      <span class="spec-label">Sensor Node</span>
+      <span class="spec-value">&lt; $40 (Uno R3)</span>
+    </div>
+    <div class="spec-item">
+      <span class="spec-label">Enclosure</span>
+      <span class="spec-value">v6 Truss (Fusion)</span>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 10px; margin: -12px 0 28px;">
+    <a class="b" href="https://farmingaura.earth" target="_blank" rel="noopener">Open Live Platform (farmingaura.earth) ↗</a>
+  </div>
+
+  <h2>Leadership &amp; System Architecture</h2>
+
+  <p>
+    Running a six-person team on a tight hackathon clock fails fast if sub-teams block each other. As Team Leader and primary organizer, I split the challenge into parallel workstreams—hardware/CAD, backend and scoring math, frontend UI/UX, Google Maps satellite integration, Gemini AI insights, and presentation—and locked down the JSON contracts between the Elegoo Uno sensor station, the Python scoring backend, and the web frontend early so everyone could build and test independently.
+  </p>
+
+  <p>
+    Beyond coordinating milestones and system integration, I owned the physical hardware and telemetry pipeline end-to-end: wiring and soldering the sensor circuits from scratch, scripting and 3D-printing the weather-resistant enclosure in Autodesk Fusion 360, building the backend API endpoints that ingest live serial telemetry, and co-designing the multi-criteria crop rotation scoring model alongside Aiden Weng.
+  </p>
+
+<pre><code>  [Mobile Measurement Station (&lt;$40)]       [NASA Earth Observation]       [USDA Soil Intelligence]
+  Elegoo Uno R3 + 4 field sensors           POWER, GPM, SMAP, MODIS        SSURGO &amp; NRCS profiles
+  (9600 baud JSON every 2s)                 (climate, rain, GWETROOT)      (pH, OC%, sand/clay)
+                  \                                    |                                /
+                   \                                   v                               /
+                    +--------------------&gt; [Python Backend API] &lt;---------------------+
+                                           - NASA POWER ingestion &amp; caching
+                                           - Live MMS telemetry override/calibration
+                                           - Multi-criteria 3-year rotation scoring
+                                                       |
+                                                       v
+                                  [Web Dashboard — farmingaura.earth]
+                                  - Google Maps JS &amp; Places field planner
+                                  - 5-metric rotation breakdown &amp; 5-yr trends
+                                  - Google Gemini API plain-English rationale</code></pre>
+
+  <h2>Core Platform Capabilities</h2>
+
+  <div class="stage-list">
+    <div class="stage-card">
+      <h3><span class="stage-tag">01</span>Location &amp; Satellite Field Border Planner</h3>
+      <p>
+        Growers search an address or drop exact coordinates (for example, Albany, NY at <code>42.65°, -73.76°</code>) and draw or auto-arrange square field borders (<code>F001</code>, <code>F002</code>, ...) directly on satellite imagery using the Google Maps JavaScript and Places APIs.
+      </p>
+    </div>
+
+    <div class="stage-card">
+      <h3><span class="stage-tag">02</span>Priority Profiles &amp; 3-Year Agronomic Scoring</h3>
+      <p>
+        Users pick from five farm strategies—<em>Balanced</em>, <em>Max Yield</em>, <em>Water Conservation</em>, <em>Soil Health First</em>, and <em>Climate Resilient</em>—plus a <code>1–100</code> priority intensity slider, previous crop planted, target crop list (13 Northeast crops including Field Corn, Soybeans/Small Grains, Hay/Alfalfa, Apples, Grapes, Berries, Cabbage, Onions, Potatoes, and Sugar Maple), and max annual water demand (<code>mm/yr</code>). The weighted model Aiden Weng and I co-designed outputs a 3-year sequence (e.g., <code>Soybeans/Small Grains → Field Corn → Hay/Alfalfa</code>) with an overall score (e.g., <code>86 / 100</code>) broken down across five <code>0–1</code> metrics: <strong>Soil Health</strong>, <strong>Water Safety</strong>, <strong>Resilience</strong>, <strong>Yield Potential</strong>, and <strong>Nitrogen Fixation</strong>, alongside ranked alternatives.
+      </p>
+    </div>
+
+    <div class="stage-card">
+      <h3><span class="stage-tag">03</span>NASA Climate Trends, USDA Soil Context &amp; Gemini Rationale</h3>
+      <p>
+        The Python backend pulls and caches 5-year historical temperature and rainfall trends (<code>2020–2024</code>) from NASA POWER/GPM alongside SMAP/MODIS root-zone moisture (<code>GWETROOT</code>) and USDA SSURGO/NRCS taxonomy profiles (such as Hudson silt loam: <code>OC 2.49% · pH 6.36</code>). Crop water demand comparisons are paired with plain-English agronomic explanations generated via the Google Gemini API.
+      </p>
+    </div>
+
+    <div class="stage-card">
+      <h3><span class="stage-tag">04</span>Live MMS Ground-Truth Calibration</h3>
+      <p>
+        Regional satellite pixels average over kilometers and cannot see a single dry or waterlogged plot. Connecting the physical Mobile Measurement Station—or toggling the built-in judge simulation mode for Dry/Wet soil testing—dynamically overrides and calibrates satellite estimates in real time, shifting recommendations toward drought-tolerant legumes when dry root-zone moisture is detected.
+      </p>
+    </div>
+  </div>
+
+  <h2>Hardware Deep Dive: Mobile Measurement Station (MMS)</h2>
+
+  <p>
+    To prove that ground-truth telemetry does not require a four-figure commercial weather station, I built a sub-$40 sensor node around an Elegoo Uno R3. Every two seconds, the microcontroller samples four field sensors and streams calibrated JSON over USB-B serial (<code>9600</code> baud) directly into the backend telemetry endpoints.
+  </p>
+
+  <div class="data-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Model / Spec</th>
+          <th>Pin / Wiring</th>
+          <th>Role in Farming Aura</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Microcontroller</strong></td>
+          <td>Elegoo Uno R3 (ATmega328P, 5V)</td>
+          <td>USB-B Serial (<code>9600</code> baud JSON)</td>
+          <td>Samples all 4 sensors every <code>2s</code> and streams calibrated JSON telemetry to the Python backend.</td>
+        </tr>
+        <tr>
+          <td><strong>Power Distribution</strong></td>
+          <td>170-Point Mini Breadboard (<code>47 × 35 mm</code>)</td>
+          <td>Row 1 = <code>+5V</code> Bus · Row 2 = <code>GND</code> Bus</td>
+          <td>Sits in the enclosure's right-hand floor bay to split power cleanly across all 4 sensors.</td>
+        </tr>
+        <tr>
+          <td><strong>Soil Moisture</strong></td>
+          <td>Capacitive Soil Moisture Sensor v1.2</td>
+          <td>Analog <code>A0</code> (dry ~<code>600</code> → water ~<code>280</code>)</td>
+          <td>Corrosion-resistant capacitive reading of real-time soil wetness.</td>
+        </tr>
+        <tr>
+          <td><strong>Soil Temperature</strong></td>
+          <td>DS18B20 Waterproof Stainless Probe</td>
+          <td>Digital <code>D2</code> (1-Wire + <code>4.7 kΩ</code> pull-up)</td>
+          <td>Direct soil temperature (<code>°C</code>) to verify crop planting thresholds.</td>
+        </tr>
+        <tr>
+          <td><strong>Air Temp &amp; Humidity</strong></td>
+          <td>DHT11 3-Pin Breakout PCB</td>
+          <td>Digital <code>D3</code> (built-in <code>10 kΩ</code> pull-up)</td>
+          <td>Ambient microclimate air temperature and relative humidity.</td>
+        </tr>
+        <tr>
+          <td><strong>Rain Detection</strong></td>
+          <td>FC-37 / YL-83 Nickel Pad + LM393 Amp</td>
+          <td>Analog <code>A1</code> + Digital <code>D4</code></td>
+          <td>Surface rainfall detection mounted on the roof lid via an <code>8 × 4 mm</code> wire slot.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>CAD &amp; 3D-Printing Iteration (Fusion 360 → Ender 3)</h2>
+
+  <p>
+    Rather than clicking together a one-off box by hand, I wrote a parametric Python API script (<code>FarmingAuraWeatherBox.py</code>) for Autodesk Fusion 360 to generate the entire enclosure geometry—sensor cutouts, breadboard bay, lid lip, and cable slots—and iterated through three major structural revisions on a Creality Ender 3 after real-world print failures.
+  </p>
+
+  <div class="two-col-grid">
+    <div class="info-card">
+      <h3>The Failure (v4 → v5 Wall Delamination)</h3>
+      <p>
+        Early fast-print prototypes with <code>2.0 mm</code> and <code>3.6 mm</code> walls flexed under hand pressure and suffered strand separation off the Ender 3. Inspecting the raw G-code toolpaths exposed the root cause: 4 inner + 4 outer parallel wall loops (<code>8 × 0.44 mm = 3.52 mm</code>) consumed the entire wall thickness, leaving zero diagonal bracing inside—essentially printing stacked parallel strips like a deck of cards.
+      </p>
+    </div>
+    <div class="info-card">
+      <h3>The Fix (v6 Triangular-Core Sandwich)</h3>
+      <p>
+        I redesigned the shell to <code>5.4 mm</code> outer walls and <code>5.0 mm</code> floor/lid plates (<code>120.8 × 88.8 × 49.0 mm</code>) with only 2 perimeter lines and 2 top/bottom skins, opening a <code>3.72 mm</code> internal core filled with 45% equilateral triangle truss infill (<code>316</code> diagonal struts per wall layer). Every sensor hole stayed unchanged, and I added zero-support mechanical locks: a chamfered moisture catch-lip and a stepped <code>6.25 mm → 4.3 mm</code> DS18B20 probe bore.
+      </p>
+    </div>
+  </div>
+
+  <h2>Team Roster &amp; Contributions</h2>
+
+  <p>
+    Deployed live on Google Cloud at <a href="https://farmingaura.earth" target="_blank" rel="noopener">farmingaura.earth</a> with a clean terracotta Figma design system, Farming Aura came together because every member owned a concrete slice of the stack:
+  </p>
+
+  <div class="data-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Team Member</th>
+          <th>Role</th>
+          <th>Key Contributions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Michael Vert</strong></td>
+          <td>Team Leader, Full-Stack, Hardware &amp; Scoring</td>
+          <td>Organized and led the 6-student team; engineered, wired, and soldered the MMS hardware; scripted and iterated the 3D-printed Fusion 360 enclosure; built telemetry API endpoints; co-designed the multi-criteria agronomic scoring engine.</td>
+        </tr>
+        <tr>
+          <td><strong>Aiden Weng</strong></td>
+          <td>Backend &amp; Scoring Architecture</td>
+          <td>Teamed closely on core backend workflows and the mathematical foundation of the weighted crop rotation scoring model using NASA weather and USDA soil records.</td>
+        </tr>
+        <tr>
+          <td><strong>Aniket Dixit</strong></td>
+          <td>Frontend Architecture, Figma &amp; APIs</td>
+          <td>Lead frontend developer coordinating UI structure and state transitions, Figma layouts, and Google Gemini API integration for plain-English agronomic insights.</td>
+        </tr>
+        <tr>
+          <td><strong>Rishabh Nagarkar</strong></td>
+          <td>UI/UX Design, QA &amp; Documentation</td>
+          <td>Created the terracotta Figma design system, led edge-case QA and debugging, and authored team overview and technical documentation.</td>
+        </tr>
+        <tr>
+          <td><strong>Gautham Reddy Sagili</strong></td>
+          <td>Frontend &amp; Maps Integration</td>
+          <td>Lead frontend developer integrating Google Maps JavaScript &amp; Places APIs for the satellite field boundary planner; co-designed the demo slide deck.</td>
+        </tr>
+        <tr>
+          <td><strong>Charles Wang</strong></td>
+          <td>Presentation, QA &amp; Full-Stack Integration</td>
+          <td>Co-created the demo slide deck, assisted with Figma polish and API-to-frontend connections, analyzed agricultural data tables, and tested platform UX.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout-note">
+    <strong>Stack Summary:</strong> Elegoo Uno R3 (C++/Serial JSON) · Fusion 360 Python API + Creality Ender 3 · Python backend (NASA POWER, GPM, SMAP, MODIS, USDA SSURGO/NRCS) · HTML/CSS/JavaScript frontend · Google Maps JavaScript &amp; Places APIs · Google Gemini API · Google Cloud (<a href="https://farmingaura.earth" target="_blank" rel="noopener">farmingaura.earth</a>).
+  </div>
+</main>
+
+<div class="post-meta-bar">
+  <div>November 2026 · <a href="projects.html">← all projects</a> · <a href="blog.html">blog</a></div>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <div>© 2026 Michael</div>
+    <div style="font-family: Tahoma, sans-serif">
+      <span style="font-size: 8px" title="Page generation time">
+        0.011 sec,
+      </span>
+      <span style="font-size: 8px" title="Unique page views">
+        #1
+      </span>
+    </div>
+  </div>
+</footer>
+
+<svg style="display: none" aria-hidden="true" focusable="false">
+  <symbol id="sun" viewBox="0 0 24 24">
+    <path d="M12,18c-3.3,0-6-2.7-6-6s2.7-6,6-6s6,2.7,6,6S15.3,18,12,18zM12,8c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4c2.2,0,4-1.8,4-4C16,9.8,14.2,8,12,8z"></path>
+    <path d="M12,4c-0.6,0-1-0.4-1-1V1c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,3.6,12.6,4,12,4z"></path>
+    <path d="M12,24c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,23.6,12.6,24,12,24z"></path>
+    <path d="M5.6,6.6c-0.3,0-0.5-0.1-0.7-0.3L3.5,4.9c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l1.4,1.4c0.4,0.4,0.4,1,0,1.4C6.2,6.5,5.9,6.6,5.6,6.6z"></path>
+    <path d="M19.8,20.8c-0.3,0-0.5-0.1-0.7-0.3l-1.4-1.4c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l1.4,1.4c0.4,0.4,0.4,1,0,1.4C20.3,20.7,20,20.8,19.8,20.8z"></path>
+    <path d="M3,13H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S3.6,13,3,13z"></path>
+    <path d="M23,13h-2c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S23.6,13,23,13z"></path>
+    <path d="M4.2,20.8c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l1.4-1.4c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-1.4,1.4C4.7,20.7,4.5,20.8,4.2,20.8z"></path>
+    <path d="M18.4,6.6c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l1.4-1.4c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-1.4,1.4C18.9,6.5,18.6,6.6,18.4,6.6z"></path>
+  </symbol>
+  <symbol id="moon" viewBox="0 0 24 24">
+    <path d="M12.1,22c-0.3,0-0.6,0-0.9,0c-5.5-0.5-9.5-5.4-9-10.9c0.4-4.8,4.2-8.6,9-9c0.4,0,0.8,0.2,1,0.5c0.2,0.3,0.2,0.8-0.1,1.1c-2,2.7-1.4,6.4,1.3,8.4c2.1,1.6,5,1.6,7.1,0c0.3-0.2,0.7-0.3,1.1-0.1c0.3,0.2,0.5,0.6,0.5,1c-0.2,2.7-1.5,5.1-3.6,6.8C16.6,21.2,14.4,22,12.1,22zM9.3,4.4c-2.9,1-5,3.6-5.2,6.8c-0.4,4.4,2.8,8.3,7.2,8.7c2.1,0.2,4.2-0.4,5.8-1.8c1.1-0.9,1.9-2.1,2.4-3.4c-2.5,0.9-5.3,0.5-7.5-1.1C9.2,11.4,8.1,7.7,9.3,4.4z"></path>
+  </symbol>
+  <symbol id="github" viewBox="0 0 24 24">
+    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path>
+  </symbol>
+  <symbol id="menu" viewBox="0 0 24 24">
+    <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path>
+  </symbol>
+</svg>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
